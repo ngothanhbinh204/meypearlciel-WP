@@ -55,27 +55,53 @@ function wre_format_image_item( $img ) {
 }
 
 /**
- * Normalize hotspot polygon string → array of {x, y} points
- * Input:  "10.5,20 30,20 30,50"
+ * Normalize hotspot polygon data → array of {x, y} points.
+ *
+ * Supports two storage formats:
+ *   New (JSON):   '{"points": [[12.5, 22.1], [42.8, 19.2], ...]}'
+ *   Legacy (SVG): '10.5,20 30,20 30,50' (space-separated x,y pairs)
+ *
  * Output: [{"x":10.5,"y":20}, {"x":30,"y":20}, ...]
  */
-function re_format_polygon( $polygon_string ) {
-    if ( empty( $polygon_string ) ) return array();
+function re_format_polygon( $data ) {
+    if ( empty( $data ) ) return array();
 
-    $points = array();
-    $pairs  = preg_split( '/\s+/', trim( $polygon_string ) );
+    if ( is_string( $data ) ) {
+        $trimmed = trim( $data );
 
-    foreach ( $pairs as $pair ) {
-        $xy = explode( ',', $pair );
-        if ( count( $xy ) === 2 ) {
-            $points[] = array(
-                'x' => (float) $xy[0],
-                'y' => (float) $xy[1],
-            );
+        // New format: JSON {"points": [[x,y], ...]}
+        if ( $trimmed !== '' && $trimmed[0] === '{' ) {
+            $decoded = json_decode( $trimmed, true );
+            if ( ! empty( $decoded['points'] ) && is_array( $decoded['points'] ) ) {
+                $points = array();
+                foreach ( $decoded['points'] as $p ) {
+                    if ( is_array( $p ) && count( $p ) >= 2 ) {
+                        $points[] = array(
+                            'x' => (float) $p[0],
+                            'y' => (float) $p[1],
+                        );
+                    }
+                }
+                return $points;
+            }
         }
+
+        // Legacy format: "10,20 30,40 50,60"
+        $points = array();
+        $pairs  = preg_split( '/\s+/', $trimmed );
+        foreach ( $pairs as $pair ) {
+            $xy = explode( ',', $pair );
+            if ( count( $xy ) === 2 ) {
+                $points[] = array(
+                    'x' => (float) $xy[0],
+                    'y' => (float) $xy[1],
+                );
+            }
+        }
+        return $points;
     }
 
-    return $points;
+    return array();
 }
 
 
@@ -91,21 +117,6 @@ function re_format_polygon( $polygon_string ) {
 function format_building( $post_id, $include_floors = false ) {
     if ( get_post_type( $post_id ) !== 're_building' ) return null;
 
-    $hotspots_raw = get_field( 'building_hotspots', $post_id ) ?: array();
-    $hotspots     = array();
-
-    foreach ( $hotspots_raw as $hs ) {
-        $hotspots[] = array(
-            'x'             => (float) ( $hs['x'] ?? 0 ),
-            'y'             => (float) ( $hs['y'] ?? 0 ),
-            'width'         => (float) ( $hs['width'] ?? 0 ),
-            'height'        => (float) ( $hs['height'] ?? 0 ),
-            'polygon'       => re_format_polygon( $hs['polygon_points'] ?? '' ),
-            'overlay_image' => $hs['overlay_image'] ?? null,
-            'popup_position'=> $hs['popup_position'] ?? 'bottom',
-        );
-    }
-
     $building = array(
         'id'            => (int) $post_id,
         'name'          => get_field( 'building_name', $post_id ) ?: get_the_title( $post_id ),
@@ -119,7 +130,6 @@ function format_building( $post_id, $include_floors = false ) {
         'thumbnail'     => re_format_image( get_field( 'building_thumbnail', $post_id ) ),
         'overlay_image' => re_format_image( get_field( 'building_overlay_image', $post_id ) ),
         'master_plan'   => re_format_image( get_field( 'building_master_plan', $post_id ) ),
-        'hotspots'      => $hotspots,
     );
 
     if ( $include_floors ) {
@@ -127,6 +137,35 @@ function format_building( $post_id, $include_floors = false ) {
     }
 
     return $building;
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// GLOBAL LEGEND HELPER
+// ═══════════════════════════════════════════════════════════
+
+/**
+ * Đọc chú thích màu từ Theme Options (options page).
+ * Kết quả được cache trong static variable — gọi nhiều lần không query lại.
+ * Output: [{ color, status, label }, ...]
+ */
+function re_get_global_legend() {
+    static $legend = null;
+
+    if ( $legend !== null ) return $legend;
+
+    $legend     = array();
+    $legend_raw = get_field( 'global_legend', 'option' ) ?: array();
+
+    foreach ( $legend_raw as $item ) {
+        $legend[] = array(
+            'color'  => $item['color']  ?? '',
+            'status' => $item['status'] ?? '',
+            'label'  => $item['label']  ?? '',
+        );
+    }
+
+    return $legend;
 }
 
 
@@ -141,16 +180,6 @@ function format_building( $post_id, $include_floors = false ) {
 function format_floor( $post_id, $include_apartments = true ) {
     if ( get_post_type( $post_id ) !== 're_floor' ) return null;
 
-    $legend_raw = get_field( 'floor_legend_items', $post_id ) ?: array();
-    $legend     = array();
-
-    foreach ( $legend_raw as $item ) {
-        $legend[] = array(
-            'color' => $item['color'] ?? '',
-            'label' => $item['label'] ?? '',
-        );
-    }
-
     $floor = array(
         'id'          => (int) $post_id,
         'name'        => get_field( 'floor_name', $post_id ) ?: get_the_title( $post_id ),
@@ -160,7 +189,6 @@ function format_floor( $post_id, $include_apartments = true ) {
         'description' => get_field( 'floor_description', $post_id ) ?: '',
         'image'       => re_format_image( get_field( 'floor_image', $post_id ) ),
         'thumbnail'   => re_format_image( get_field( 'floor_thumbnail', $post_id ) ),
-        'legend'      => $legend,
         'building_id' => (int) get_field( 'parent_building', $post_id ),
     );
 
@@ -182,31 +210,46 @@ function format_floor( $post_id, $include_apartments = true ) {
 function format_apartment( $post_id ) {
     if ( get_post_type( $post_id ) !== 're_apartment' ) return null;
 
-    // Facilities
+    // Facilities — resolve từ re_utility catalog
     $facilities_raw = get_field( 'apartment_choose_facility', $post_id ) ?: array();
     $facilities     = array();
 
     foreach ( $facilities_raw as $f ) {
+        $utility_id = (int) ( $f['facility_ref'] ?? 0 );
+
+        if ( $utility_id && get_post_type( $utility_id ) === 're_utility' ) {
+            // Lấy icon & label từ catalog, đảm bảo đồng nhất toàn site
+            $icon  = get_field( 'utility_icon', $utility_id )  ?: '';
+            $label = get_field( 'utility_label', $utility_id ) ?: get_the_title( $utility_id );
+        } else {
+            // Fallback nếu utility bị xóa
+            $icon  = '';
+            $label = '';
+        }
+
         $facilities[] = array(
-            'icon'  => $f['icon']  ?? '',
-            'label' => $f['label'] ?? '',
-            'value' => $f['value'] ?? '',
+            'utility_id' => $utility_id,
+            'icon'       => $icon,
+            'label'      => $label,
+            'value'      => $f['facility_value'] ?? '',
         );
     }
+
+    // Sắp xếp theo utility_sort_order (nếu có)
+    usort( $facilities, function ( $a, $b ) {
+        $order_a = $a['utility_id'] ? (int) get_field( 'utility_sort_order', $a['utility_id'] ) : 99;
+        $order_b = $b['utility_id'] ? (int) get_field( 'utility_sort_order', $b['utility_id'] ) : 99;
+        return $order_a <=> $order_b;
+    } );
 
     // Gallery
     $gallery = re_format_gallery( get_field( 'apartment_gallery', $post_id ) ?: array() );
 
-    // Hotspot (group field)
-    $hs_raw  = get_field( 'apartment_hotspot', $post_id ) ?: array();
-    $hotspot = array(
-        'x'             => (float) ( $hs_raw['x']             ?? 0 ),
-        'y'             => (float) ( $hs_raw['y']             ?? 0 ),
-        'width'         => (float) ( $hs_raw['width']         ?? 0 ),
-        'height'        => (float) ( $hs_raw['height']        ?? 0 ),
-        'polygon'       => re_format_polygon( $hs_raw['polygon_points'] ?? '' ),
-        'popup_position'=> $hs_raw['popup_position'] ?? 'top',
-        'hover_color'   => $hs_raw['hover_color'] ?? '#F97316',
+    // Interaction: polygon drawn via Polygon Editor + display options
+    $interaction = array(
+        'polygon'        => re_format_polygon( get_field( 'apartment_polygon', $post_id ) ?: '' ),
+        'hover_color'    => get_field( 'apartment_hover_color', $post_id ) ?: '#f97316',
+        'popup_position' => get_field( 'apartment_popup_position', $post_id ) ?: 'top',
     );
 
     return array(
@@ -222,7 +265,7 @@ function format_apartment( $post_id ) {
         'layout'      => re_format_image( get_field( 'apartment_layout', $post_id ) ),
         'gallery'     => $gallery,
         'facilities'  => $facilities,
-        'hotspot'     => $hotspot,
+        'interaction' => $interaction,
         'floor_id'    => (int) get_field( 'parent_floor', $post_id ),
     );
 }
@@ -328,7 +371,10 @@ function format_masterplan_data( $building_ids = array() ) {
         wp_reset_postdata();
     }
 
-    return array( 'buildings' => $buildings );
+    return array(
+        'buildings' => $buildings,
+        'legend'    => re_get_global_legend(),
+    );
 }
 
 
@@ -481,34 +527,108 @@ function re_localize_masterplan_data() {
     $sections = get_field( 'page_sections' );
     if ( empty( $sections ) ) return;
 
-    $has_masterplan = false;
-    $building_ids   = array();
-    $default_building = 0;
+    $has_masterplan   = false;
+    $buildings_rows   = array();
     $masterplan_image = null;
-    $display_style  = 'popup';
 
     foreach ( $sections as $section ) {
         if ( isset( $section['acf_fc_layout'] ) && $section['acf_fc_layout'] === 'apartment_layout' ) {
             $has_masterplan   = true;
-            $building_ids     = $section['relationship_buildings'] ?? array();
-            $default_building = (int) ( $section['default_building'] ?? 0 );
+            $buildings_rows   = $section['buildings'] ?? array();
             $masterplan_image = re_format_image( $section['masterplan_image'] ?? null );
-            $display_style    = $section['display_style'] ?? 'popup';
             break;
         }
     }
 
     if ( ! $has_masterplan ) return;
 
-    $data = format_masterplan_data( $building_ids );
+    // Each buildings row: building_ref (post ID) + building_polygon + building_color
+    $buildings_data = array();
+    foreach ( $buildings_rows as $row ) {
+        $building_id = (int) ( $row['building_ref'] ?? 0 );
+        if ( ! $building_id ) continue;
+        $building = format_building( $building_id, true );
+        if ( ! $building ) continue;
+        $building['polygon'] = re_format_polygon( $row['building_polygon'] ?? '' );
+        $building['color']   = sanitize_hex_color( $row['building_color'] ?? '' ) ?: '#f97316';
+        $buildings_data[] = $building;
+    }
+
+    $data = array(
+        'buildings' => $buildings_data,
+        'legend'    => re_get_global_legend(),
+    );
 
     $data['meta'] = array(
-        'default_building' => $default_building,
         'masterplan_image' => $masterplan_image,
-        'display_style'    => $display_style,
         'api_base'         => esc_url( rest_url( 're/v1' ) ),
         'nonce'            => wp_create_nonce( 'wp_rest' ),
     );
 
     wp_localize_script( 'front-end-main', 'RE_DATA', $data );
+}
+
+
+// ════════════════════════════════════════════════════════════════
+// FORMAT UTILITIES SECTION
+// ════════════════════════════════════════════════════════════════
+
+/**
+ * Parse camera_state JSON → sanitized array { scale, x, y }.
+ * Used by re_format_utilities_section().
+ *
+ * @param  string $raw  Raw textarea value (JSON string).
+ * @return array        { scale: float, x: float, y: float }
+ */
+function re_format_camera_state( $raw ) {
+    if ( empty( $raw ) ) {
+        return array( 'scale' => 1.0, 'x' => 50.0, 'y' => 50.0 );
+    }
+    $data = json_decode( trim( $raw ), true );
+    if ( ! is_array( $data ) ) {
+        return array( 'scale' => 1.0, 'x' => 50.0, 'y' => 50.0 );
+    }
+    return array(
+        'scale' => (float) ( $data['scale'] ?? 1.0 ),
+        'x'     => (float) ( $data['x']     ?? 50.0 ),
+        'y'     => (float) ( $data['y']     ?? 50.0 ),
+    );
+}
+
+/**
+ * Format the utilities_all_in_one flexible content layout row
+ * into a frontend-ready data structure.
+ *
+ * @param  array $layout  ACF flexible content row data.
+ * @return array
+ */
+function re_format_utilities_section( $layout ) {
+    $floor_groups = array();
+
+    foreach ( $layout['floor_groups'] ?? array() as $floor ) {
+        $amenities = array();
+
+        foreach ( $floor['amenities'] ?? array() as $a ) {
+            $amenities[] = array(
+                'name'        => $a['amenity_name']        ?? '',
+                'description' => $a['amenity_description'] ?? '',
+                'polygon'     => re_format_polygon( $a['amenity_polygon'] ?? '' ),
+            );
+        }
+
+        $floor_groups[] = array(
+            'name'         => $floor['floor_name'] ?? '',
+            'code'         => $floor['floor_code'] ?? '',
+            'camera_state' => re_format_camera_state( $floor['camera_state'] ?? '' ),
+            'amenities'    => $amenities,
+        );
+    }
+
+    return array(
+        'section_title'       => $layout['section_title']       ?? '',
+        'section_description' => $layout['section_description'] ?? '',
+        'section_image'       => re_format_image( $layout['section_image']    ?? null ),
+        'masterplan_image'    => re_format_image( $layout['masterplan_image'] ?? null ),
+        'floor_groups'        => $floor_groups,
+    );
 }

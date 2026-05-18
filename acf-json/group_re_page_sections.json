@@ -320,45 +320,160 @@
               "preview_size": "medium",
               "instructions": "Ảnh tổng thể dự án — nền để đặt hotspot từng tòa nhà",
               "required": 1,
-              "wrapper": { "width": "50", "class": "", "id": "" }
+              "wrapper": { "width": "100", "class": "", "id": "" }
             },
             {
               "key": "field_al_buildings",
-              "label": "Các tòa nhà hiển thị",
-              "name": "relationship_buildings",
-              "type": "relationship",
-              "instructions": "Chọn các tòa nhà hiển thị trong section này",
-              "post_type": ["re_building"],
-              "filters": ["search"],
-              "min": 1,
-              "return_format": "id",
-              "wrapper": { "width": "50", "class": "", "id": "" }
+              "label": "Tòa nhà & Polygon",
+              "name": "buildings",
+              "type": "repeater",
+              "instructions": "Mỗi row = 1 tòa nhà, vẽ polygon vị trí tòa trên ảnh masterplan bên trên",
+              "layout": "block",
+              "button_label": "Thêm tòa nhà",
+              "sub_fields": [
+                {
+                  "key": "field_al_building_ref",
+                  "label": "Tòa nhà",
+                  "name": "building_ref",
+                  "type": "post_object",
+                  "post_type": ["re_building"],
+                  "filters": ["search"],
+                  "return_format": "id",
+                  "ui": 1,
+                  "required": 1,
+                  "wrapper": { "width": "60", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_al_building_color",
+                  "label": "Màu polygon",
+                  "name": "building_color",
+                  "type": "color_picker",
+                  "default_value": "#f97316",
+                  "wrapper": { "width": "40", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_al_building_polygon",
+                  "label": "Dữ liệu polygon",
+                  "name": "building_polygon",
+                  "type": "textarea",
+                  "rows": 2,
+                  "instructions": "JSON polygon — do not edit manually. Use the Polygon Editor above.",
+                  "wrapper": { "width": "100", "class": "", "id": "" }
+                }
+              ]
+            }
+          ]
+        },
+        "layout_utilities_all_in_one": {
+          "key": "layout_utilities_all_in_one",
+          "name": "utilities_all_in_one",
+          "label": "Hệ Tiện Ích ALL IN ONE",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_uaio_section_title",
+              "label": "Tiêu đề section",
+              "name": "section_title",
+              "type": "text",
+              "wrapper": { "width": "100", "class": "", "id": "" }
             },
             {
-              "key": "field_al_default_building",
-              "label": "Tòa nhà mặc định",
-              "name": "default_building",
-              "type": "post_object",
-              "instructions": "Tòa nhà active mặc định khi load trang",
-              "post_type": ["re_building"],
-              "filters": ["search"],
-              "return_format": "id",
-              "ui": 1,
-              "wrapper": { "width": "50", "class": "", "id": "" }
+              "key": "field_uaio_section_description",
+              "label": "Mô tả section",
+              "name": "section_description",
+              "type": "textarea",
+              "rows": 3,
+              "wrapper": { "width": "100", "class": "", "id": "" }
             },
             {
-              "key": "field_al_display_style",
-              "label": "Kiểu hiển thị",
-              "name": "display_style",
-              "type": "select",
-              "choices": {
-                "popup": "Popup overlay",
-                "sidebar": "Sidebar slide",
-                "fullscreen": "Full screen"
-              },
-              "default_value": "popup",
-              "return_format": "value",
-              "wrapper": { "width": "50", "class": "", "id": "" }
+              "key": "field_uaio_masterplan_image",
+              "label": "Ảnh masterplan tiện ích",
+              "name": "masterplan_image",
+              "type": "image",
+              "return_format": "url",
+              "preview_size": "medium",
+              "instructions": "1 ảnh masterplan duy nhất cho toàn bộ hệ thống tiện ích. Dùng để vẽ polygon và làm camera reference.",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_uaio_section_image",
+              "label": "Ảnh section",
+              "name": "section_image",
+              "type": "image",
+              "return_format": "url",
+              "preview_size": "medium",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_uaio_floor_groups",
+              "label": "Nhóm tầng",
+              "name": "floor_groups",
+              "type": "repeater",
+              "instructions": "Mỗi item là một tầng / khu vực có floor plan riêng",
+              "layout": "block",
+              "button_label": "Thêm tầng",
+              "sub_fields": [
+                {
+                  "key": "field_uaio_floor_name",
+                  "label": "Tên tầng / khu vực",
+                  "name": "floor_name",
+                  "type": "text",
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_uaio_floor_code",
+                  "label": "Mã tầng",
+                  "name": "floor_code",
+                  "type": "text",
+                  "instructions": "VD: F1, OUTDOOR, ROOFTOP",
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_uaio_camera_state",
+                  "label": "Camera state (JSON)",
+                  "name": "camera_state",
+                  "type": "textarea",
+                  "rows": 2,
+                  "instructions": "JSON viewport state — do not edit manually",
+                  "wrapper": { "width": "100", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_uaio_amenities",
+                  "label": "Danh sách tiện ích",
+                  "name": "amenities",
+                  "type": "repeater",
+                  "instructions": "Vẽ polygon cho từng tiện ích trên floor plan",
+                  "layout": "row",
+                  "button_label": "Thêm tiện ích",
+                  "sub_fields": [
+                    {
+                      "key": "field_uaio_amenity_name",
+                      "label": "Tên tiện ích",
+                      "name": "amenity_name",
+                      "type": "text",
+                      "required": 1,
+                      "wrapper": { "width": "50", "class": "", "id": "" }
+                    },
+                    {
+                      "key": "field_uaio_amenity_description",
+                      "label": "Mô tả",
+                      "name": "amenity_description",
+                      "type": "textarea",
+                      "rows": 2,
+                      "wrapper": { "width": "50", "class": "", "id": "" }
+                    },
+                    {
+                      "key": "field_uaio_amenity_polygon",
+                      "label": "Dữ liệu polygon",
+                      "name": "amenity_polygon",
+                      "type": "textarea",
+                      "rows": 2,
+                      "instructions": "JSON polygon — do not edit manually. Use the Polygon Editor.",
+                      "wrapper": { "width": "100", "class": "", "id": "" }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },

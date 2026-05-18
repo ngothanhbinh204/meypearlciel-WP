@@ -54,4 +54,21 @@ function re_register_post_types()
         'exclude_from_search' => true,
     ));
 
-   
+    // ─────────────────────────────────────────────
+    // CPT: re_utility — Danh mục tiện ích chung
+    // Dùng làm catalog: editor tạo sẵn các tiện ích
+    // (icon + tên), apartment chỉ cần chọn + nhập value
+    // ─────────────────────────────────────────────
+    create_post_type('re_utility', array(
+        'name'          => 'Tiện ích',
+        'singular_name' => 'Tiện ích',
+        'slug'          => 're-utility',
+        'icon'          => 'dashicons-star-filled',
+        'menu_position' => 28,
+        'supports'      => array('title'),
+        'has_archive'   => false,
+        'show_in_rest'  => true,
+        'exclude_from_search' => true,
+    ));
+}
+

@@ -1,0 +1,53 @@
+{
+  "key": "group_re_utility",
+  "title": "Thông tin tiện ích",
+  "fields": [
+    {
+      "key": "field_utility_icon",
+      "label": "Icon",
+      "name": "utility_icon",
+      "type": "text",
+      "instructions": "Emoji hoặc tên class icon. VD: 🛏  hoặc  icon-bed  hoặc  fas fa-bed",
+      "required": 1,
+      "wrapper": { "width": "30", "class": "", "id": "" }
+    },
+    {
+      "key": "field_utility_label",
+      "label": "Tên tiện ích",
+      "name": "utility_label",
+      "type": "text",
+      "instructions": "VD: Phòng ngủ, Ban công, Phòng WC, Logia, Phòng giặt",
+      "required": 1,
+      "wrapper": { "width": "70", "class": "", "id": "" }
+    },
+    {
+      "key": "field_utility_sort_order",
+      "label": "Thứ tự hiển thị",
+      "name": "utility_sort_order",
+      "type": "number",
+      "instructions": "Số nhỏ hiển thị trước. VD: Phòng ngủ = 1, WC = 2, Ban công = 3",
+      "default_value": 10,
+      "min": 0,
+      "step": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "re_utility"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["permalink", "the_content", "excerpt", "discussion", "comments", "revisions", "slug", "author", "format", "categories", "tags", "send-trackbacks"],
+  "active": true,
+  "description": "Danh mục tiện ích chung — dùng làm catalog cho apartment_choose_facility",
+  "show_in_rest": 0
+}

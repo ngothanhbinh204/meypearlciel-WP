@@ -72,7 +72,7 @@
     },
     {
       "key": "field_shared_status_tab",
-      "label": "Trạng thái căn hộ (Legend toàn cục)",
+      "label": "Chú thích màu căn hộ",
       "name": "",
       "type": "tab",
       "placement": "top",
@@ -80,10 +80,10 @@
     },
     {
       "key": "field_global_legend",
-      "label": "Chú thích màu trạng thái (dùng làm default cho tất cả tầng)",
+      "label": "Chú thích màu  căn hộ",
       "name": "global_legend",
       "type": "repeater",
-      "instructions": "Định nghĩa chú thích màu sắc toàn cục — editor có thể override ở từng tầng",
+      "instructions": "Định nghĩa chú thích màu sắc dùng chung cho tất cả tầng — nhập 1 lần, áp dụng toàn dự án",
       "layout": "table",
       "button_label": "Thêm chú thích",
       "sub_fields": [
@@ -96,19 +96,11 @@
           "wrapper": { "width": "25", "class": "", "id": "" }
         },
         {
-          "key": "field_global_legend_status",
-          "label": "Trạng thái",
-          "name": "status",
-          "type": "text",
-          "instructions": "VD: available, sold, reserved",
-          "wrapper": { "width": "25", "class": "", "id": "" }
-        },
-        {
           "key": "field_global_legend_label",
           "label": "Nhãn hiển thị",
           "name": "label",
           "type": "text",
-          "instructions": "VD: Còn hàng, Đã bán, Đặt cọc",
+          "instructions": "VD: Studio, 1PN, 2PN, 3PN, Duplex,...",
           "wrapper": { "width": "50", "class": "", "id": "" }
         }
       ]

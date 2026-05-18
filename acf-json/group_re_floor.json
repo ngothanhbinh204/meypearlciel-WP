@@ -103,42 +103,6 @@
       "preview_size": "thumbnail",
       "instructions": "Ảnh nhỏ hiển thị trong sidebar danh sách tầng",
       "wrapper": { "width": "34", "class": "", "id": "" }
-    },
-    {
-      "key": "field_floor_legend_tab",
-      "label": "Chú thích màu",
-      "name": "",
-      "type": "tab",
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_floor_legend_items",
-      "label": "Chú thích màu sắc căn hộ",
-      "name": "floor_legend_items",
-      "type": "repeater",
-      "instructions": "Các chú thích màu sắc hiển thị trong sidebar phải của popup tầng (VD: Đỏ = Đã bán)",
-      "layout": "table",
-      "button_label": "Thêm chú thích",
-      "sub_fields": [
-        {
-          "key": "field_legend_color",
-          "label": "Màu sắc",
-          "name": "color",
-          "type": "color_picker",
-          "enable_opacity": 0,
-          "return_format": "string",
-          "wrapper": { "width": "30", "class": "", "id": "" }
-        },
-        {
-          "key": "field_legend_label",
-          "label": "Chú thích",
-          "name": "label",
-          "type": "text",
-          "instructions": "VD: Đã bán, Available, Duplex",
-          "wrapper": { "width": "70", "class": "", "id": "" }
-        }
-      ]
     }
   ],
   "location": [
