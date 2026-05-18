@@ -2,20 +2,22 @@
 /**
  * Home Section 10 — Liên hệ / CTA
  * ACF layout: cta (index 0)
- * Fields: title (left heading), subtitle (form heading), background_image (section bg), phone, button_text
+ * Fields: title, subtitle, background_image, phone, button_text,
+ *         contact_form (CF7 ID), popup_contact_form (CF7 ID)
  *
  * Popup: #intro-popup — Fancybox registration form modal
  */
 
-$cc_sections  = get_query_var('cc_sections', []);
-$data         = $cc_sections['cta'][0] ?? null;
-$title        = $data['title'] ?? '';
-$subtitle     = $data['subtitle'] ?? '';
-$phone        = $data['phone'] ?? '';
-$button_text  = $data['button_text'] ?? 'ĐĂNG KÝ';
-$bg_image     = $data['background_image'] ?? null;
-$bg_url       = is_array($bg_image) ? ($bg_image['url'] ?? '') : $bg_image;
-$bg_style     = $bg_url ? ' style="background-image: url(' . esc_url($bg_url) . ')"' : '';
+$cc_sections       = get_query_var('cc_sections', []);
+$data              = $cc_sections['cta'][0] ?? null;
+$title             = $data['title'] ?? '';
+$subtitle          = $data['subtitle'] ?? '';
+$phone             = $data['phone'] ?? '';
+$bg_image          = $data['background_image'] ?? null;
+$bg_url            = is_array($bg_image) ? ($bg_image['url'] ?? '') : $bg_image;
+$bg_style          = $bg_url ? ' style="background-image: url(' . esc_url($bg_url) . ')"' : '';
+$cf7_form_id       = (int) ($data['contact_form'] ?? 0);
+$cf7_popup_form_id = (int) ($data['popup_contact_form'] ?? 0);
 
 // Developer logo — from options or static fallback
 $dev_logo_url = get_template_directory_uri() . '/img/logo-MeyGroup.png';
@@ -49,37 +51,11 @@ if (is_array($options_logo) && !empty($options_logo['url'])) {
 					<?php echo esc_html($subtitle); ?>
 				</h2>
 				<?php endif; ?>
-				<form class="my-8 contact-form" method="post" action="#" novalidate>
-					<?php wp_nonce_field('home_contact_form', 'home_contact_nonce'); ?>
-					<div class="wrap-form grid xl:grid-cols-2 grid-cols-1 gap-4">
-						<div class="form-left flex flex-col gap-4">
-							<div class="form-group">
-								<input class="input" type="text" name="contact_name" placeholder="Họ và tên *" required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="contact_phone" placeholder="Số điện thoại *"
-									required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="contact_email" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="contact_subject" placeholder="Chủ đề quan tâm">
-							</div>
-						</div>
-						<div class="form-right">
-							<div class="form-group h-full">
-								<textarea class="textarea h-full rem:min-h-[180px]" name="contact_message"
-									placeholder="Nội dung tư vấn"></textarea>
-							</div>
-						</div>
-					</div>
-					<div class="form-submit mt-5 flex-center">
-						<button type="submit" class="button-submit pulse">
-							<?php echo esc_html($button_text); ?>
-						</button>
-					</div>
-				</form>
+				<div class="my-8">
+					<?php if ($cf7_form_id) : ?>
+						<?php echo do_shortcode('[contact-form-7 id="' . esc_attr($cf7_form_id) . '"]'); ?>
+					<?php endif; ?>
+				</div>
 				<?php if ($phone) : ?>
 				<div class="hotline text-center text-Secondary-1 body-4">
 					Hotline: <a href="tel:<?php echo esc_attr(preg_replace('/\D/', '', $phone)); ?>"
@@ -110,17 +86,9 @@ if (is_array($options_logo) && !empty($options_logo['url'])) {
 			<div class="title heading-4 font-bold font-fontHeading text-Primary-1 mb-5">
 				Liên hệ nhận thông tin tư vấn dự án
 			</div>
-			<form class="popup-form" method="post" action="#" novalidate>
-				<?php wp_nonce_field('intro_popup_form', 'intro_popup_nonce'); ?>
-				<div class="flex flex-col gap-3">
-					<input class="input" type="text" name="popup_name" placeholder="Họ và tên *" required>
-					<input class="input" type="tel" name="popup_phone" placeholder="Số điện thoại *" required>
-					<input class="input" type="email" name="popup_email" placeholder="Email">
-				</div>
-				<div class="form-submit mt-5">
-					<button type="submit" class="button-submit pulse w-full">ĐĂNG KÝ</button>
-				</div>
-			</form>
+			<?php if ($cf7_popup_form_id) : ?>
+				<?php echo do_shortcode('[contact-form-7 id="' . esc_attr($cf7_popup_form_id) . '"]'); ?>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

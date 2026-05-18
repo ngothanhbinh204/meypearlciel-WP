@@ -13,55 +13,17 @@
         "layout_hero_banner": {
           "key": "layout_hero_banner",
           "name": "hero_banner",
-          "label": "Hero Banner",
+          "label": "Home 1 — Hero Banner",
           "display": "block",
           "sub_fields": [
             {
-              "key": "field_hero_title",
-              "label": "Tiêu đề chính",
-              "name": "title",
-              "type": "text",
-              "required": 1,
-              "wrapper": { "width": "60", "class": "", "id": "" }
-            },
-            {
-              "key": "field_hero_subtitle",
-              "label": "Tiêu đề phụ",
-              "name": "subtitle",
-              "type": "text",
-              "wrapper": { "width": "40", "class": "", "id": "" }
-            },
-            {
-              "key": "field_hero_description",
-              "label": "Mô tả",
-              "name": "description",
-              "type": "textarea",
-              "rows": 3,
-              "wrapper": { "width": "", "class": "", "id": "" }
-            },
-            {
               "key": "field_hero_image",
-              "label": "Ảnh nền / Ảnh hero",
+              "label": "Ảnh nền hero",
               "name": "image",
               "type": "image",
               "return_format": "array",
               "preview_size": "medium",
-              "wrapper": { "width": "50", "class": "", "id": "" }
-            },
-            {
-              "key": "field_hero_video_url",
-              "label": "Video URL (YouTube/MP4)",
-              "name": "video_url",
-              "type": "url",
-              "instructions": "Để trống nếu không dùng video",
-              "wrapper": { "width": "50", "class": "", "id": "" }
-            },
-            {
-              "key": "field_hero_cta_text",
-              "label": "Nút CTA — Text",
-              "name": "cta_text",
-              "type": "text",
-              "placeholder": "VD: Đăng ký ngay",
+              "required": 1,
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
@@ -69,40 +31,86 @@
               "label": "Nút CTA — URL",
               "name": "cta_url",
               "type": "url",
+              "instructions": "Link khi click vào banner",
               "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_video_url",
+              "label": "Video URL (YouTube / MP4)",
+              "name": "video_url",
+              "type": "url",
+              "instructions": "Tuỳ chọn — để trống nếu không dùng video",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            }
+          ]
+        },
+        "layout_welcome": {
+          "key": "layout_welcome",
+          "name": "welcome",
+          "label": "Home 2 — Welcome / Câu chuyện dự án",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_welcome_slides",
+              "label": "Danh sách slides",
+              "name": "slides",
+              "type": "repeater",
+              "layout": "block",
+              "button_label": "Thêm slide",
+              "min": 1,
+              "sub_fields": [
+                {
+                  "key": "field_welcome_slide_title",
+                  "label": "Tiêu đề slide",
+                  "name": "title",
+                  "type": "text",
+                  "wrapper": { "width": "100", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_welcome_slide_image",
+                  "label": "Hình ảnh slide",
+                  "name": "image",
+                  "type": "image",
+                  "return_format": "array",
+                  "preview_size": "medium",
+                  "wrapper": { "width": "40", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_welcome_slide_description",
+                  "label": "Mô tả slide",
+                  "name": "description",
+                  "type": "wysiwyg",
+                  "tabs": "all",
+                  "toolbar": "basic",
+                  "media_upload": 0,
+                  "wrapper": { "width": "60", "class": "", "id": "" }
+                }
+              ]
             }
           ]
         },
         "layout_overview": {
           "key": "layout_overview",
           "name": "overview",
-          "label": "Tổng quan dự án",
+          "label": "Home 3 — Tổng quan phân khu",
           "display": "block",
           "sub_fields": [
             {
               "key": "field_overview_title",
-              "label": "Tiêu đề section",
+              "label": "Tiêu đề",
               "name": "title",
               "type": "text",
-              "wrapper": { "width": "50", "class": "", "id": "" }
+              "required": 1,
+              "wrapper": { "width": "100", "class": "", "id": "" }
             },
             {
-              "key": "field_overview_description",
-              "label": "Mô tả",
-              "name": "description",
-              "type": "wysiwyg",
-              "tabs": "all",
-              "toolbar": "basic",
-              "media_upload": 0,
-              "wrapper": { "width": "", "class": "", "id": "" }
-            },
-            {
-              "key": "field_overview_image",
-              "label": "Hình ảnh",
-              "name": "image",
+              "key": "field_overview_background_image",
+              "label": "Ảnh nền section",
+              "name": "background_image",
               "type": "image",
               "return_format": "array",
               "preview_size": "medium",
+              "instructions": "Ảnh hiển thị làm background toàn section",
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
@@ -114,27 +122,30 @@
               "button_label": "Thêm thông số",
               "sub_fields": [
                 {
-                  "key": "field_stat_value",
-                  "label": "Giá trị",
-                  "name": "value",
+                  "key": "field_stat_icon",
+                  "label": "Icon (URL hoặc class FA)",
+                  "name": "icon",
                   "type": "text",
-                  "instructions": "VD: 35, 500+, 150m²",
+                  "instructions": "VD: /img/icon/Users.svg hoặc fa-light fa-building",
                   "wrapper": { "width": "30", "class": "", "id": "" }
                 },
                 {
                   "key": "field_stat_label",
-                  "label": "Nhãn",
+                  "label": "Nhãn / Tiêu đề",
                   "name": "label",
                   "type": "text",
-                  "instructions": "VD: Tầng, Căn hộ, Diện tích",
-                  "wrapper": { "width": "40", "class": "", "id": "" }
+                  "instructions": "VD: Đơn vị phát triển",
+                  "wrapper": { "width": "70", "class": "", "id": "" }
                 },
                 {
-                  "key": "field_stat_icon",
-                  "label": "Icon",
-                  "name": "icon",
-                  "type": "text",
-                  "wrapper": { "width": "30", "class": "", "id": "" }
+                  "key": "field_stat_description",
+                  "label": "Nội dung chi tiết",
+                  "name": "description",
+                  "type": "wysiwyg",
+                  "tabs": "all",
+                  "toolbar": "basic",
+                  "media_upload": 0,
+                  "wrapper": { "width": "100", "class": "", "id": "" }
                 }
               ]
             }
@@ -143,7 +154,7 @@
         "layout_location": {
           "key": "layout_location",
           "name": "location",
-          "label": "Vị trí dự án",
+          "label": "Home 4 — Vị trí dự án",
           "display": "block",
           "sub_fields": [
             {
@@ -151,6 +162,15 @@
               "label": "Tiêu đề section",
               "name": "title",
               "type": "text",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_location_image",
+              "label": "Ảnh bản đồ / vị trí",
+              "name": "image",
+              "type": "image",
+              "return_format": "array",
+              "preview_size": "medium",
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
@@ -161,23 +181,6 @@
               "tabs": "all",
               "toolbar": "basic",
               "media_upload": 0,
-              "wrapper": { "width": "", "class": "", "id": "" }
-            },
-            {
-              "key": "field_location_map_embed",
-              "label": "Google Maps Embed URL",
-              "name": "map_embed",
-              "type": "url",
-              "instructions": "Dán link Google Maps embed iframe src",
-              "wrapper": { "width": "100", "class": "", "id": "" }
-            },
-            {
-              "key": "field_location_image",
-              "label": "Ảnh vị trí (thay thế map)",
-              "name": "image",
-              "type": "image",
-              "return_format": "array",
-              "preview_size": "medium",
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
@@ -190,70 +193,174 @@
               "sub_fields": [
                 {
                   "key": "field_loc_highlight_icon",
-                  "label": "Icon",
+                  "label": "Thời gian / Khoảng cách",
                   "name": "icon",
                   "type": "text",
-                  "wrapper": { "width": "20", "class": "", "id": "" }
+                  "instructions": "VD: 5ph, 2km",
+                  "wrapper": { "width": "25", "class": "", "id": "" }
                 },
                 {
                   "key": "field_loc_highlight_label",
-                  "label": "Nội dung",
+                  "label": "Tên địa điểm",
                   "name": "label",
                   "type": "text",
-                  "instructions": "VD: Cách trung tâm 5km",
-                  "wrapper": { "width": "80", "class": "", "id": "" }
+                  "instructions": "VD: Trung tâm TP.HCM, Sân bay Tân Sơn Nhất",
+                  "wrapper": { "width": "75", "class": "", "id": "" }
                 }
               ]
             }
           ]
         },
-        "layout_utilities": {
-          "key": "layout_utilities",
-          "name": "utilities",
-          "label": "Tiện ích dự án",
+        "layout_utilities_all_in_one": {
+          "key": "layout_utilities_all_in_one",
+          "name": "utilities_all_in_one",
+          "label": "Home 5 — Hệ Tiện Ích ALL IN ONE",
           "display": "block",
           "sub_fields": [
             {
-              "key": "field_utilities_title",
+              "key": "field_uaio_section_title",
               "label": "Tiêu đề section",
-              "name": "title",
+              "name": "section_title",
               "type": "text",
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
-              "key": "field_utilities_description",
-              "label": "Mô tả",
-              "name": "description",
-              "type": "textarea",
-              "rows": 3,
-              "wrapper": { "width": "", "class": "", "id": "" }
+              "key": "field_uaio_section_description",
+              "label": "Mô tả section",
+              "name": "section_description",
+              "type": "wysiwyg",
+              "tabs": "all",
+              "toolbar": "basic",
+              "media_upload": 0,
+              "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
-              "key": "field_utilities_items",
-              "label": "Danh sách tiện ích",
-              "name": "utility_items",
+              "key": "field_uaio_masterplan_image",
+              "label": "Ảnh masterplan tiện ích",
+              "name": "masterplan_image",
+              "type": "image",
+              "return_format": "url",
+              "preview_size": "medium",
+              "instructions": "Ảnh nền để vẽ polygon tiện ích",
+              "required": 1,
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_uaio_floor_groups",
+              "label": "Nhóm tầng / khu vực",
+              "name": "floor_groups",
               "type": "repeater",
-              "layout": "grid",
-              "button_label": "Thêm tiện ích",
+              "instructions": "Mỗi item là một tầng / khu vực có danh sách tiện ích riêng",
+              "layout": "block",
+              "button_label": "Thêm tầng",
               "sub_fields": [
                 {
-                  "key": "field_utility_icon",
-                  "label": "Icon",
+                  "key": "field_uaio_floor_name",
+                  "label": "Tên tầng / khu vực",
+                  "name": "floor_name",
+                  "type": "text",
+                  "required": 1,
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_uaio_floor_code",
+                  "label": "Mã tầng",
+                  "name": "floor_code",
+                  "type": "text",
+                  "instructions": "VD: F1, OUTDOOR, ROOFTOP",
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_uaio_camera_state",
+                  "label": "Camera state (JSON)",
+                  "name": "camera_state",
+                  "type": "textarea",
+                  "rows": 2,
+                  "instructions": "JSON viewport state — do not edit manually",
+                  "wrapper": { "width": "100", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_uaio_amenities",
+                  "label": "Danh sách tiện ích",
+                  "name": "amenities",
+                  "type": "repeater",
+                  "layout": "row",
+                  "button_label": "Thêm tiện ích",
+                  "sub_fields": [
+                    {
+                      "key": "field_uaio_amenity_name",
+                      "label": "Tên tiện ích",
+                      "name": "amenity_name",
+                      "type": "text",
+                      "required": 1,
+                      "wrapper": { "width": "50", "class": "", "id": "" }
+                    },
+                    {
+                      "key": "field_uaio_amenity_description",
+                      "label": "Mô tả",
+                      "name": "amenity_description",
+                      "type": "wysiwyg",
+                      "tabs": "all",
+                      "toolbar": "basic",
+                      "media_upload": 0,
+                      "wrapper": { "width": "50", "class": "", "id": "" }
+                    },
+                    {
+                      "key": "field_uaio_amenity_polygon",
+                      "label": "Dữ liệu polygon",
+                      "name": "amenity_polygon",
+                      "type": "textarea",
+                      "rows": 2,
+                      "instructions": "JSON polygon — do not edit manually. Use the Polygon Editor.",
+                      "wrapper": { "width": "100", "class": "", "id": "" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "layout_lifestyle": {
+          "key": "layout_lifestyle",
+          "name": "lifestyle",
+          "label": "Home 6 — Lifestyle Experience",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_lifestyle_title",
+              "label": "Tiêu đề section",
+              "name": "section_title",
+              "type": "text",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_lifestyle_items",
+              "label": "Danh sách slides",
+              "name": "utility_items",
+              "type": "repeater",
+              "layout": "block",
+              "button_label": "Thêm slide",
+              "min": 1,
+              "sub_fields": [
+                {
+                  "key": "field_lifestyle_icon",
+                  "label": "Hình ảnh slide",
                   "name": "icon",
                   "type": "image",
                   "return_format": "url",
-                  "preview_size": "thumbnail",
-                  "wrapper": { "width": "25", "class": "", "id": "" }
+                  "preview_size": "medium",
+                  "required": 1,
+                  "wrapper": { "width": "30", "class": "", "id": "" }
                 },
                 {
-                  "key": "field_utility_name",
-                  "label": "Tên tiện ích",
+                  "key": "field_lifestyle_name",
+                  "label": "Tiêu đề slide",
                   "name": "name",
                   "type": "text",
-                  "wrapper": { "width": "40", "class": "", "id": "" }
+                  "wrapper": { "width": "35", "class": "", "id": "" }
                 },
                 {
-                  "key": "field_utility_description",
+                  "key": "field_lifestyle_description",
                   "label": "Mô tả ngắn",
                   "name": "description",
                   "type": "text",
@@ -263,35 +370,10 @@
             }
           ]
         },
-        "layout_gallery": {
-          "key": "layout_gallery",
-          "name": "gallery",
-          "label": "Gallery dự án",
-          "display": "block",
-          "sub_fields": [
-            {
-              "key": "field_gallery_title",
-              "label": "Tiêu đề section",
-              "name": "title",
-              "type": "text",
-              "wrapper": { "width": "50", "class": "", "id": "" }
-            },
-            {
-              "key": "field_gallery_images",
-              "label": "Gallery hình ảnh",
-              "name": "gallery_images",
-              "type": "gallery",
-              "return_format": "array",
-              "preview_size": "medium",
-              "insert": "append",
-              "min": 1
-            }
-          ]
-        },
         "layout_apartment_layout": {
           "key": "layout_apartment_layout",
           "name": "apartment_layout",
-          "label": "Mặt bằng & Căn hộ (Interactive)",
+          "label": "Home 7 — Mặt bằng & Căn hộ (Interactive)",
           "display": "block",
           "sub_fields": [
             {
@@ -301,15 +383,7 @@
               "type": "text",
               "instructions": "VD: Tổng thể mặt bằng dự án",
               "required": 1,
-              "wrapper": { "width": "50", "class": "", "id": "" }
-            },
-            {
-              "key": "field_al_description",
-              "label": "Mô tả section",
-              "name": "section_description",
-              "type": "textarea",
-              "rows": 3,
-              "wrapper": { "width": "50", "class": "", "id": "" }
+              "wrapper": { "width": "100", "class": "", "id": "" }
             },
             {
               "key": "field_al_masterplan_image",
@@ -327,7 +401,7 @@
               "label": "Tòa nhà & Polygon",
               "name": "buildings",
               "type": "repeater",
-              "instructions": "Mỗi row = 1 tòa nhà, vẽ polygon vị trí tòa trên ảnh masterplan bên trên",
+              "instructions": "Mỗi row = 1 tòa nhà",
               "layout": "block",
               "button_label": "Thêm tòa nhà",
               "sub_fields": [
@@ -364,172 +438,79 @@
             }
           ]
         },
-        "layout_utilities_all_in_one": {
-          "key": "layout_utilities_all_in_one",
-          "name": "utilities_all_in_one",
-          "label": "Hệ Tiện Ích ALL IN ONE",
+        "layout_gallery": {
+          "key": "layout_gallery",
+          "name": "gallery",
+          "label": "Home 8 — Gallery Sắc màu",
           "display": "block",
           "sub_fields": [
             {
-              "key": "field_uaio_section_title",
-              "label": "Tiêu đề section",
-              "name": "section_title",
-              "type": "text",
-              "wrapper": { "width": "100", "class": "", "id": "" }
-            },
-            {
-              "key": "field_uaio_section_description",
-              "label": "Mô tả section",
-              "name": "section_description",
-              "type": "textarea",
-              "rows": 3,
-              "wrapper": { "width": "100", "class": "", "id": "" }
-            },
-            {
-              "key": "field_uaio_masterplan_image",
-              "label": "Ảnh masterplan tiện ích",
-              "name": "masterplan_image",
-              "type": "image",
-              "return_format": "url",
-              "preview_size": "medium",
-              "instructions": "1 ảnh masterplan duy nhất cho toàn bộ hệ thống tiện ích. Dùng để vẽ polygon và làm camera reference.",
-              "wrapper": { "width": "100", "class": "", "id": "" }
-            },
-            {
-              "key": "field_uaio_section_image",
-              "label": "Ảnh section",
-              "name": "section_image",
-              "type": "image",
-              "return_format": "url",
-              "preview_size": "medium",
-              "wrapper": { "width": "100", "class": "", "id": "" }
-            },
-            {
-              "key": "field_uaio_floor_groups",
-              "label": "Nhóm tầng",
-              "name": "floor_groups",
-              "type": "repeater",
-              "instructions": "Mỗi item là một tầng / khu vực có floor plan riêng",
-              "layout": "block",
-              "button_label": "Thêm tầng",
-              "sub_fields": [
-                {
-                  "key": "field_uaio_floor_name",
-                  "label": "Tên tầng / khu vực",
-                  "name": "floor_name",
-                  "type": "text",
-                  "wrapper": { "width": "50", "class": "", "id": "" }
-                },
-                {
-                  "key": "field_uaio_floor_code",
-                  "label": "Mã tầng",
-                  "name": "floor_code",
-                  "type": "text",
-                  "instructions": "VD: F1, OUTDOOR, ROOFTOP",
-                  "wrapper": { "width": "50", "class": "", "id": "" }
-                },
-                {
-                  "key": "field_uaio_camera_state",
-                  "label": "Camera state (JSON)",
-                  "name": "camera_state",
-                  "type": "textarea",
-                  "rows": 2,
-                  "instructions": "JSON viewport state — do not edit manually",
-                  "wrapper": { "width": "100", "class": "", "id": "" }
-                },
-                {
-                  "key": "field_uaio_amenities",
-                  "label": "Danh sách tiện ích",
-                  "name": "amenities",
-                  "type": "repeater",
-                  "instructions": "Vẽ polygon cho từng tiện ích trên floor plan",
-                  "layout": "row",
-                  "button_label": "Thêm tiện ích",
-                  "sub_fields": [
-                    {
-                      "key": "field_uaio_amenity_name",
-                      "label": "Tên tiện ích",
-                      "name": "amenity_name",
-                      "type": "text",
-                      "required": 1,
-                      "wrapper": { "width": "50", "class": "", "id": "" }
-                    },
-                    {
-                      "key": "field_uaio_amenity_description",
-                      "label": "Mô tả",
-                      "name": "amenity_description",
-                      "type": "textarea",
-                      "rows": 2,
-                      "wrapper": { "width": "50", "class": "", "id": "" }
-                    },
-                    {
-                      "key": "field_uaio_amenity_polygon",
-                      "label": "Dữ liệu polygon",
-                      "name": "amenity_polygon",
-                      "type": "textarea",
-                      "rows": 2,
-                      "instructions": "JSON polygon — do not edit manually. Use the Polygon Editor.",
-                      "wrapper": { "width": "100", "class": "", "id": "" }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "layout_faq": {
-          "key": "layout_faq",
-          "name": "faq",
-          "label": "FAQ",
-          "display": "block",
-          "sub_fields": [
-            {
-              "key": "field_faq_title",
+              "key": "field_gallery_title",
               "label": "Tiêu đề section",
               "name": "title",
               "type": "text",
-              "wrapper": { "width": "50", "class": "", "id": "" }
+              "instructions": "Hỗ trợ HTML đơn giản: <span>từ khoá</span> để highlight",
+              "wrapper": { "width": "100", "class": "", "id": "" }
             },
             {
-              "key": "field_faq_items",
-              "label": "Câu hỏi thường gặp",
-              "name": "faq_items",
-              "type": "repeater",
-              "layout": "row",
-              "button_label": "Thêm câu hỏi",
+              "key": "field_gallery_format_content",
+              "label": "Nội dung mô tả (cột trái)",
+              "name": "format_content",
+              "type": "wysiwyg",
+              "tabs": "all",
+              "toolbar": "basic",
+              "media_upload": 0,
+              "instructions": "Danh sách màu sắc / mô tả bộ sưu tập — hiển thị cột trái dưới tiêu đề",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_gallery_images",
+              "label": "Gallery hình ảnh",
+              "name": "gallery_images",
+              "type": "gallery",
+              "return_format": "array",
+              "preview_size": "medium",
+              "insert": "append",
+              "min": 3,
+              "instructions": "Tối thiểu 3 ảnh — chia đều vào 3 cột cuộn"
+            }
+          ]
+        },
+        "layout_news": {
+          "key": "layout_news",
+          "name": "news",
+          "label": "Home 9 — Tin tức",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_news_section_title",
+              "label": "Tiêu đề section",
+              "name": "section_title",
+              "type": "text",
+              "default_value": "Tin tức",
+              "wrapper": { "width": "70", "class": "", "id": "" }
+            },
+            {
+              "key": "field_news_posts_count",
+              "label": "Số bài viết hiển thị",
+              "name": "posts_count",
+              "type": "number",
+              "default_value": 3,
               "min": 1,
-              "sub_fields": [
-                {
-                  "key": "field_faq_question",
-                  "label": "Câu hỏi",
-                  "name": "question",
-                  "type": "text",
-                  "required": 1,
-                  "wrapper": { "width": "50", "class": "", "id": "" }
-                },
-                {
-                  "key": "field_faq_answer",
-                  "label": "Trả lời",
-                  "name": "answer",
-                  "type": "wysiwyg",
-                  "tabs": "all",
-                  "toolbar": "basic",
-                  "media_upload": 0,
-                  "wrapper": { "width": "50", "class": "", "id": "" }
-                }
-              ]
+              "max": 9,
+              "wrapper": { "width": "30", "class": "", "id": "" }
             }
           ]
         },
         "layout_cta": {
           "key": "layout_cta",
           "name": "cta",
-          "label": "CTA — Kêu gọi hành động",
+          "label": "Home 10 — Liên hệ / CTA",
           "display": "block",
           "sub_fields": [
             {
               "key": "field_cta_title",
-              "label": "Tiêu đề",
+              "label": "Tiêu đề trái (tên dự án / nhà đầu tư)",
               "name": "title",
               "type": "text",
               "required": 1,
@@ -537,39 +518,65 @@
             },
             {
               "key": "field_cta_subtitle",
-              "label": "Tiêu đề phụ",
+              "label": "Tiêu đề form (bên phải)",
               "name": "subtitle",
               "type": "text",
+              "default_value": "ĐĂNG KÝ NHẬN THÔNG TIN",
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
               "key": "field_cta_button_text",
-              "label": "Text nút",
+              "label": "Text nút submit",
               "name": "button_text",
               "type": "text",
+              "default_value": "ĐĂNG KÝ",
               "wrapper": { "width": "33", "class": "", "id": "" }
             },
             {
               "key": "field_cta_button_url",
-              "label": "URL nút",
+              "label": "URL nút (tuỳ chọn)",
               "name": "button_url",
               "type": "url",
               "wrapper": { "width": "34", "class": "", "id": "" }
             },
             {
               "key": "field_cta_phone",
-              "label": "Số điện thoại hotline",
+              "label": "Hotline",
               "name": "phone",
               "type": "text",
               "wrapper": { "width": "33", "class": "", "id": "" }
             },
             {
               "key": "field_cta_bg_image",
-              "label": "Ảnh nền",
+              "label": "Ảnh nền section",
               "name": "background_image",
               "type": "image",
               "return_format": "url",
               "preview_size": "medium",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_contact_form",
+              "label": "Form liên hệ — section (Contact Form 7)",
+              "name": "contact_form",
+              "type": "post_object",
+              "post_type": ["wpcf7_contact_form"],
+              "filters": ["search"],
+              "return_format": "id",
+              "ui": 1,
+              "instructions": "Chọn form CF7 hiển thị trong section chính",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_popup_contact_form",
+              "label": "Form liên hệ — popup #intro-popup (Contact Form 7)",
+              "name": "popup_contact_form",
+              "type": "post_object",
+              "post_type": ["wpcf7_contact_form"],
+              "filters": ["search"],
+              "return_format": "id",
+              "ui": 1,
+              "instructions": "Chọn form CF7 cho popup đăng ký",
               "wrapper": { "width": "50", "class": "", "id": "" }
             }
           ]
@@ -591,8 +598,10 @@
   "style": "seamless",
   "label_placement": "top",
   "instruction_placement": "label",
-  "hide_on_screen": ["the_content"],
+  "hide_on_screen": [
+    "the_content"
+  ],
   "active": true,
-  "description": "Flexible Content sections cho Landing Page",
+  "description": "Flexible Content sections cho Landing Page — 10 layouts tương ứng home-1 đến home-10",
   "show_in_rest": 0
 }

@@ -1,12 +1,12 @@
 <?php
 /**
  * Home Section 6 — Lifestyle Experience Swiper
- * ACF layout: utilities (index 0)
+ * ACF layout: lifestyle
  * Each utility_item = one slide: icon (image url) → left + right images, name → title, description → desc
  */
 
 $cc_sections   = get_query_var('cc_sections', []);
-$data          = $cc_sections['utilities'][0] ?? null;
+$data          = $cc_sections['lifestyle'][0] ?? null;
 $utility_items = $data['utility_items'] ?? [];
 ?>
 <section class="home-6 relative overflow-hidden">

@@ -32,7 +32,7 @@ $floor_groups = $data['floor_groups'] ?? [];
 			<?php endif; ?>
 			<?php if ($description) : ?>
 			<div class="ctn body-3 font-normal" data-aos="fade-right" data-aos-delay="600" data-aos-duration="700">
-				<p><?php echo esc_html($description); ?></p>
+				<?php echo wp_kses_post($description); ?>
 			</div>
 			<?php endif; ?>
 		</div>

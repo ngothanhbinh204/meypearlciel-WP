@@ -1,14 +1,14 @@
 <?php
 /**
  * Home Section 3 — Tổng quan phân khu
- * ACF layout: overview (index 1) — title, image (background), stats repeater
- * stats sub-fields: value (short label/number), label (content text), icon (img src)
+ * ACF layout: overview — title, background_image, stats repeater
+ * stats sub-fields: icon (text), label (text), description (wysiwyg)
  */
 
 $cc_sections = get_query_var('cc_sections', []);
-$data        = $cc_sections['overview'][1] ?? null;
+$data        = $cc_sections['overview'][0] ?? null;
 $title       = $data['title'] ?? '';
-$bg_image    = $data['image']['url'] ?? '';
+$bg_image    = $data['background_image']['url'] ?? '';
 $stats       = $data['stats'] ?? [];
 $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image) . ')"' : '';
 ?>
@@ -33,15 +33,14 @@ $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image)
 					</div>
 					<?php endif; ?>
 					<div class="content">
+						<?php if (!empty($stat['label'])) : ?>
+						<div class="label body-3 font-semibold text-Primary-2 mb-1"><?php echo esc_html($stat['label']); ?></div>
+						<?php endif; ?>
+						<?php if (!empty($stat['description'])) : ?>
 						<div class="format-content body-3 font-normal text-Primary-4">
-							<?php if (!empty($stat['value']) && !empty($stat['label'])) : ?>
-							<p><strong><?php echo esc_html($stat['value']); ?></strong>: <?php echo esc_html($stat['label']); ?></p>
-							<?php elseif (!empty($stat['label'])) : ?>
-							<p><?php echo esc_html($stat['label']); ?></p>
-							<?php elseif (!empty($stat['value'])) : ?>
-							<p><?php echo esc_html($stat['value']); ?></p>
-							<?php endif; ?>
+							<?php echo wp_kses_post($stat['description']); ?>
 						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 				<?php endforeach; ?>

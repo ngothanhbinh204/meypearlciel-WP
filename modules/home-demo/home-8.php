@@ -7,9 +7,10 @@
  */
 
 $cc_sections  = get_query_var('cc_sections', []);
-$data         = $cc_sections['gallery'][0] ?? null;
-$title        = $data['title'] ?? '';
-$images       = $data['gallery_images'] ?? [];
+$data           = $cc_sections['gallery'][0] ?? null;
+$title          = $data['title'] ?? '';
+$format_content = $data['format_content'] ?? '';
+$images         = $data['gallery_images'] ?? [];
 
 // Split gallery images into 3 columns
 $col_count   = 3;
@@ -31,9 +32,14 @@ foreach ($images as $i => $img) {
 					<?php echo wp_kses_post($title); ?>
 				</div>
 				<?php endif; ?>
+				<?php if ($format_content) : ?>
 				<div class="format-content mt-5 body-4 font-normal text-Secondary-1/60" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">
-					<!-- Colour list — configure per project -->
+					<?php echo wp_kses_post($format_content); ?>
 				</div>
+				<?php else : ?>
+				<div class="format-content mt-5 body-4 font-normal text-Secondary-1/60" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">
+				</div>
+				<?php endif; ?>
 			</div>
 			<!-- Right: scrolling columns (desktop) -->
 			<?php if ($images) : ?>

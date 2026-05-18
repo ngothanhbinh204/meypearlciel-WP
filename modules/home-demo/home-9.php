@@ -1,14 +1,20 @@
 <?php
 /**
  * Home Section 9 — Tin tức mới nhất
- * Data source: WP_Query — 3 most recent posts (standard post type)
+ * ACF layout: news — section_title, posts_count
+ * Data source: WP_Query — N most recent posts
  *
  * Popup: #popup-news — renders the first post's full content as a Fancybox modal
  */
 
+$cc_sections   = get_query_var('cc_sections', []);
+$news_data     = $cc_sections['news'][0] ?? null;
+$news_title    = $news_data['section_title'] ?? 'Tin tức';
+$posts_count   = max(1, (int) ($news_data['posts_count'] ?? 3));
+
 $news_query = new WP_Query([
 	'post_type'      => 'post',
-	'posts_per_page' => 3,
+	'posts_per_page' => $posts_count,
 	'post_status'    => 'publish',
 	'orderby'        => 'date',
 	'order'          => 'DESC',
