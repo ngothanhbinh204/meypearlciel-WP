@@ -1,0 +1,160 @@
+{
+  "key": "group_options_header_footer",
+  "title": "Header & Footer",
+  "fields": [
+    {
+      "key": "field_opt_header_tab",
+      "label": "Header",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_header_logo",
+      "label": "Logo header",
+      "name": "header_logo",
+      "type": "image",
+      "instructions": "Logo hiển thị trên header. Khuyến nghị dùng file SVG hoặc PNG nền trong.",
+      "return_format": "array",
+      "preview_size": "medium",
+      "wrapper": { "width": "", "class": "", "id": "" }
+    },
+    {
+      "key": "field_header_social_links",
+      "label": "Mạng xã hội (header)",
+      "name": "header_social_links",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Thêm mạng xã hội",
+      "sub_fields": [
+        {
+          "key": "field_header_social_icon",
+          "label": "Icon class",
+          "name": "social_icon",
+          "type": "text",
+          "instructions": "VD: fa-brands fa-facebook-f",
+          "wrapper": { "width": "40", "class": "", "id": "" }
+        },
+        {
+          "key": "field_header_social_url",
+          "label": "URL",
+          "name": "social_url",
+          "type": "url",
+          "wrapper": { "width": "60", "class": "", "id": "" }
+        }
+      ]
+    },
+    {
+      "key": "field_opt_footer_tab",
+      "label": "Footer",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_footer_logo",
+      "label": "Logo footer",
+      "name": "footer_logo",
+      "type": "image",
+      "instructions": "Logo hiển thị trong footer.",
+      "return_format": "array",
+      "preview_size": "medium",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_footer_bg_image",
+      "label": "Ảnh nền footer",
+      "name": "footer_bg_image",
+      "type": "image",
+      "instructions": "Ảnh nền section footer (background-image).",
+      "return_format": "url",
+      "preview_size": "medium",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_footer_address",
+      "label": "Địa chỉ",
+      "name": "footer_address",
+      "type": "wysiwyg",
+	  "toolbar": "basic",
+	  "media_upload": 0
+    },
+    {
+      "key": "field_footer_map_url",
+      "label": "Link bản đồ",
+      "name": "footer_map_url",
+      "type": "url",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_footer_hotline",
+      "label": "Hotline",
+      "name": "footer_hotline",
+      "type": "wysiwyg",
+      "toolbar": "basic",
+      "media_upload": 0,
+      "wrapper": { "width": "25", "class": "", "id": "" }
+    },
+    {
+      "key": "field_footer_email",
+      "label": "Email",
+      "name": "footer_email",
+      "type": "wysiwyg",
+      "toolbar": "basic",
+      "media_upload": 0,
+      "wrapper": { "width": "25", "class": "", "id": "" }
+    },
+    {
+      "key": "field_footer_copyright",
+      "label": "Copyright",
+      "name": "footer_copyright",
+      "type": "text",
+      "instructions": "VD: © 2026 Meypearl Ciel. All Rights Reserved.",
+      "wrapper": { "width": "", "class": "", "id": "" }
+    },
+    {
+      "key": "field_footer_social_links",
+      "label": "Mạng xã hội (footer)",
+      "name": "footer_social_links",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Thêm mạng xã hội",
+      "sub_fields": [
+        {
+          "key": "field_footer_social_icon",
+          "label": "Icon class",
+          "name": "social_icon",
+          "type": "text",
+          "instructions": "VD: fa-brands fa-facebook-f",
+          "wrapper": { "width": "40", "class": "", "id": "" }
+        },
+        {
+          "key": "field_footer_social_url",
+          "label": "URL",
+          "name": "social_url",
+          "type": "url",
+          "wrapper": { "width": "60", "class": "", "id": "" }
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "theme-settings"
+      }
+    ]
+  ],
+  "menu_order": 1,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Quản lý logo, mạng xã hội, thông tin liên hệ footer"
+}

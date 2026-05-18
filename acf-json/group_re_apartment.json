@@ -24,6 +24,19 @@
       "wrapper": { "width": "50", "class": "", "id": "" }
     },
     {
+      "key": "field_parent_building",
+      "label": "Thuộc tòa nhà",
+      "name": "parent_building",
+      "type": "post_object",
+      "instructions": "Chọn tòa nhà mà căn hộ này thuộc về",
+      "required": 1,
+      "post_type": ["re_building"],
+      "filters": ["search"],
+      "return_format": "id",
+      "ui": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
       "key": "field_apartment_name",
       "label": "Tên căn hộ",
       "name": "apartment_name",

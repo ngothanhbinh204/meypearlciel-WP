@@ -1,0 +1,10 @@
+<svg class="nav-vector-svg" width="580" height="236" viewBox="0 0 580 236" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path class="nav-vector-path" d="M-105 117.959C-76.2393 126.751 -21.1563 161.669 -30.9099 231.001C-9.3394 161.606 71.6908 29.9753 223.247 58.6125C412.693 94.4089 513.98 172.597 547.743 70.8599C550.869 60.4978 551.494 35.6287 528.986 19.0493C516.828 10.0941 486.781 10.6606 493.348 40.7155C500.432 73.1389 579.045 105.604 625 81.1105" stroke="url(#nav-vector-grad)" stroke-width="28" stroke-linecap="round" pathLength="1000" stroke-dashoffset="0" stroke-dasharray="1000 0" draw="0 1"></path>
+<defs>
+<linearGradient id="nav-vector-grad" x1="-105" y1="124.04" x2="619.02" y2="124.04" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF8CBE"></stop>
+<stop offset="0.557692" stop-color="#FF6E00"></stop>
+<stop offset="1" stop-color="#ECE294"></stop>
+</linearGradient>
+</defs>
+</svg>

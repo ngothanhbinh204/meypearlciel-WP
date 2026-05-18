@@ -1,0 +1,10 @@
+<svg width="1622" height="287" viewBox="0 0 1622 287" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path class="home6-vector-draw" stroke-linecap="round" d="M15.4824 315.205C81.3158 234.705 308.582 58.2053 482.982 28.2053C700.982 -9.29475 849.982 89.205 999.482 165.705C1115.98 225.319 1505.98 368.205 1691.48 315.205" stroke="url(#h6v-grad)" stroke-width="40"/>
+<defs>
+<linearGradient id="h6v-grad" x1="15.4824" y1="174.362" x2="1677.75" y2="174.362" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF8CBE"/>
+<stop offset="0.557692" stop-color="#FF6E00"/>
+<stop offset="1" stop-color="#ECE294"/>
+</linearGradient>
+</defs>
+</svg>
