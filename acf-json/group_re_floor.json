@@ -1,0 +1,162 @@
+{
+  "key": "group_re_floor",
+  "title": "Thông tin tầng",
+  "fields": [
+    {
+      "key": "field_floor_info_tab",
+      "label": "Thông tin tầng",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_parent_building",
+      "label": "Thuộc tòa nhà",
+      "name": "parent_building",
+      "type": "post_object",
+      "instructions": "Chọn tòa nhà mà tầng này thuộc về",
+      "required": 1,
+      "post_type": ["re_building"],
+      "filters": ["search"],
+      "return_format": "id",
+      "ui": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_name",
+      "label": "Tên tầng",
+      "name": "floor_name",
+      "type": "text",
+      "instructions": "VD: Tầng 1, Tầng 4-35, Tầng kỹ thuật",
+      "required": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_number",
+      "label": "Số tầng (để sort)",
+      "name": "floor_number",
+      "type": "number",
+      "instructions": "Số thứ tự tầng dùng để sắp xếp. Tầng nhóm (4-35) nhập số đầu tiên",
+      "required": 1,
+      "min": 0,
+      "step": 1,
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_number_end",
+      "label": "Số tầng cuối (nếu nhóm)",
+      "name": "floor_number_end",
+      "type": "number",
+      "instructions": "Để trống nếu là tầng đơn. Nhập số cuối nếu là nhóm tầng VD: 35",
+      "min": 0,
+      "step": 1,
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_status",
+      "label": "Trạng thái",
+      "name": "floor_status",
+      "type": "select",
+      "choices": {
+        "available": "Đang mở bán",
+        "coming_soon": "Sắp mở bán",
+        "sold_out": "Đã bán hết"
+      },
+      "default_value": "available",
+      "return_format": "value",
+      "wrapper": { "width": "34", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_description",
+      "label": "Mô tả tầng",
+      "name": "floor_description",
+      "type": "textarea",
+      "rows": 3,
+      "wrapper": { "width": "", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_media_tab",
+      "label": "Hình ảnh",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_floor_image",
+      "label": "Sơ đồ mặt bằng tầng (Floor Plan)",
+      "name": "floor_image",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "medium",
+      "instructions": "Ảnh sơ đồ mặt bằng tầng hiển thị trong popup building — dùng làm nền để đặt hotspot căn hộ",
+      "required": 1,
+      "wrapper": { "width": "66", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_thumbnail",
+      "label": "Ảnh thumbnail tầng",
+      "name": "floor_thumbnail",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "thumbnail",
+      "instructions": "Ảnh nhỏ hiển thị trong sidebar danh sách tầng",
+      "wrapper": { "width": "34", "class": "", "id": "" }
+    },
+    {
+      "key": "field_floor_legend_tab",
+      "label": "Chú thích màu",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_floor_legend_items",
+      "label": "Chú thích màu sắc căn hộ",
+      "name": "floor_legend_items",
+      "type": "repeater",
+      "instructions": "Các chú thích màu sắc hiển thị trong sidebar phải của popup tầng (VD: Đỏ = Đã bán)",
+      "layout": "table",
+      "button_label": "Thêm chú thích",
+      "sub_fields": [
+        {
+          "key": "field_legend_color",
+          "label": "Màu sắc",
+          "name": "color",
+          "type": "color_picker",
+          "enable_opacity": 0,
+          "return_format": "string",
+          "wrapper": { "width": "30", "class": "", "id": "" }
+        },
+        {
+          "key": "field_legend_label",
+          "label": "Chú thích",
+          "name": "label",
+          "type": "text",
+          "instructions": "VD: Đã bán, Available, Duplex",
+          "wrapper": { "width": "70", "class": "", "id": "" }
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "re_floor"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["permalink", "the_content", "excerpt", "discussion", "comments", "revisions", "slug", "author", "format", "categories", "tags", "send-trackbacks"],
+  "active": true,
+  "description": "Fields cho CPT re_floor — Tầng",
+  "show_in_rest": 0
+}

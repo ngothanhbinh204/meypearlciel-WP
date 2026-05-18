@@ -1,0 +1,222 @@
+.wpcf7-form 
+	.wpcf7-response-output
+		z-index: 99 !important
+	&.sent
+		.wpcf7-response-output
+			border: 1px solid #fff !important
+			position: relative !important
+			@apply text-primary-1 text-base !#{important}
+	&.invalid
+		.wpcf7-response-output
+			border: 1px solid #fff !important
+			position: relative !important
+			@apply text-red text-lg !#{important}
+.wrap-form
+	@apply relative
+	
+	.wpcf7-form
+		@apply  gap-y-[26px] grid gap-x-5 grid-cols-2
+	.fa-exclamation-triangle,.wpcf7-not-valid-tip
+		@apply absolute text-red font-bold
+		font-size: 12px
+		bottom: -20px
+		left: 0
+		@media screen and ( max-width: 576px)
+			font-size: 12px
+		&:before
+			font-family: 'Font Awesome 6 Pro' !important
+	.wpcf7-form-control-wrap
+		@apply block static h-auto
+	.wpcf7-response-output
+		@apply text-red text-16 relative  z-99
+		z-index: 9999
+		border: none !important
+		margin: 0 !important
+		grid-column: span 2 / span 2
+		padding:  0 !important
+	.col
+		@apply mb-4 relative
+		&:last-child
+			@apply mb-6
+	.attach-file
+		.codedropz-upload-handler
+			height: 50px
+			.codedropz-upload-container
+				padding: 4px
+		.codedropz-upload-inner 
+			@apply text-16 flex-center
+			*
+				@apply text-16
+			.cd-upload-btn
+				@apply text-16
+			span
+				@apply block mx-2
+	.form-group
+		@apply relative overflow-visible
+		grid-column: span 1 / span 1
+		&:not(:last-child)
+			@apply mb-6
+		&.col-span-2
+			grid-column: span 2 / span 2
+		>span
+			@apply w-full
+		input,textarea,select
+			height: 40px
+			@apply w-full transition font-normal text-xl  bg-white py-2  overflow-hidden  px-8 rounded-full  text-white
+			border: 1px solid #E5E5E5
+			outline: none !important
+			height: r(52px)
+			background: rgba(#454545 ,.2 )
+			&::placeholder
+				@apply text-xl text-white 
+			@screen 2xl
+				@apply  min-h-[48px]
+				
+	
+		select
+			@apply text-16
+			option
+				@apply text-16
+	.form-group
+		@media screen and ( max-width: 1024px)
+			grid-column: span 2 / span 2
+		&.full-width
+			@apply col-span-4
+		textarea
+			@apply p-4 w-full py-3
+			height: 7rem
+			@screen lg
+				height: r(120px)
+	.custom-select
+		@apply relative
+		select
+			@apply text-sm  py-2 h-[44px]
+		&::after
+			@apply text-grey-950 text-xs right-4  font-bold
+	.btn.btn-tertiary
+		&:hover
+			@apply border-primary-1
+			span
+				@apply   text-primary-1
+	.custom-datepicker
+		input[type="date"] 
+			position: relative
+		input[type="date"]:not(.has-value)::before 
+			content: attr(placeholder)
+			position: absolute
+			left: 10px
+			top: 50%
+			transform: translateY(-50%)
+			color: #757575  
+			background-color: white 
+			width: calc(100% - 20px)
+			pointer-events: none
+			z-index: 1
+		input[type="date"]:not(.has-value)::-webkit-datetime-edit 
+			color: transparent !important
+			opacity: 0
+		input[type="date"].has-value::placeholder
+			opacity: 0  !important
+.custom-datepicker
+	@apply rounded overflow-hidden w-full relative
+	input[type='date']
+		@apply block rounded-2 overflow-hidden  p-1 text-grey-600 h-[44px] text-sm px-4
+		-webkit-appearance: none
+		margin-top: 0px
+		text-align: left
+		align-self: center
+		vertical-align: bottom
+		@screen lg
+			@apply h-12
+		&::-webkit-date-and-time-value 
+			text-align: left
+		&::-webkit-calendar-picker-indicator 
+			@apply absolute-center w-full h-full opacity-0
+		&::after
+			content: ''
+			@apply block absolute-y pointer-events-none right-4  z-10  transition 
+			background-image: url("data:image/svg+xml;charset=utf-8,<svg width='14' height='16' viewBox='0 0 14 16' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M3.5 0C3.75 0 4 0.25 4 0.5V2H10V0.5C10 0.25 10.2188 0 10.5 0C10.75 0 11 0.25 11 0.5V2H12C13.0938 2 14 2.90625 14 4V14C14 15.125 13.0938 16 12 16H2C0.875 16 0 15.125 0 14V4C0 2.90625 0.875 2 2 2H3V0.5C3 0.25 3.21875 0 3.5 0ZM13 6H1V14C1 14.5625 1.4375 15 2 15H12C12.5312 15 13 14.5625 13 14V6ZM12 3H2C1.4375 3 1 3.46875 1 4V5H13V4C13 3.46875 12.5312 3 12 3Z' fill='%23656565'/></svg>")
+			background-repeat: no-repeat
+			background-size: contain !important
+			background-position: center
+			width: 12px
+			height: 12px
+	@media (max-width: 767px)  // mobile devices
+		@supports (-webkit-overflow-scrolling: touch)  //only safari
+			input[type="date"]:before 
+				color: #7C7C7C
+				@apply absolute-center
+				content: attr(placeholder)
+			input[type="date"]:focus:before
+				color: #7C7C7C
+				content: "" !important
+			input[type="date"] 
+				-webkit-text-fill-color: #7C7C7C
+				-webkit-opacity: 1
+	input::-webkit-datetime-edit 
+		display: block
+		padding: 0
+	input::-webkit-date-and-time-value
+		@apply pt-[12px]
+		text-align: center
+		align-self: bottom
+		vertical-align: bottom
+.input-group,.form-password
+	@apply relative w-full
+	.reveal-password
+		@apply absolute-y right-[20px]  text-grey-600 text-20 font-light
+		em
+			@apply  font-light
+			font-size: 20px
+.pwd-input-group
+	input
+		@apply w-full
+	&.show
+		.reveal-password
+			em
+				&::before
+					content: '\f06e' !important
+.frm-btnwrap
+	@apply col-span-2  flex-start
+.wpcf7 form.wpcf7-form.submitting button 
+	opacity: 0.5  !important
+	pointer-events: none !important
+.subscribe
+	.subscribefrm
+		@apply relative 
+	.wpcf7-form-control-wrap
+		grid-column: span 2 / span 2
+	input
+		@apply  h-[56px] w-full bg-transparent  text-white px-6 pr-[140px] rounded-2  text-base overflow-hidden 
+		background: #091C34
+		@media screen and ( min-width: 2000px)
+			@apply h-14
+		@screen max-xl
+			@apply h-[50px] !#{important}
+		&::placeholder
+			@apply  text-base text-grey-500
+	button
+		@apply absolute  top-[4px] right-[4px] rounded-full overflow-hidden w-24  min-h-12    flex-center  transition  p-0 min-w-max px-6
+		min-width: auto !important
+		width: auto !important
+		@apply h-[48px] !#{important}
+		@media screen and ( min-width: 2000px)
+			@apply top-2 right-2 h-12 !#{important}
+		@screen max-xl
+			@apply h-[40px] !#{important}
+			@apply top-[4px] right-[4px]
+			min-height: 42px !important 
+		&:hover
+			em,i
+				animation: l-t-r 0.4s forwards
+		i,em
+			@apply text-2xl  transition text-secondary-9 font-light
+			animation: r-t-l 0.4s forwards
+	.wpcf7-form
+		column-gap: 0 
+	.wpcf7-response-output,.wpcf7-not-valid-tip
+		@apply text-red mt-1 font-bold text-sm
+	.wpcf7-not-valid-tip
+		@apply mt-4 text-lg 
+	.wpcf7-response-output
+		@apply mb-4 !#{important}

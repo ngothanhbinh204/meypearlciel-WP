@@ -1,0 +1,22 @@
+{
+  "key": "group_re_hotspot_ref",
+  "title": "[REF] Hotspot Structure",
+  "fields": [
+    {
+      "key": "field_ref_hotspot_note",
+      "label": "Ghi chú kiến trúc",
+      "name": "hotspot_ref_note",
+      "type": "message",
+      "message": "<strong>File này là tài liệu tham chiếu cấu trúc Hotspot.</strong><br>Hotspot fields được nhúng trực tiếp vào group_re_building (repeater: building_hotspots) và group_re_apartment (group: apartment_hotspot).<br><br><strong>Cấu trúc chuẩn:</strong><ul><li>x — float % chiều rộng</li><li>y — float % chiều cao</li><li>width — float %</li><li>height — float %</li><li>polygon_points — string SVG (x,y cách nhau bởi dấu cách)</li><li>popup_position — top|bottom|left|right</li><li>hover_color — hex color (chỉ có ở apartment)</li><li>overlay_image — url (chỉ có ở building)</li></ul>"
+    }
+  ],
+  "location": [],
+  "menu_order": 99,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": false,
+  "description": "Reference file: cấu trúc Hotspot data. Không attach vào post type nào.",
+  "show_in_rest": 0
+}

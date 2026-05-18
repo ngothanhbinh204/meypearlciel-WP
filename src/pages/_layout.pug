@@ -1,0 +1,47 @@
+block var
+block mixin
+	include ../modules/mixin.pug
+doctype html
+
+html(lang="en")
+
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible", content="ie=edge")
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		link(rel="stylesheet", href="./css/core.min.css", attr)
+		link(rel="stylesheet", href="./css/tailwind.min.css")
+		link(rel="stylesheet", href="./css/main.min.css")
+		<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+		title #{title}
+		
+	body(class=bodyClass)
+		main
+			block main
+		<script src="https://unpkg.com/videojs-youtube/dist/Youtube.min.js"></script>
+		script(src="./js/core.min.js")
+		script(src="./js/main.min.js")
+		<script src="https://unpkg.com/videojs-youtube/dist/Youtube.min.js"></script>
+		//- <script type="text/javascript">
+		//- 	let wpcf7Elm = document.querySelector(".primary-banner .wpcf7");
+		//- 	let loader = document.querySelector(".primary-banner .loader");
+
+		//- 	if (wpcf7Elm && loader) {
+		//- 		// Show loader when validation starts (button greys out)
+		//- 		wpcf7Elm.addEventListener("wpcf7beforesubmit", function (event) {
+		//- 			loader.style.display = "block";
+		//- 		});
+
+		//- 		// Hide loader when validation completes (regardless of result)
+		//- 		const hideLoader = () => {
+		//- 			loader.style.display = "none";
+		//- 		};
+
+		//- 		document.addEventListener("wpcf7mailsent", hideLoader);
+		//- 		document.addEventListener("wpcf7mailfailed", hideLoader);
+		//- 		document.addEventListener("wpcf7invalid", hideLoader);
+		//- 		document.addEventListener("wpcf7spam", hideLoader);
+		//- 	}
+		//- </script>

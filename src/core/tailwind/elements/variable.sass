@@ -1,0 +1,12 @@
+body
+	--header-height: 70px
+	@screen xl
+		--header-height:  #{clampSize(150)}
+	&.minimize
+		@screen xl
+			--header-height: #{clampSize(80)}
+		.nav-brand
+			a
+				height: clampSize(60)
+		.search-overlay
+			top: var(--header-height)

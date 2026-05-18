@@ -1,0 +1,127 @@
+@layer components
+	.desc,.zone-desc
+		@apply text-lg leading-140
+		*
+			font: inherit
+		strong
+			@apply font-bold
+			*
+				@apply font-bold  
+		ul
+			list-style-type: disc
+			li
+				padding-left: 20px
+				@apply mb-3 block relative
+				&::before
+					content: ''
+					@apply inline-block absolute  left-0  pointer-events-none z-10  transition rounded-full  top-[10px]  w-[6px] h-[6px] min-w-[6px] bg-grey-900 
+			ul
+				list-style-type: disc
+				li
+					padding-left: 20px
+					@apply mb-1 block
+					&::before
+						content: ''
+						@apply inline-block absolute left-0  pointer-events-none z-10  transition top-[6px]  w-[6px] h-[1px]  min-w-[3px] bg-grey-900 
+		ol 
+			counter-reset: item
+			li
+				display: block
+				&:before 
+					content: counters(item, ".") ". "
+					counter-increment: item
+		ol[style*="list-style-type: lower-alpha;"] li:before 
+				content: counters(item, ".", lower-alpha) ". "
+				counter-increment: item
+.fullcontent
+	@apply text-lg leading-140
+	*
+		font: inherit
+	img,iframe
+		@apply block mx-auto my-5  overflow-hidden rounded-4 w-full 
+	p
+		@apply mb-6 text-18
+		*
+			@apply text-18
+	a
+		@apply text-primary-1
+		&:hover
+			@apply underline
+	figure
+		@apply mx-auto my-5
+		img
+			@apply m-0  overflow-hidden rounded-5
+			@screen xl
+				@apply rounded-6
+		figcaption
+			@apply bg-grey-200 font-light text-15 italic
+	ul
+		list-style-type: disc
+		li
+			padding-left: 20px
+			@apply mb-3 block relative
+			&::before
+				content: ''
+				@apply inline-block absolute  left-0  pointer-events-none z-10  transition rounded-full  top-[10px]  w-[6px] h-[6px] min-w-[6px] bg-grey-900 
+		ul
+			list-style-type: disc
+			li
+				padding-left: 20px
+				@apply mb-1 block
+				&::before
+					content: ''
+					@apply inline-block absolute left-0  pointer-events-none z-10  transition top-[6px]  w-[6px] h-[1px]  min-w-[3px] bg-grey-900 
+	ol 
+		counter-reset: item
+		li
+			display: block
+			&:before 
+				content: counters(item, ".") ". "
+				counter-increment: item
+	ol[style*="list-style-type: lower-alpha;"] li:before 
+			content: counters(item, ".", lower-alpha) ". "
+			counter-increment: item
+	hr
+		@apply block my-4
+	h2,h3,h4,h5,h6
+		@apply  mb-4 font-bold  
+	h2
+		@apply text-40 leading-none
+		*
+			font: inherit
+	h3
+		@apply text-32 leading-none
+		*
+				font: inherit
+	h4
+		@apply text-28
+		*
+			font: inherit
+	h5
+		@apply text-24
+		*
+			font: inherit
+	h6
+		@apply text-20
+		*
+			font: inherit
+	strong
+		font-weight: 700 !important
+		*
+			font-weight: 700 !important
+	.row
+		@apply mb-0
+	table
+		@apply w-full
+		tr
+			td
+				@apply border border-primary-3  text-left
+				padding: r(14px) r(24px) !important
+				&:first-child
+					@apply font-bold text-18  bg-primary-3 text-white border-b-white
+			&:last-child
+				td
+					&:first-child
+						@apply border-b-primary-3
+		p
+			@apply mb-0

@@ -1,0 +1,65 @@
+mixin subscribeForm()
+	.subscribe
+		.subscribefrm
+			input(type="text", placeholder="Nhập email của bạn...")
+			button.btn.btn-primary.orange
+				span Gửi
+				em.fa-regular.fa-long-arrow-right
+mixin FooImg(url="https://picsum.photos/1920/1080?nature=1", className="")
+	- var className = className ? "lozad " + className : "lozad";
+	img(src=url, alt="", class=className ,loading="lazy")
+mixin timeCat(time='08/03/2024',type='Tin công ty')
+	.time-cat.relative.flex-between
+		time= time
+		.type= type
+mixin SlideBtn()
+	.swiper-nav
+		.prev 
+		.next
+mixin SlideBtn2()
+	.swiper-nav.normal
+		.prev 
+		.next
+mixin SlideBtn3()
+	.swiper-nav.center
+		.prev 
+		.next
+mixin SlideBtn4()
+	.swiper-nav.white
+		.prev 
+		.next
+mixin SlideGroup()
+	.swiper-nav-group.relative
+		.swiper-nav
+			.prev 
+			.swiper-pagination
+			.next
+		
+mixin btn1(text='Tìm hiểu thêm',additionalClass)
+	a.btn.btn-primary(class=additionalClass)
+		span= text
+		em.fa-regular.fa-long-arrow-right
+mixin btn2(text='Tìm hiểu thêm',additionalClass)
+	a.btn.btn-secondary(class=additionalClass)
+		span= text
+		em.fa-regular.fa-arrow-right
+mixin btn3(text='Tìm hiểu thêm',additionalClass)
+	a.btn.btn-tertiary(class=additionalClass)
+		span= text
+		em.fa-regular.fa-arrow-right
+mixin btn4(text='Tìm hiểu thêm',additionalClass)
+	a.btn.btn-default(class=additionalClass)
+		span= text
+		em.fa-regular.fa-chevron-down
+mixin btn6
+	a.btn.btn-arrow
+		em.icon-arrow-right
+mixin newsItem()
+	.news-item.overflow-hidden.group
+		.img.zoom-in.overflow-hidden.relative(class='rounded-tl-10 rounded-br-10 lg:rounded-tl-[96px] lg:rounded-br-[96px]')
+			a.img-ratio(class='ratio:pt-[285_380]')
+				+FooImg
+		.txt.py-5(class='lg:pt-8')
+			+timeCat
+			h3.headline.pt-5
+				a(class='heading-4 group-hover:text-primary-3 line-clamp-3') Imexpharm được vinh danh là doanh nghiệp có báo cáo thường niên tốt nhất và quản trị tốt nhất

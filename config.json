@@ -1,0 +1,17 @@
+{
+	"font": ["src/fonts/**"],
+	"js": [
+		"src/plugins/jquery.js",
+		"node_modules/@fancyapps/ui/dist/fancybox.umd.js",
+		"src/plugins/lozad.js",
+
+		"src/plugins/videojs.js",
+		"src/plugins/swiper.min.js"
+	],
+	"css": [
+		"src/plugins/font.css",
+		"src/plugins/videojs.css",
+		"node_modules/@fancyapps/ui/dist/fancybox.css",
+		"src/plugins/swiper.min.css"
+	]
+}

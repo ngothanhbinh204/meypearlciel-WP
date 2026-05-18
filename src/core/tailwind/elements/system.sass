@@ -1,0 +1,49 @@
+@layer components
+	// Base text mixin
+	@mixin text-base
+		@apply transition 
+		*
+			@apply transition
+			font: inherit
+	.heading-banner
+		@apply text-4xl font-bold uppercase
+		@screen sm
+			@apply text-5xl 
+		@screen xl
+			@apply text-7xl
+	.heading-1
+		@apply text-5xl font-bold text-dark uppercase
+		@screen max-sm
+			@apply text-4xl
+		br
+			@media screen and ( max-width: 1024px)
+				@apply hidden
+	
+	.heading-2
+		@apply text-4xl   font-bold
+		@screen max-sm
+			@apply text-3xl
+	.heading-3
+		@apply text-2xl font-bold
+	.heading-4
+		@apply text-xl  font-bold
+	.heading-5
+		@apply text-lg  font-bold
+	.heading-5-underline
+		@apply text-xl  underline font-bold
+	.heading-6
+		@apply text-lg leading-140  font-bold
+	.heading-7
+		@apply text-sm leading-140  font-bold
+	.body-1
+		@apply text-base leading-140
+	.body-2
+		@apply text-sm leading-140 
+	.body-3
+		@apply text-lg leading-140
+	.body-4
+		@apply text-xl leading-140
+
+	.heading-1, .heading-2, .heading-3, .heading-4, .heading-5,.heading-6,.heading-7,
+	.body-1, .body-2, .body-3, .body-4, .body-5
+		@include text-base

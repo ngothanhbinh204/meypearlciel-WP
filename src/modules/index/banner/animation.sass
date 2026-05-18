@@ -1,0 +1,176 @@
+$bounce-delay: 0.15s
+$bounce-duration: 0.8s
+$bounce-scale-up: 1.2
+$bounce-scale-down: 0.9
+$translate-up: -10%
+$translate-down: 1%
+.moving-tree
+	.box:before
+		animation: bounce $bounce-duration infinite
+		transform-origin: bottom
+
+
+.example1
+	.box:before
+		animation: wiggle $bounce-duration infinite
+		transform-origin: bottom
+.example2
+	.box:before
+		animation: bounce $bounce-duration infinite
+		transform-origin: bottom
+
+.example3
+	.box:before
+		animation: wiggle $bounce-duration infinite
+		transform-origin: bottom
+
+@for $i from 1 through 4
+	#tree#{$i}
+		animation-delay: $i * $bounce-delay
+
+@keyframes bob
+	0%
+		transform: translateY(0)
+
+	10%
+		transform: translateY($translate-up)
+
+	30%
+		transform: translateY($translate-down)
+
+	40%
+		transform: translateY(1)
+
+@keyframes bounce
+	0%
+		transform: scaleY(1)
+
+	10%
+		transform: scaleY($bounce-scale-up)
+
+	30%
+		transform: scaleY($bounce-scale-down)
+
+	40%
+		transform: scaleY(1)
+
+@keyframes wiggle
+	0%
+		transform: skew(0deg)
+
+	7%
+		transform: skew(6deg)
+
+	17%
+		transform: skew(-4.5deg)
+
+	27%
+		transform: skew(3.3deg)
+
+	37%
+		transform: skew(-2deg)
+
+	41%
+		transform: skew(0deg)
+.animation-grass,.animation-tree
+	@apply absolute-center w-full h-full pointer-events-none z-50
+.grass-front,.grass-right
+	@apply absolute  bottom-0 flex justify-between opacity-0
+	&::after
+		content: ''
+		@apply flex pointer-events-none z-10  transition w-full h-full
+		background-repeat: no-repeat !important
+		background-size: contain !important
+		background-position: center !important
+		
+.grass-front
+	@apply left-0 z-40
+	width: r(600px)
+	height: r(300px)
+	
+	&::after
+		background: url('../img/icon/grass-front.png')
+		background-position:  bottom left !important
+		animation: wiggle 1.2s infinite
+		transform-origin: bottom
+	@screen max-md
+		height: r(60px) 
+		left: 0
+.grass-right
+	@apply right-0 z-40
+	bottom: r(140px)
+	width: r(200px)
+	height: r(100px)
+	@media screen and ( max-width: 1700px)
+		bottom: r(240px)
+	@media screen and ( max-width: 1400px)
+		bottom: r(290px)
+	@screen max-md
+		@apply hidden
+	&::after
+		background: url('../img/icon/grass-right.png')
+		background-position:  bottom right !important
+		animation: bounce $bounce-duration infinite
+		transform-origin: bottom
+.moving-tree
+	width: r(200px)
+	height: r(100px)
+	@apply absolute 
+	@media screen and ( max-width: 768px)
+		@apply hidden
+	.box
+		@apply relative opacity-0
+		&:before
+			content: ''
+			background-repeat: no-repeat !important
+			background-size: contain !important
+			background-position: center !important
+			@apply flex-center
+.example1
+	bottom: r(180px)
+	left: r(90px)
+	.box
+		&:before
+			width: r(100px)
+			height: r(100px)
+			background-image:  url('../img/icon/tree-1.png')
+.example2
+	bottom: r(195px)
+	left: r(180px)
+	.box
+		&:before
+			width: r(130px)
+			height: r(160px)
+			background-image:  url('../img/icon/tree-2.png')
+.example3
+	bottom: r(185px)
+	right: r(440px)
+	@media screen and ( max-width: 1700px)
+		bottom: r(225px)
+	@media screen and ( max-width: 1600px)
+		bottom: r(175px)
+	@media screen and ( max-width: 1500px)
+		bottom: r(285px)
+	@media screen and ( max-width: 1024px)
+		@apply hidden
+	.box
+		&:before
+			width: r(120px)
+			height: r(120px)
+			background-image:  url('../img/icon/tree-2.png')
+.example4
+	bottom: r(170px)
+	right: r(530px)
+	@media screen and ( max-width: 1700px)
+		bottom: r(185px)
+	@media screen and ( max-width: 1600px)
+		bottom: r(155px)
+	@media screen and ( max-width: 1500px)
+		bottom: r(245px)
+	@media screen and ( max-width: 1024px)
+		@apply hidden
+	.box
+		&:before
+			width: r(90px)
+			height: r(90px)
+			background-image:  url('../img/icon/tree-4.png')

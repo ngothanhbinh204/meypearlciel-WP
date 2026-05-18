@@ -1,0 +1,315 @@
+{
+  "key": "group_re_apartment",
+  "title": "Thông tin căn hộ",
+  "fields": [
+    {
+      "key": "field_apartment_info_tab",
+      "label": "Thông tin căn hộ",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_parent_floor",
+      "label": "Thuộc tầng",
+      "name": "parent_floor",
+      "type": "post_object",
+      "instructions": "Chọn tầng mà căn hộ này thuộc về",
+      "required": 1,
+      "post_type": ["re_floor"],
+      "filters": ["search"],
+      "return_format": "id",
+      "ui": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_name",
+      "label": "Tên căn hộ",
+      "name": "apartment_name",
+      "type": "text",
+      "instructions": "VD: Căn 12B, A-1204",
+      "required": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_code",
+      "label": "Mã căn hộ",
+      "name": "apartment_code",
+      "type": "text",
+      "instructions": "VD: A1204, S1-12B",
+      "required": 1,
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_type",
+      "label": "Loại căn hộ",
+      "name": "apartment_type",
+      "type": "select",
+      "choices": {
+        "studio": "Studio",
+        "1br": "1 Phòng ngủ",
+        "2br": "2 Phòng ngủ",
+        "3br": "3 Phòng ngủ",
+        "4br": "4 Phòng ngủ",
+        "penthouse": "Penthouse",
+        "duplex": "Duplex",
+        "shophouse": "Shophouse"
+      },
+      "default_value": "2br",
+      "return_format": "value",
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_status",
+      "label": "Trạng thái",
+      "name": "apartment_status",
+      "type": "select",
+      "choices": {
+        "available": "Còn hàng",
+        "reserved": "Đã đặt cọc",
+        "sold": "Đã bán"
+      },
+      "default_value": "available",
+      "return_format": "value",
+      "wrapper": { "width": "34", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_area_tab",
+      "label": "Diện tích",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_apartment_area_net",
+      "label": "Diện tích thông thủy (m²)",
+      "name": "apartment_area_net",
+      "type": "number",
+      "min": 0,
+      "step": 0.01,
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_area_gross",
+      "label": "Diện tích tim tường (m²)",
+      "name": "apartment_area_gross",
+      "type": "number",
+      "min": 0,
+      "step": 0.01,
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_direction",
+      "label": "Hướng căn hộ",
+      "name": "apartment_direction",
+      "type": "select",
+      "choices": {
+        "dong": "Đông",
+        "tay": "Tây",
+        "nam": "Nam",
+        "bac": "Bắc",
+        "dong_nam": "Đông Nam",
+        "dong_bac": "Đông Bắc",
+        "tay_nam": "Tây Nam",
+        "tay_bac": "Tây Bắc"
+      },
+      "return_format": "value",
+      "wrapper": { "width": "34", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_description",
+      "label": "Mô tả căn hộ",
+      "name": "apartment_description",
+      "type": "textarea",
+      "rows": 4,
+      "wrapper": { "width": "", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_media_tab",
+      "label": "Hình ảnh",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_apartment_layout",
+      "label": "Sơ đồ thiết kế căn hộ",
+      "name": "apartment_layout",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "medium",
+      "instructions": "Ảnh layout/thiết kế nội thất của căn hộ",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_gallery",
+      "label": "Gallery hình ảnh",
+      "name": "apartment_gallery",
+      "type": "gallery",
+      "return_format": "array",
+      "preview_size": "medium",
+      "insert": "append",
+      "min": 0,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_apartment_facility_tab",
+      "label": "Tiện ích",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_apartment_choose_facility",
+      "label": "Tiện ích căn hộ",
+      "name": "apartment_choose_facility",
+      "type": "repeater",
+      "instructions": "Thêm các tiện ích của căn hộ. Nhập icon (emoji hoặc class), tên tiện ích và giá trị tương ứng",
+      "layout": "table",
+      "button_label": "Thêm tiện ích",
+      "sub_fields": [
+        {
+          "key": "field_facility_icon",
+          "label": "Icon",
+          "name": "icon",
+          "type": "text",
+          "instructions": "Emoji hoặc class icon. VD: 🛏 hoặc icon-bed",
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_facility_label",
+          "label": "Tên tiện ích",
+          "name": "label",
+          "type": "text",
+          "instructions": "VD: Phòng ngủ, Ban công, Phòng WC",
+          "wrapper": { "width": "40", "class": "", "id": "" }
+        },
+        {
+          "key": "field_facility_value",
+          "label": "Giá trị",
+          "name": "value",
+          "type": "text",
+          "instructions": "VD: 2, 1, Có",
+          "wrapper": { "width": "40", "class": "", "id": "" }
+        }
+      ]
+    },
+    {
+      "key": "field_apartment_hotspot_tab",
+      "label": "Hotspot Floor Plan",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_apartment_hotspot",
+      "label": "Hotspot trên sơ đồ tầng",
+      "name": "apartment_hotspot",
+      "type": "group",
+      "instructions": "Vị trí và hình dạng hotspot của căn hộ trên sơ đồ mặt bằng tầng",
+      "layout": "block",
+      "sub_fields": [
+        {
+          "key": "field_apt_hotspot_x",
+          "label": "X (%)",
+          "name": "x",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "instructions": "Vị trí X tính theo % chiều rộng floor plan",
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_apt_hotspot_y",
+          "label": "Y (%)",
+          "name": "y",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "instructions": "Vị trí Y tính theo % chiều cao floor plan",
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_apt_hotspot_width",
+          "label": "Width (%)",
+          "name": "width",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "wrapper": { "width": "15", "class": "", "id": "" }
+        },
+        {
+          "key": "field_apt_hotspot_height",
+          "label": "Height (%)",
+          "name": "height",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "wrapper": { "width": "15", "class": "", "id": "" }
+        },
+        {
+          "key": "field_apt_hotspot_popup_position",
+          "label": "Vị trí popup",
+          "name": "popup_position",
+          "type": "select",
+          "choices": {
+            "top": "Trên",
+            "bottom": "Dưới",
+            "left": "Trái",
+            "right": "Phải"
+          },
+          "default_value": "top",
+          "return_format": "value",
+          "wrapper": { "width": "15", "class": "", "id": "" }
+        },
+        {
+          "key": "field_apt_hotspot_hover_color",
+          "label": "Màu highlight hover",
+          "name": "hover_color",
+          "type": "color_picker",
+          "instructions": "Màu highlight khi hover vào căn hộ (mặc định: cam)",
+          "default_value": "#F97316",
+          "enable_opacity": 1,
+          "return_format": "string",
+          "wrapper": { "width": "15", "class": "", "id": "" }
+        },
+        {
+          "key": "field_apt_hotspot_polygon",
+          "label": "Polygon points",
+          "name": "polygon_points",
+          "type": "textarea",
+          "rows": 2,
+          "instructions": "Tọa độ SVG polygon theo % (x,y). VD: 10,20 30,20 30,50 10,50. Dùng khi căn hộ không phải hình chữ nhật đơn giản",
+          "wrapper": { "width": "100", "class": "", "id": "" }
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "re_apartment"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["permalink", "the_content", "excerpt", "discussion", "comments", "revisions", "slug", "author", "format", "categories", "tags", "send-trackbacks"],
+  "active": true,
+  "description": "Fields cho CPT re_apartment — Căn hộ",
+  "show_in_rest": 0
+}

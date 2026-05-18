@@ -1,0 +1,388 @@
+//Transition
+@keyframes fd-in
+	0%
+		opacity: 0
+	100%
+		opacity: 1
+
+@keyframes fd-out
+	0%
+		opacity: 1
+	100%
+		opacity: 0
+
+@keyframes fade-in
+	0%
+		opacity: 0
+	100%
+		opacity: 1
+.fade-in
+	-webkit-animation: fade-in .3s cubic-bezier(0.39, 0.575, 0.565, 1) both
+	animation: fade-in .3s cubic-bezier(0.39, 0.575, 0.565, 1) both
+
+@keyframes slide-in-up 
+	0% 
+		transform: translateY(50%)
+		opacity: 0
+	100% 
+		transform: translateX(0)
+		opacity: 1
+@keyframes slide-in-left 
+	0% 
+		transform: translateX(50%)
+		opacity: 0
+	100% 
+		transform: translateX(0)
+		opacity: 1
+
+.slide-in-left
+	animation: slide-in-left .3s cubic-bezier(0.39, 0.575, 0.565, 1) both
+.slide-in-up
+	animation: slide-in-up .3s cubic-bezier(0.39, 0.575, 0.565, 1) both
+.fade-out
+	-webkit-animation: fade-in .3s cubic-bezier(0.39, 0.575, 0.565, 1) both
+	animation: fade-in .3s cubic-bezier(0.39, 0.575, 0.565, 1) both
+.ripple
+	margin: auto
+	margin-top: 5rem
+	background-color: #666
+	width: 1rem
+	height: 1rem
+	border-radius: 50%
+	position: relative
+	animation: ripple 3s linear infinite
+	&::before
+		content: ""
+		position: absolute
+		top: 0
+		left: 0
+		right: 0
+		bottom: 0
+		border-radius: 50%
+		animation: inherit
+		animation-delay: 1.5s
+
+	&::after
+		content: ""
+		position: absolute
+		top: 0
+		left: 0
+		right: 0
+		bottom: 0
+		border-radius: 50%
+		animation: inherit
+		animation-delay: 1.5s
+		animation-delay: 3s
+
+@keyframes ripple
+	0% 
+		transform: scale(1)
+		opacity: 0.6
+
+	100% 
+		transform: scale(1.8)
+		opacity: 0
+.shine
+	overflow: hidden
+	position: relative
+	&:before
+		position: absolute
+		top: 0
+		pointer-events: none
+		left: -100%
+		z-index: 2
+		display: block
+		content: ''
+		width: 50%
+		height: 100%
+		background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%)
+		background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%)
+		-webkit-transform: skewX(-25deg)
+		transform: skewX(-25deg)
+	&:hover
+		&:before
+			-webkit-animation: shine 1s
+			animation: shine 1s
+			@-webkit-keyframes shine 
+				100% 
+					left: 125%
+			@keyframes shine
+				100% 
+					left: 125%
+.circle
+	overflow: hidden
+	position: relative
+	&:before
+		position: absolute
+		top: 50%
+		left: 50%
+		z-index: 2
+		display: block
+		content: ''
+		width: 0
+		height: 0
+		background: rgba(255,255,255,.2)
+		border-radius: 100%
+		-webkit-transform: translate(-50%, -50%)
+		transform: translate(-50%, -50%)
+		opacity: 0
+	&:hover
+		&:before
+			animation: circle .75s
+			@-webkit-keyframes circle
+				0%
+					opacity: 1
+
+				40%
+					opacity: 1
+
+				100%
+					width: 200%
+					height: 200%
+					opacity: 0
+
+
+			@keyframes circle
+				0%
+					opacity: 1
+
+				40%
+					opacity: 1
+
+				100%
+					width: 200%
+					height: 200%
+					opacity: 0
+.img-contain
+	img
+		@apply object-contain
+.zoom-in
+	overflow: hidden
+	transition: .45s all ease-in-out
+	&:hover
+		img
+			transform: scale(1.05) translateZ(0)
+	img
+		transform: scale(1)
+		transition: .45s all ease-in-out
+.opacity
+	transition: .45s all ease-in-out
+	&:hover
+		opacity: .8
+	img
+		opacity: 1
+		transition: .3s all ease-in-out
+					opacity: 0
+.sliding-hover
+	@apply relative inline-block
+	&:before,&:after 
+		content: '' 
+		height: 2px
+		@apply bg-primary-900 absolute bottom-[-4px] w-0 block
+	&:before
+		@apply left-0
+		transition: width 0s ease, background .5s ease 
+	&:after 
+		@apply right-0
+		transition: width .5s ease 
+	&:hover 
+		&:before 
+			@apply w-full bg-primary-900
+			transition: width .5s ease 
+		&:after 
+			@apply w-full bg-transparent
+			transition: all 0s ease 
+
+
+@keyframes dashAnim 
+	0% 
+		width: 0
+		opacity: 0
+	
+	20% 
+		opacity: .8
+	
+	70% 
+		opacity: 0.9
+	
+	97% 
+		opacity: 0.8
+	
+	100% 
+		width: 105%
+		opacity: 0
+	
+
+
+@keyframes flash
+	0%
+		opacity: .4
+
+	100%
+		opacity: 1
+@-webkit-keyframes loadingFade
+	0%
+		opacity: 0
+
+	50%
+		opacity: 0.8
+
+	100%
+		opacity: 0
+
+@-moz-keyframes loadingFade
+	0%
+		opacity: 0
+
+	50%
+		opacity: 0.8
+
+	100%
+		opacity: 0
+
+@keyframes loadingFade
+	0%
+		opacity: 0
+
+	50%
+		opacity: 0.8
+
+	100%
+		opacity: 0
+@keyframes textShine
+	0% 
+		background-position: 0 100%
+	100% 
+		background-position: 0 0
+
+
+
+
+
+@keyframes lightbright 
+	0% 
+		box-shadow:
+		0 0 0px 0 rgba(255,255,255,0),
+		0 0 0px 0 rgba(255,240,200,0)
+	
+
+	20% 
+		box-shadow:
+		0 0 20px 5px rgba(255,255,255,0.6),
+		0 0 40px 10px rgba(255,240,200,0.5)
+	
+
+	50% 
+		box-shadow:
+		0 0 60px 20px rgba(255,255,255,1),
+		0 0 120px 40px rgba(255,240,200,0.9)
+	
+
+	70% 
+		box-shadow:
+		0 0 40px 15px rgba(255,255,255,0.7),
+		0 0 80px 25px rgba(255,240,200,0.6)
+	
+
+	100% 
+		box-shadow:
+		0 0 10px 5px rgba(255,255,255,0.2),
+		0 0 20px 10px rgba(255,240,200,0.2)
+
+$hamburger-padding-x: 0 !default
+$hamburger-padding-y: 0 !default
+$hamburger-layer-width: 24px !default
+$hamburger-layer-height: 2px !default
+$hamburger-layer-spacing: 6px !default
+$hamburger-layer-color: #F37021 !default
+$hamburger-layer-border-radius: 4px !default
+$hamburger-hover-opacity: 1 !default
+$hamburger-active-layer-color: $hamburger-layer-color !default
+$hamburger-active-hover-opacity: $hamburger-hover-opacity !default
+$hamburger-hover-use-filter: false !default
+$hamburger-hover-filter: opacity(50%) !default
+$hamburger-active-hover-filter: $hamburger-hover-filter !default
+.hamburger--elastic 
+	.hamburger-inner 
+		top: ($hamburger-layer-height / -2)
+		transition-duration: 0.275s
+		transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55)
+		&:before 
+			top: $hamburger-layer-height + $hamburger-layer-spacing
+			transition: opacity 0.125s 0.275s ease
+		&:after 
+			top: ($hamburger-layer-height * 2) + ($hamburger-layer-spacing * 2)
+			transition: transform 0.275s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+	&.is-active 
+		.hamburger-inner 
+			$y-offset: $hamburger-layer-spacing + $hamburger-layer-height
+			transform: translate3d(0, $y-offset, 0) rotate(135deg)
+			transition-delay: 0.075s
+			&:before 
+				transition-delay: 0s
+				opacity: 0
+			&:after 
+				transform: translate3d(0, $y-offset * -2, 0) rotate(-270deg)
+				transition-delay: 0.075s
+				
+.hamburger
+	padding: $hamburger-padding-y $hamburger-padding-x
+	display: inline-block
+	cursor: pointer
+	transition-property: opacity, filter
+	transition-duration: 0.15s
+	transition-timing-function: linear
+	// Normalize (<button>)
+	font: inherit
+	color: inherit
+	text-transform: none
+	background-color: transparent
+	border: 0
+	margin: 0
+	overflow: visible
+	&:hover 
+		@if $hamburger-hover-use-filter == true 
+			filter: $hamburger-hover-filter
+		
+		@else 
+			opacity: $hamburger-hover-opacity
+	&.is-active 
+		&:hover 
+			@if $hamburger-hover-use-filter == true 
+				filter: $hamburger-active-hover-filter
+			
+			@else 
+				opacity: $hamburger-active-hover-opacity
+		.hamburger-inner,
+		.hamburger-inner:before,
+		.hamburger-inner:after 
+			background-color: $hamburger-active-layer-color
+.hamburger-box 
+	width: $hamburger-layer-width
+	height: $hamburger-layer-height * 3 + $hamburger-layer-spacing * 2
+	display: block
+	margin: auto 0
+	position: relative
+.hamburger-inner
+	display: block
+	top: 50%
+	margin-top: ($hamburger-layer-height / -2)
+	&,
+	&:before,
+	&:after 
+		width: $hamburger-layer-width
+		height: $hamburger-layer-height
+		background-color: $hamburger-layer-color
+		border-radius: $hamburger-layer-border-radius
+		position: absolute
+		transition-property: transform
+		transition-duration: 0.15s
+		transition-timing-function: ease
+	&:before,
+	&:after 
+		content: ""
+		display: block
+	&:before 
+		top: ($hamburger-layer-spacing + $hamburger-layer-height) * -1
+	&:after 
+		bottom: ($hamburger-layer-spacing + $hamburger-layer-height) * -1

@@ -1,0 +1,15 @@
+.account-wrap
+	@apply relative mx-3
+	height: 32px
+	@screen xl
+		height: 36px
+		@apply mx-2
+	.user 
+		span
+			@media screen  and ( max-width: 1440px)
+				@apply hidden
+			@media screen and ( max-width: 768px)
+				@apply block mx-3
+		.fa-chevron-down 
+			@media screen  and ( max-width: 1440px)
+				@apply ml-3

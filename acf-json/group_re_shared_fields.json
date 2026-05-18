@@ -1,0 +1,134 @@
+{
+  "key": "group_re_shared_fields",
+  "title": "Cài đặt chung dự án",
+  "fields": [
+    {
+      "key": "field_shared_project_tab",
+      "label": "Thông tin dự án",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_project_name",
+      "label": "Tên dự án",
+      "name": "project_name",
+      "type": "text",
+      "instructions": "VD: Vinhomes Grand Park",
+      "wrapper": { "width": "60", "class": "", "id": "" }
+    },
+    {
+      "key": "field_project_slogan",
+      "label": "Slogan",
+      "name": "project_slogan",
+      "type": "text",
+      "wrapper": { "width": "40", "class": "", "id": "" }
+    },
+    {
+      "key": "field_project_logo",
+      "label": "Logo dự án",
+      "name": "project_logo",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "thumbnail",
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_project_address",
+      "label": "Địa chỉ",
+      "name": "project_address",
+      "type": "text",
+      "wrapper": { "width": "67", "class": "", "id": "" }
+    },
+    {
+      "key": "field_shared_contact_tab",
+      "label": "Liên hệ & Hotline",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_contact_phone",
+      "label": "Hotline chính",
+      "name": "contact_phone",
+      "type": "text",
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_contact_email",
+      "label": "Email",
+      "name": "contact_email",
+      "type": "email",
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_contact_zalo",
+      "label": "Zalo",
+      "name": "contact_zalo",
+      "type": "text",
+      "wrapper": { "width": "34", "class": "", "id": "" }
+    },
+    {
+      "key": "field_shared_status_tab",
+      "label": "Trạng thái căn hộ (Legend toàn cục)",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_global_legend",
+      "label": "Chú thích màu trạng thái (dùng làm default cho tất cả tầng)",
+      "name": "global_legend",
+      "type": "repeater",
+      "instructions": "Định nghĩa chú thích màu sắc toàn cục — editor có thể override ở từng tầng",
+      "layout": "table",
+      "button_label": "Thêm chú thích",
+      "sub_fields": [
+        {
+          "key": "field_global_legend_color",
+          "label": "Màu",
+          "name": "color",
+          "type": "color_picker",
+          "return_format": "string",
+          "wrapper": { "width": "25", "class": "", "id": "" }
+        },
+        {
+          "key": "field_global_legend_status",
+          "label": "Trạng thái",
+          "name": "status",
+          "type": "text",
+          "instructions": "VD: available, sold, reserved",
+          "wrapper": { "width": "25", "class": "", "id": "" }
+        },
+        {
+          "key": "field_global_legend_label",
+          "label": "Nhãn hiển thị",
+          "name": "label",
+          "type": "text",
+          "instructions": "VD: Còn hàng, Đã bán, Đặt cọc",
+          "wrapper": { "width": "50", "class": "", "id": "" }
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "theme-settings"
+      }
+    ]
+  ],
+  "menu_order": 5,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Cài đặt chung toàn dự án — hiển thị trong Theme Options",
+  "show_in_rest": 0
+}

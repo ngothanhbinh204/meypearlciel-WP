@@ -1,0 +1,483 @@
+{
+  "key": "group_re_page_sections",
+  "title": "Page Sections",
+  "fields": [
+    {
+      "key": "field_page_sections",
+      "label": "Sections",
+      "name": "page_sections",
+      "type": "flexible_content",
+      "instructions": "Thêm và sắp xếp các section cho trang",
+      "button_label": "Thêm section",
+      "layouts": {
+        "layout_hero_banner": {
+          "key": "layout_hero_banner",
+          "name": "hero_banner",
+          "label": "Hero Banner",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_hero_title",
+              "label": "Tiêu đề chính",
+              "name": "title",
+              "type": "text",
+              "required": 1,
+              "wrapper": { "width": "60", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_subtitle",
+              "label": "Tiêu đề phụ",
+              "name": "subtitle",
+              "type": "text",
+              "wrapper": { "width": "40", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_description",
+              "label": "Mô tả",
+              "name": "description",
+              "type": "textarea",
+              "rows": 3,
+              "wrapper": { "width": "", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_image",
+              "label": "Ảnh nền / Ảnh hero",
+              "name": "image",
+              "type": "image",
+              "return_format": "array",
+              "preview_size": "medium",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_video_url",
+              "label": "Video URL (YouTube/MP4)",
+              "name": "video_url",
+              "type": "url",
+              "instructions": "Để trống nếu không dùng video",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_cta_text",
+              "label": "Nút CTA — Text",
+              "name": "cta_text",
+              "type": "text",
+              "placeholder": "VD: Đăng ký ngay",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_cta_url",
+              "label": "Nút CTA — URL",
+              "name": "cta_url",
+              "type": "url",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            }
+          ]
+        },
+        "layout_overview": {
+          "key": "layout_overview",
+          "name": "overview",
+          "label": "Tổng quan dự án",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_overview_title",
+              "label": "Tiêu đề section",
+              "name": "title",
+              "type": "text",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_overview_description",
+              "label": "Mô tả",
+              "name": "description",
+              "type": "wysiwyg",
+              "tabs": "all",
+              "toolbar": "basic",
+              "media_upload": 0,
+              "wrapper": { "width": "", "class": "", "id": "" }
+            },
+            {
+              "key": "field_overview_image",
+              "label": "Hình ảnh",
+              "name": "image",
+              "type": "image",
+              "return_format": "array",
+              "preview_size": "medium",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_overview_stats",
+              "label": "Thông số dự án",
+              "name": "stats",
+              "type": "repeater",
+              "layout": "table",
+              "button_label": "Thêm thông số",
+              "sub_fields": [
+                {
+                  "key": "field_stat_value",
+                  "label": "Giá trị",
+                  "name": "value",
+                  "type": "text",
+                  "instructions": "VD: 35, 500+, 150m²",
+                  "wrapper": { "width": "30", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_stat_label",
+                  "label": "Nhãn",
+                  "name": "label",
+                  "type": "text",
+                  "instructions": "VD: Tầng, Căn hộ, Diện tích",
+                  "wrapper": { "width": "40", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_stat_icon",
+                  "label": "Icon",
+                  "name": "icon",
+                  "type": "text",
+                  "wrapper": { "width": "30", "class": "", "id": "" }
+                }
+              ]
+            }
+          ]
+        },
+        "layout_location": {
+          "key": "layout_location",
+          "name": "location",
+          "label": "Vị trí dự án",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_location_title",
+              "label": "Tiêu đề section",
+              "name": "title",
+              "type": "text",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_location_description",
+              "label": "Mô tả",
+              "name": "description",
+              "type": "wysiwyg",
+              "tabs": "all",
+              "toolbar": "basic",
+              "media_upload": 0,
+              "wrapper": { "width": "", "class": "", "id": "" }
+            },
+            {
+              "key": "field_location_map_embed",
+              "label": "Google Maps Embed URL",
+              "name": "map_embed",
+              "type": "url",
+              "instructions": "Dán link Google Maps embed iframe src",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_location_image",
+              "label": "Ảnh vị trí (thay thế map)",
+              "name": "image",
+              "type": "image",
+              "return_format": "array",
+              "preview_size": "medium",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_location_highlights",
+              "label": "Điểm nổi bật vị trí",
+              "name": "highlights",
+              "type": "repeater",
+              "layout": "table",
+              "button_label": "Thêm điểm nổi bật",
+              "sub_fields": [
+                {
+                  "key": "field_loc_highlight_icon",
+                  "label": "Icon",
+                  "name": "icon",
+                  "type": "text",
+                  "wrapper": { "width": "20", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_loc_highlight_label",
+                  "label": "Nội dung",
+                  "name": "label",
+                  "type": "text",
+                  "instructions": "VD: Cách trung tâm 5km",
+                  "wrapper": { "width": "80", "class": "", "id": "" }
+                }
+              ]
+            }
+          ]
+        },
+        "layout_utilities": {
+          "key": "layout_utilities",
+          "name": "utilities",
+          "label": "Tiện ích dự án",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_utilities_title",
+              "label": "Tiêu đề section",
+              "name": "title",
+              "type": "text",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_utilities_description",
+              "label": "Mô tả",
+              "name": "description",
+              "type": "textarea",
+              "rows": 3,
+              "wrapper": { "width": "", "class": "", "id": "" }
+            },
+            {
+              "key": "field_utilities_items",
+              "label": "Danh sách tiện ích",
+              "name": "utility_items",
+              "type": "repeater",
+              "layout": "grid",
+              "button_label": "Thêm tiện ích",
+              "sub_fields": [
+                {
+                  "key": "field_utility_icon",
+                  "label": "Icon",
+                  "name": "icon",
+                  "type": "image",
+                  "return_format": "url",
+                  "preview_size": "thumbnail",
+                  "wrapper": { "width": "25", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_utility_name",
+                  "label": "Tên tiện ích",
+                  "name": "name",
+                  "type": "text",
+                  "wrapper": { "width": "40", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_utility_description",
+                  "label": "Mô tả ngắn",
+                  "name": "description",
+                  "type": "text",
+                  "wrapper": { "width": "35", "class": "", "id": "" }
+                }
+              ]
+            }
+          ]
+        },
+        "layout_gallery": {
+          "key": "layout_gallery",
+          "name": "gallery",
+          "label": "Gallery dự án",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_gallery_title",
+              "label": "Tiêu đề section",
+              "name": "title",
+              "type": "text",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_gallery_images",
+              "label": "Gallery hình ảnh",
+              "name": "gallery_images",
+              "type": "gallery",
+              "return_format": "array",
+              "preview_size": "medium",
+              "insert": "append",
+              "min": 1
+            }
+          ]
+        },
+        "layout_apartment_layout": {
+          "key": "layout_apartment_layout",
+          "name": "apartment_layout",
+          "label": "Mặt bằng & Căn hộ (Interactive)",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_al_title",
+              "label": "Tiêu đề section",
+              "name": "section_title",
+              "type": "text",
+              "instructions": "VD: Tổng thể mặt bằng dự án",
+              "required": 1,
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_al_description",
+              "label": "Mô tả section",
+              "name": "section_description",
+              "type": "textarea",
+              "rows": 3,
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_al_masterplan_image",
+              "label": "Ảnh masterplan tổng thể",
+              "name": "masterplan_image",
+              "type": "image",
+              "return_format": "array",
+              "preview_size": "medium",
+              "instructions": "Ảnh tổng thể dự án — nền để đặt hotspot từng tòa nhà",
+              "required": 1,
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_al_buildings",
+              "label": "Các tòa nhà hiển thị",
+              "name": "relationship_buildings",
+              "type": "relationship",
+              "instructions": "Chọn các tòa nhà hiển thị trong section này",
+              "post_type": ["re_building"],
+              "filters": ["search"],
+              "min": 1,
+              "return_format": "id",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_al_default_building",
+              "label": "Tòa nhà mặc định",
+              "name": "default_building",
+              "type": "post_object",
+              "instructions": "Tòa nhà active mặc định khi load trang",
+              "post_type": ["re_building"],
+              "filters": ["search"],
+              "return_format": "id",
+              "ui": 1,
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_al_display_style",
+              "label": "Kiểu hiển thị",
+              "name": "display_style",
+              "type": "select",
+              "choices": {
+                "popup": "Popup overlay",
+                "sidebar": "Sidebar slide",
+                "fullscreen": "Full screen"
+              },
+              "default_value": "popup",
+              "return_format": "value",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            }
+          ]
+        },
+        "layout_faq": {
+          "key": "layout_faq",
+          "name": "faq",
+          "label": "FAQ",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_faq_title",
+              "label": "Tiêu đề section",
+              "name": "title",
+              "type": "text",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_faq_items",
+              "label": "Câu hỏi thường gặp",
+              "name": "faq_items",
+              "type": "repeater",
+              "layout": "row",
+              "button_label": "Thêm câu hỏi",
+              "min": 1,
+              "sub_fields": [
+                {
+                  "key": "field_faq_question",
+                  "label": "Câu hỏi",
+                  "name": "question",
+                  "type": "text",
+                  "required": 1,
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_faq_answer",
+                  "label": "Trả lời",
+                  "name": "answer",
+                  "type": "wysiwyg",
+                  "tabs": "all",
+                  "toolbar": "basic",
+                  "media_upload": 0,
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                }
+              ]
+            }
+          ]
+        },
+        "layout_cta": {
+          "key": "layout_cta",
+          "name": "cta",
+          "label": "CTA — Kêu gọi hành động",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_cta_title",
+              "label": "Tiêu đề",
+              "name": "title",
+              "type": "text",
+              "required": 1,
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_subtitle",
+              "label": "Tiêu đề phụ",
+              "name": "subtitle",
+              "type": "text",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_button_text",
+              "label": "Text nút",
+              "name": "button_text",
+              "type": "text",
+              "wrapper": { "width": "33", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_button_url",
+              "label": "URL nút",
+              "name": "button_url",
+              "type": "url",
+              "wrapper": { "width": "34", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_phone",
+              "label": "Số điện thoại hotline",
+              "name": "phone",
+              "type": "text",
+              "wrapper": { "width": "33", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_bg_image",
+              "label": "Ảnh nền",
+              "name": "background_image",
+              "type": "image",
+              "return_format": "url",
+              "preview_size": "medium",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
+      }
+    ]
+  ],
+  "menu_order": 10,
+  "position": "normal",
+  "style": "seamless",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["the_content"],
+  "active": true,
+  "description": "Flexible Content sections cho Landing Page",
+  "show_in_rest": 0
+}

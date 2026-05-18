@@ -1,0 +1,239 @@
+{
+  "key": "group_re_building",
+  "title": "Thông tin tòa nhà",
+  "fields": [
+    {
+      "key": "field_building_info_tab",
+      "label": "Thông tin tòa",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_building_name",
+      "label": "Tên tòa",
+      "name": "building_name",
+      "type": "text",
+      "instructions": "VD: Tòa A, Block S1",
+      "required": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_code",
+      "label": "Mã tòa",
+      "name": "building_code",
+      "type": "text",
+      "instructions": "VD: BLOCK-A, S1",
+      "required": 1,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_total_floor",
+      "label": "Số tầng",
+      "name": "building_total_floor",
+      "type": "number",
+      "min": 1,
+      "step": 1,
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_total_apartment",
+      "label": "Tổng số căn hộ",
+      "name": "building_total_apartment",
+      "type": "number",
+      "min": 0,
+      "step": 1,
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_area",
+      "label": "Diện tích căn hộ",
+      "name": "building_area",
+      "type": "text",
+      "instructions": "VD: 50 - 150m²",
+      "wrapper": { "width": "34", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_status",
+      "label": "Trạng thái",
+      "name": "building_status",
+      "type": "select",
+      "choices": {
+        "available": "Đang mở bán",
+        "coming_soon": "Sắp mở bán",
+        "sold_out": "Đã bán hết"
+      },
+      "default_value": "available",
+      "return_format": "value",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_description",
+      "label": "Mô tả tòa nhà",
+      "name": "building_description",
+      "type": "textarea",
+      "rows": 4,
+      "wrapper": { "width": "", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_popup_summary",
+      "label": "Tóm tắt hiển thị trong popup hover",
+      "name": "building_popup_summary",
+      "type": "textarea",
+      "rows": 3,
+      "instructions": "Nội dung ngắn hiển thị khi hover vào tòa nhà trên masterplan",
+      "wrapper": { "width": "", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_media_tab",
+      "label": "Hình ảnh",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_building_thumbnail",
+      "label": "Ảnh đại diện tòa",
+      "name": "building_thumbnail",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "medium",
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_overlay_image",
+      "label": "Ảnh overlay khi hover",
+      "name": "building_overlay_image",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "medium",
+      "instructions": "Ảnh PNG overlay màu cam hiển thị khi hover tòa nhà trên masterplan",
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_master_plan",
+      "label": "Ảnh masterplan riêng tòa",
+      "name": "building_master_plan",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "medium",
+      "instructions": "Ảnh tổng thể dự án nếu mỗi tòa có masterplan riêng",
+      "wrapper": { "width": "34", "class": "", "id": "" }
+    },
+    {
+      "key": "field_building_hotspot_tab",
+      "label": "Hotspot Masterplan",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_building_hotspots",
+      "label": "Danh sách hotspot tòa nhà",
+      "name": "building_hotspots",
+      "type": "repeater",
+      "instructions": "Mỗi hotspot là vùng tương tác trên ảnh masterplan tương ứng với tòa nhà này",
+      "layout": "row",
+      "button_label": "Thêm hotspot",
+      "sub_fields": [
+        {
+          "key": "field_hotspot_b_x",
+          "label": "X (%)",
+          "name": "x",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "instructions": "Vị trí X tính theo % chiều rộng ảnh",
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_hotspot_b_y",
+          "label": "Y (%)",
+          "name": "y",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "instructions": "Vị trí Y tính theo % chiều cao ảnh",
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_hotspot_b_width",
+          "label": "Width (%)",
+          "name": "width",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_hotspot_b_height",
+          "label": "Height (%)",
+          "name": "height",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 0.01,
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_hotspot_b_popup_position",
+          "label": "Vị trí popup",
+          "name": "popup_position",
+          "type": "select",
+          "choices": {
+            "top": "Trên",
+            "bottom": "Dưới",
+            "left": "Trái",
+            "right": "Phải"
+          },
+          "default_value": "bottom",
+          "return_format": "value",
+          "wrapper": { "width": "20", "class": "", "id": "" }
+        },
+        {
+          "key": "field_hotspot_b_polygon",
+          "label": "Polygon points",
+          "name": "polygon_points",
+          "type": "textarea",
+          "rows": 2,
+          "instructions": "Tọa độ SVG polygon theo % (x,y). VD: 10,20 30,20 30,50 10,50",
+          "wrapper": { "width": "70", "class": "", "id": "" }
+        },
+        {
+          "key": "field_hotspot_b_overlay",
+          "label": "Overlay image",
+          "name": "overlay_image",
+          "type": "image",
+          "return_format": "url",
+          "preview_size": "thumbnail",
+          "instructions": "Ảnh overlay riêng cho hotspot này (nếu khác với building_overlay_image)",
+          "wrapper": { "width": "30", "class": "", "id": "" }
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "re_building"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["permalink", "the_content", "excerpt", "discussion", "comments", "revisions", "slug", "author", "format", "categories", "tags", "send-trackbacks"],
+  "active": true,
+  "description": "Fields cho CPT re_building — Tòa nhà / Block",
+  "show_in_rest": 0
+}

@@ -1,0 +1,64 @@
+{
+	"name": "gulp-html",
+	"description": "transpile pug, sass, js(es6) => html, css(w/ added prefix, auto-sorted css, terser), js(babeled, terser)",
+	"main": "gulpfile.babel.js",
+	"version": "3.2.3",
+	"repository": "https://github.com/dreadfear/HTML-Mk.3",
+	"private": false,
+	"author": "dreadfear",
+	"license": "MIT",
+	"scripts": {
+		"start": "gulp",
+		"sync": "gulp sync",
+		"prod": "gulp prod"
+	},
+	"babel": {
+		"presets": [
+			"@babel/preset-env"
+		],
+		"plugins": [
+			"@babel/plugin-proposal-class-properties"
+		]
+	},
+	"dependencies": {
+		"@babel/core": "7.2.2",
+		"@babel/plugin-proposal-class-properties": "^7.12.1",
+		"@babel/preset-env": "7.3.1",
+		"@babel/register": "7.18.9",
+		"@tailwindcss/aspect-ratio": "^0.4.2",
+		"autoprefixer": "^10.4.14",
+		"browser-sync": "^2.27.10",
+		"caniuse-lite": "^1.0.30001359",
+		"css-declaration-sorter": "6.3.1",
+		"cssnano": "5.1.12",
+		"del": "6.0.0",
+		"graceful-fs": "4.1.15",
+		"gulp": "4.0.2",
+		"gulp-babel": "8.0.0",
+		"gulp-concat": "2.6.1",
+		"gulp-imagemin": "^7.1.0",
+		"gulp-notify": "^4.0.0",
+		"gulp-plumber": "1.2.1",
+		"gulp-postcss": "^9.0.1",
+		"gulp-pug": "^5.0.0",
+		"gulp-sass": "^5.1.0",
+		"gulp-sourcemaps": "^3.0.0",
+		"gulp-terser": "^2.1.0",
+		"node-sass": "9.0.0",
+		"plugin-error": "^2.0.1",
+		"pug": "^3.0.2",
+		"sass": "^1.57.1",
+		"vinyl-ftp": "^0.6.1",
+		"rollup": "^1.32.0",
+		"rollup-plugin-babel": "^4.4.0",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"rollup-plugin-node-resolve": "^5.2.0",
+		"gulp-better-rollup": "^4.0.1"
+	},
+	"devDependencies": {
+		"@fancyapps/ui": "^4.0.31",
+		"swiper": "11.0.5",
+		"tailwindcss": "3.4.17",
+		"gulp-rename": "^2.0.0"
+	}
+}

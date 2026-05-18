@@ -1,0 +1,206 @@
+
+.primary-banner
+	@apply relative z-10 overflow-hidden
+	@media screen and ( max-width: 1200px)
+		padding: 0 !important
+	.vjs-fluid
+
+		@apply pt-0 w-screen h-screen !#{important}
+		height: 100svh !important
+	.wrap
+		@apply relative
+		@media screen and ( max-width: 1024px)
+			@apply static
+	.swiper-slide
+		@apply h-auto pointer-events-none 
+		z-index: -1
+		&:hover
+			.video
+				&::before
+					@apply opacity-10
+		&.swiper-slide-active
+			z-index: 999
+			@apply pointer-events-auto
+			.moving-tree
+				.box
+					animation: slide-in-up 1.75s cubic-bezier(0.39, 0.575, 0.565, 1) both
+			.grass-front
+				animation: slide-in-up 1.25s cubic-bezier(0.39, 0.575, 0.565, 1) both
+			.grass-right
+				animation: slide-in-left 1.25s cubic-bezier(0.39, 0.575, 0.565, 1) both
+	.video
+		@apply relative  z-20
+		.vjs-tech
+			@apply w-full h-full object-cover
+			@screen max-md
+				@apply object-contain
+		&::before
+			content: ''
+			@apply block absolute pointer-events-none left-0 bottom-0 z-10  transition w-full h-full bg-dark bg-opacity-40
+	.my-video-dimensions
+		@apply flex-center w-full h-screen
+		height: 100svh
+		video,iframe
+			width: 100%
+			height: 100%
+			
+			object-fit: cover
+	.img
+		&:not(.video)
+			a
+			
+				display: flex
+				height: 100vh
+				height: 100svh
+				width: 100%
+				img,picture,iframe
+					width: 100%
+					height: 100%
+					@screen lg
+						object-fit: cover
+.loader
+	@apply my-4 hidden relative z-70
+	svg
+		@apply w-[40px]
+.bttom-row
+	padding: 0 
+	@apply flex items-center h-full
+	@screen max-xl
+		@apply absolute-center z-80  pointer-events-auto w-full
+	align-items: flex-start
+	flex-direction: column
+	justify-content: center
+.block-wrap
+	@apply absolute-center z-50  w-full h-full
+	
+	.top-row
+		@apply absolute top-0 right-0 flex flex-col justify-between h-full
+	.title
+		font-family: "Big Shoulders", sans-serif
+		font-weight: 700
+		font-size: r(120px)
+		@apply uppercase mb-8
+		line-height: 1
+		background-clip: text
+		-webkit-background-clip: text
+		-webkit-text-fill-color: transparent
+		background-image: linear-gradient(180deg, #FFFFFF 15.35%, rgba(255, 255, 255, 0.835959) 69.95%, rgba(255, 255, 255, 0.2) 100%)
+		@screen max-xl
+			@apply text-center
+		@screen 2xl
+			font-size: r(160px)
+			line-height: .9
+	.title-wrap
+		margin: 0 r(120px)
+		@screen max-lg
+			@apply mx-auto
+		@screen 2xl
+			@apply mb-0
+
+.block-form
+	max-width: r(600px)
+	padding: r(34px) r(32px)
+	@apply relative pointer-events-auto w-full
+	box-shadow: 0px 7px 15.3px 0px #594c4c40
+	border-radius: r(45px)
+	border: 2px solid tranparent
+	margin-left: r(230px)
+	@screen max-xl
+		@apply mx-auto
+	&:before
+		content: ''
+		@apply block absolute pointer-events-none left-0 bottom-0 z-10  transition w-full h-full
+		
+	&::after
+		content: ''
+		@apply block absolute pointer-events-none left-0 bottom-0 z-10  transition w-full h-full bg-white bg-opacity-20
+		backdrop-filter: blur(10px)
+		border-radius: r(45px)
+
+	.wrap-form
+		@apply relative z-50
+	.frm-btnwrap
+		@apply mt-10 mx-auto flex-center
+
+.logo,.right-logo
+	a
+		width: 100%
+		min-width: 50px
+		@apply transition flex-center h-full
+		@media screen and ( min-width: 1200px)
+			@apply justify-center
+			
+		img,svg
+			width: 100%
+			height: 100%
+			object-fit: contain
+.top-row
+	padding: r(60px) 0 r(30px)
+	@media screen and ( max-width: 1200px)
+		position: static !important
+	@screen max-xl
+		@apply flex flex-col 
+.gradient-border
+	@screen max-xl
+		@apply px-7
+.dash-width-loop
+	@apply w-0 h-[40px] relative
+	animation: dashAnim 4s linear infinite
+	&::before
+		content: ''
+		@apply block absolute pointer-events-none right-0 bottom-[2px] z-10  transition  opacity-100
+		width: r(320px)
+		height: r(120px)
+		background: url('../img/flash-line.png')
+		background-repeat: no-repeat
+		background-size: auto
+		background-position: right bottom
+		@media screen and ( max-width: 1400px)
+			width: r(400px)
+.box-wrap
+	.dash-width-loop
+		height: r(24px)
+		right: -10%
+		@media screen and ( max-width: 1800px)
+			height: r(30px)
+		@media screen and ( max-width: 1600px)
+			height: r(34px)
+		@media screen and ( max-width: 1400px)
+			height: r(48px)
+			right: -25%
+		@media screen and ( max-width: 576px)
+			height: r(48px)
+			right: -50%
+			
+.logo
+	height: 50px
+	
+	@screen max-xl
+		@apply mx-auto
+	@screen xl
+		
+		padding-right: r(140px)
+		height: 84px
+	@media screen and ( min-width: 4000px)
+		height: #{clampSize(84)}
+		max-width: #{clampSize(260px)}
+	.dash-width-loop
+		animation: dashAnim 5s linear infinite
+		height: r(64px)
+		right: -50%
+		@media screen and ( max-width: 1800px)
+			height: r(74px)
+		@media screen and ( max-width: 1600px)
+			height: r(84px)
+		@media screen and ( max-width: 1600px)
+			height: r(94px)
+		
+.right-logo
+	height: 50px
+	@screen max-xl
+		@apply mt-10 absolute-x bottom-8
+	@screen xl
+		@apply mr-8
+		height: 40px
+	@media screen and ( min-width: 4000px)
+		height: #{clampSize(40)}

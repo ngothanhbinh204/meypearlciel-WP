@@ -1,0 +1,126 @@
+@function r($size)
+	@return ($size/1920px*100rem)
+@function clampSize($min,$max:null)
+	@if $max == null
+		@return clamp(#{$min}px,calc(#{$min}/1920*100rem),calc(#{$min}/1920*100rem))
+	@return clamp(#{$min}px,calc(#{$max}/1920*100rem),calc(#{$max}/1920*100rem))
+=line-clamp($min,$max, $line-height, $lines-to-show)
+	@if unitless($line-height) == false 
+		$line-height: create-unitless-line-height($font-size, $line-height)
+	display: -webkit-box
+	font-size: clamp($min,r($max),r($max))
+	height: (r($max)* $line-height * $lines-to-show) 
+	min-height: ($min* $line-height * $lines-to-show) 
+	line-height: $line-height
+	overflow: hidden
+	text-overflow: ellipsis
+	-webkit-box-orient: vertical
+	-webkit-line-clamp: $lines-to-show
+=line($line)
+	overflow: hidden
+	display: -webkit-box
+	text-overflow: ellipsis
+	-webkit-line-clamp: $line
+	-webkit-box-orient: vertical
+=fz($min,$max)
+	font-size: clamp($min,r($max),$max)
+=line($line)
+	overflow: hidden
+	display: -webkit-box
+	text-overflow: ellipsis
+	-webkit-line-clamp: $line
+	-webkit-box-orient: vertical
+=res-nav
+	@apply overflow-x-auto
+	ul
+		@apply  flex-start whitespace-nowrap pb-1
+		justify-content: flex-start
+		li
+			&:first-child
+				@apply pl-0
+=img-ratio($h:1,$w:1,$fit:cover)
+	position: relative
+	display: block
+	height: 0
+	overflow: hidden
+	padding-top: $h / $w * 100%
+	img,svg
+		position: absolute
+		width: 100%
+		height: 100%
+		top: 0
+		left: 0
+		object-fit: $fit
+		transition: .3s ease-in-out all
+=aspect-ratio($h:1,$w:1,$fit:cover)
+	position: relative
+	display: block
+	height: 0
+	overflow: hidden
+	padding-top: $h / $w * 100%
+	img,picture,video,iframe
+		position: absolute
+		width: 100%
+		height: 100%
+		top: 0
+		left: 0
+		object-fit: $fit
+		transition: .3s ease-in-out all
+=video-ratio($h:1,$w:1,$fit:cover)
+	position: relative
+	display: block
+	height: 0
+	overflow: hidden
+	padding-top: $h / $w * 100%
+	video,iframe
+		position: absolute
+		width: 100%
+		height: 100%
+		top: 0
+		left: 0
+		object-fit: $fit
+		transition: .3s ease-in-out all
+=left-icon($w:1,$h:1,$url:cover,$t:unset,$b:unset,$l:unset)
+	&::before
+		content: ''
+		width: r($w)
+		height: r($h)
+		top: $t
+		bottom: $b
+		left: $l
+		background: url($url)
+		background-repeat: no-repeat !important
+		background-size: contain  !important
+		background-position: center left !important
+		@apply block absolute pointer-events-none z-10  transition 
+		@media screen and ( max-width: 1360px)
+			width: r(120px)
+			height: r(120px)
+		@media screen and ( max-width: 576px)
+			width: r(72px)
+			height: r(72px)
+		@media screen and ( max-width: 390px)
+			width: r(64px)
+			height: r(64px)
+=right-icon($w:1,$h:1,$url:cover,$t:unset,$b:unset,$r:unset)
+	&::before
+		content: ''
+		width: r($w)
+		height: r($h)
+		top: $t
+		bottom: $b
+		right: $r
+		background: url($url)
+		background-repeat: no-repeat !important
+		background-size: contain  !important
+		background-position: center right  !important
+		@apply block absolute pointer-events-none z-10 transition 
+		@media screen and ( max-width: 1024px)
+			width: r(120px)
+			height: r(120px)
+		@media screen and ( max-width: 576px)
+			width: r(72px)
+			height: r(72px)
+		@media screen and ( max-width: 390px)
+			width: r(64px)
+			height: r(64px)

@@ -1,0 +1,132 @@
+
+.my-video-dimensions
+	width: 3840px
+	height: 2172px
+
+.my-video-dimensions.vjs-fluid:not(.vjs-audio-only-mode)
+	padding-top: unset
+
+
+.video-js .vjs-control-bar 
+	display: flex !important
+	align-items: center
+	width: calc(100% - 40px)
+	max-width: 600px
+	height: 72px
+	left: 50%
+	bottom: 20px
+	transform: translateX(-50%)
+	@apply  bg-dark bg-opacity-20
+	backdrop-filter: blur(10px)
+	border-radius: 30px 
+	padding: 0 20px
+	box-sizing: border-box
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2)
+.vjs-volume-level
+	display: none !important
+.video-js .vjs-volume-control
+	display: none !important
+.vjs-volume-control 
+	.vjs-control 
+		.vjs-volume-horizontal
+			display: none !important
+.video-js .vjs-progress-control 
+	flex: 1 1 auto
+	min-width: 100px
+	display: flex
+	align-items: center
+	margin-right: 24px
+
+.video-js .vjs-progress-holder 
+	height: 3px
+	border-radius: 2px
+	background: rgba(255, 255, 255, 0.4)
+	margin: 0
+
+.video-js .vjs-play-progress 
+	background: #ffffff
+	border-radius: 2px
+
+
+.video-js .vjs-play-progress:before 
+	font-size: 16px
+	color: #ffffff
+	top: 0 
+
+
+.video-js .vjs-progress-control:hover .vjs-progress-holder 
+	font-size: 1em 
+
+
+
+.video-js .vjs-time-control 
+	font-family: inherit 
+	@apply text-sm
+	color: #ffffff
+	line-height: 72px 
+	display: block !important
+	padding: 0 !important
+
+.video-js .vjs-time-divider 
+	padding: 0 4px !important
+	min-width: auto
+
+
+
+.video-js .vjs-button 
+	width: 40px
+
+.video-js .vjs-button > .vjs-icon-placeholder:before 
+	line-height: 72px
+	font-size: 24px
+
+.video-js .vjs-volume-panel 
+	margin-left: auto 
+	display: flex
+	align-items: center
+
+
+
+.video-js .vjs-control-bar 
+	opacity: 1 !important
+	visibility: visible !important
+	transition: opacity 0.3s ease !important
+
+
+.video-js .vjs-time-tooltip
+	font-size: .875rem !important
+
+
+.video-js 
+	.vjs-big-play-button
+		display: none !important
+		// width: r(160px) !important
+		// min-width: r(160px)  !important
+		// height: r(160px) !important
+		// @apply overflow-visible bg-transparent border-none
+		// background: none !important
+		// &::before,&::after
+		// 	content: ''
+		// 	@apply block absolute inset-0 overflow-hidden rounded-full pointer-events-none z-10  transition w-full h-full border border-white
+		// 	animation: ripple 2s linear infinite
+		// &::before
+		// 	animation-delay: 0s
+		// &::after
+		// 	animation-delay: 1s
+		// .vjs-icon-placeholder
+		// 	width: r(160px) !important
+		// 	min-width: r(160px)  !important
+		// 	height: r(160px) !important
+		// 	@apply bg-white block overflow-hidden rounded-full bg-opacity-20 
+		// 	&:before
+		// 		@apply font-Awesome6  flex-center text-40 font-black text-white  absolute-center  overflow-hidden
+		// 		@apply rounded-full !#{important}
+		// 		content: "\f04b"
+		// .vjs-control-text
+		// 	position: static
+		// 	font-size: 0
+		// 	&::after
+		// 		content: ''
+		// 		@apply block absolute inset-0 overflow-hidden rounded-full pointer-events-none z-10  transition w-full h-full border border-white
+		// 		animation: ripple 2s linear infinite
+		// 		animation-delay: 2s

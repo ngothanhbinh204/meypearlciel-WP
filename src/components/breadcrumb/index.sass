@@ -1,0 +1,103 @@
+// .rank-math-breadcrumb
+// 	min-height: 58px
+// 	@apply   flex-start  h-full border-b border-b-grey-200 py-2
+// 	p
+// 		@apply  flex font-normal mb-0   flex-start flex-wrap relative  text-18 text-grey-500
+// 		justify-content: flex-start
+// 		align-items: center
+// 		*
+// 			@apply  font-normal
+// 		span 
+// 			@apply whitespace-nowrap  text-18
+// 			*
+// 				@apply  text-18
+// 		.separator
+// 			margin: 0 
+// 			padding: 0 20px
+// 			font-size: 0
+// 			width: auto
+// 			@apply relative
+// 			@media screen and ( max-width: 576px)
+// 				@apply mx-0
+// 			&:first-child
+// 				margin-left: 24px !important
+// 			&:after
+// 				content: ''
+// 				@apply  block font-normal pointer-events-none z-10   bg-grey-500
+// 				height: 18px
+// 				width: 1px
+// 				@media screen and ( max-width: 1024px)
+// 					font-size: 14px
+// 				@media screen and ( max-width: 576px)
+// 					@apply left-[-6px]
+// 		.last
+// 			margin-top: 3px
+// 			@apply  whitespace-normal font-bold
+// 		a
+// 			@apply whitespace-nowrap  text-18 relative text-grey-500
+// 			@media screen and ( max-width: 576px)
+// 				@apply  mt-1 
+// 			+ .separator
+// 				margin: 0
+// 			&:first-child
+// 				width: 18px
+// 				height: 18px
+// 				@apply flex-center
+// 				font-size: 0 !important
+// 				margin-top: 0 !important
+// 				&:before
+// 					content: '\f015'
+// 					font-family: 'Font Awesome 6 Pro'
+// 					@apply  block pointer-events-none z-10 font-black text-16  
+
+
+
+.global-breadcrumb
+	@apply bg-grey-50 overflow-hidden relative z-60 
+.rank-math-breadcrumb
+	@apply  flex-start  h-full  py-2  min-h-[40px] overflow-x-auto
+	p
+		@apply  flex font-normal mb-0  flex-start relative  text-lg text-grey-800 whitespace-nowrap
+		justify-content: center
+		align-items: center
+		@screen max-md
+			@apply text-sm
+		*
+			@apply  font-normal
+		span 
+			@apply whitespace-nowrap  text-lg
+			*
+				@apply  text-lg
+			@screen max-md
+				@apply text-sm
+				*
+					@apply text-sm
+		.separator
+			margin: 0 
+			padding: 0 20px
+			font-size: 0
+			width: auto
+			@apply relative
+			@media screen and ( max-width: 576px)
+				@apply mx-0
+			&:first-child
+				margin-left: 24px !important
+			&:after
+				content: "\f054"
+				@apply  block font-normal pointer-events-none z-10   text-grey-800 font-Awesome6 text-sm
+				height: 16px
+				width: 14px
+				@media screen and ( max-width: 1024px)
+					font-size: 14px
+				@media screen and ( max-width: 576px)
+					@apply left-[-6px]
+		.last
+			margin-top: 3px
+			@apply   text-primary-1
+		a
+			@apply whitespace-nowrap  text-lg relative text-grey-800
+			@media screen and ( max-width: 576px)
+				@apply  mt-1  text-sm
+			+ .separator
+				margin: 0
+	
