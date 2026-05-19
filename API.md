@@ -2,18 +2,22 @@
 
 Base URL: `/wp-json/re/v1`
 ví dụ: `https://example.com/wp-json/re/v1/masterplan`,
-
+`https://example.com/wp-json/re/v1/buildings`
+`https://example.com/wp-json/re/v1/building/{id}/floors`
+`https://example.com/wp-json/re/v1/apartment/{id}`
+`https://example.com/wp-json/re/v1/page/{page_id}/apartment-layout`
+`https://example.com/wp-json/re/v1/page/{page_id}/utilities`
 ---
 
 ## Masterplan (Home-7 — Mặt bằng dự án)
 
 | Method | Endpoint | Mô tả |
 |--------|----------|-------|
-| GET | `/masterplan` | Full JSON: tất cả buildings + floors + apartments (Level 1-4) |
-| GET | `/buildings` | Building list + hotspot polygon (Level 1) |
-| GET | `/building/{id}/floors` | Floors + apartments của một tòa (Level 2-3) |
+| GET | `/masterplan` | Full JSON: tất cả tòa nhà + Tầng + căn hộ (Level 1-4) |
+| GET | `/buildings` | Danh sách tòa nhà + polygon hotspot (Level 1) |
+| GET | `/building/{id}/floors` | Tầng + căn hộ của một tòa (Level 2-3) |
 | GET | `/apartment/{id}` | Chi tiết căn hộ: gallery, tiện ích, polygon (Level 4) |
-| GET | `/page/{page_id}/apartment-layout` | Buildings + polygon/color từ section ACF + floors + apartments |
+| GET | `/page/{page_id}/apartment-layout` | Tòa nhà + polygon/màu từ section ACF + tầng + căn hộ |
 
 ### `/page/{page_id}/apartment-layout` — Response
 ```json

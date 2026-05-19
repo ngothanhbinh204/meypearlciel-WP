@@ -1,0 +1,81 @@
+{
+  "key": "group_re_apt_template",
+  "title": "Thông tin mẫu căn hộ",
+  "fields": [
+    {
+      "key": "field_tpl_info_tab",
+      "label": "Thông tin mẫu",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+
+    {
+      "key": "field_tpl_area",
+      "label": "Diện tích điển hình (m²)",
+      "name": "template_area",
+      "type": "number",
+      "instructions": "Diện tích thông thủy đặc trưng của mẫu này (dùng để hiển thị)",
+      "min": 0,
+      "step": 0.01,
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_tpl_description",
+      "label": "Mô tả mẫu",
+      "name": "template_description",
+      "type": "textarea",
+      "rows": 3,
+      "wrapper": { "width": "", "class": "", "id": "" }
+    },
+    {
+      "key": "field_tpl_media_tab",
+      "label": "Hình ảnh",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_tpl_layout",
+      "label": "Sơ đồ thiết kế (Layout)",
+      "name": "template_layout",
+      "type": "image",
+      "return_format": "array",
+      "preview_size": "medium",
+      "instructions": "Ảnh sơ đồ/layout của mẫu căn hộ. Nếu căn hộ dùng mẫu này sẽ ưu tiên hiển thị ảnh layout từ đây.",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_tpl_gallery",
+      "label": "Thư viện hình ảnh",
+      "name": "template_gallery",
+      "type": "gallery",
+      "return_format": "array",
+      "preview_size": "medium",
+      "insert": "append",
+      "min": 0,
+      "instructions": "Bộ ảnh dùng chung cho tất cả căn hộ áp dụng mẫu này. Ưu tiên hơn gallery riêng của từng căn hộ.",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "re_apt_template"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": ["permalink", "the_content", "excerpt", "discussion", "comments", "revisions", "slug", "author", "format", "categories", "tags", "send-trackbacks"],
+  "active": true,
+  "description": "Fields cho CPT re_apt_template — Mẫu căn hộ dùng chung",
+  "show_in_rest": 0
+}

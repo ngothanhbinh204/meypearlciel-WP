@@ -30,8 +30,8 @@ $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image)
 				<div class="item flex gap-2 pb-3 border-b border-b-Primary-2/20">
 					<?php if (!empty($stat['icon'])) : ?>
 					<div class="icon">
-						<!-- <img class="img-svg" src="<?php echo esc_url($stat['icon']); ?>" alt=""> -->
-						<i class="<?php echo esc_url($stat['icon']); ?>"></i>
+						<img class="img-svg" src="<?php echo esc_url($stat['icon']); ?>" alt="">
+
 					</div>
 					<?php endif; ?>
 					<div class="content">

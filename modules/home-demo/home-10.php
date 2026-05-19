@@ -35,7 +35,7 @@ $cf7_popup_form_id = (int) ($data['popup_contact_form'] ?? 0);
 				</h2>
 				<?php endif; ?>
 				<div class="logo rem:max-w-[324px]" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">
-					<a class="img-ratio ratio:pt-[124_324]" href="#">
+					<a class="img-ratio ratio:pt-[80_324]" href="#">
 						<img class="lozad" data-src="<?php echo esc_url($logo_section); ?>" alt="">
 					</a>
 				</div>
@@ -78,13 +78,13 @@ $cf7_popup_form_id = (int) ($data['popup_contact_form'] ?? 0);
 		</div>
 		<div class="col-right flex flex-col justify-center xl:p-10 p-6">
 			<?php if ($logo_popup) : ?>
-			<div class="logo rem:max-w-[248px] mb-5">
-				<a class="img-ratio ratio:pt-[60_248]" href="#">
+			<div class="rem:max-w-[248px] w-full mx-auto xl:mb-15 mb-base">
+				<a class="img-ratio ratio:pt-[80_248]" href="#">
 					<img class="lozad" data-src="<?php echo esc_url($logo_popup); ?>" alt="">
 				</a>
 			</div>
 			<?php endif; ?>
-			<div class="title heading-4 font-bold font-fontHeading text-Primary-1 mb-5">
+			<div class="title heading-4 font-bold font-fontHeading text-Primary-1 mb-5 text-center">
 				Liên hệ nhận thông tin tư vấn dự án
 			</div>
 			<?php if ($cf7_popup_form_id) : ?>

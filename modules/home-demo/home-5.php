@@ -1,32 +1,108 @@
 <?php
 /**
  * Home Section 5 — Hệ tiện ích ALL IN ONE
- * ACF layout: utilities_all_in_one (index 0)
- * Fields: section_title, section_description, masterplan_image (url), floor_groups repeater
- * floor_groups sub-fields: floor_name, floor_code, amenities repeater (amenity_name, amenity_description)
+ * ACF layout: utilities_all_in_one trong page_sections
  */
 
-$cc_sections  = get_query_var('cc_sections', []);
-$data         = $cc_sections['utilities_all_in_one'][0] ?? null;
+if (!function_exists('cc_home5_amenity_name')) {
+	function cc_home5_amenity_name(array $amenity) {
+		return trim((string) ($amenity['amenity_name'] ?? $amenity['name'] ?? ''));
+	}
+}
+
+if (!function_exists('cc_home5_floor_name')) {
+	function cc_home5_floor_name(array $group) {
+		return trim((string) ($group['floor_name'] ?? $group['name'] ?? ''));
+	}
+}
+
+if (!function_exists('cc_home5_floor_code')) {
+	function cc_home5_floor_code(array $group) {
+		$code = trim((string) ($group['floor_code'] ?? $group['code'] ?? ''));
+		if ($code !== '') {
+			return $code;
+		}
+		$name = cc_home5_floor_name($group);
+		return $name !== '' ? sanitize_title($name) : '';
+	}
+}
+
+if (!function_exists('cc_home5_group_amenities')) {
+	function cc_home5_group_amenities(array $group) {
+		foreach (array('amenities', 'amenity_list', 'floor_amenities') as $key) {
+			if (!empty($group[$key]) && is_array($group[$key])) {
+				return $group[$key];
+			}
+		}
+		return array();
+	}
+}
+
+if (!function_exists('cc_home5_amenity_map_id')) {
+	function cc_home5_amenity_map_id(array $amenity, $floor_code = '') {
+		foreach (array('mapping_id', 'amenity_map_id', 'map_id', 'data_title', 'data_title_imp') as $key) {
+			if (!empty($amenity[$key])) {
+				return trim((string) $amenity[$key]);
+			}
+		}
+
+		$floor_code = trim((string) $floor_code);
+		$name       = cc_home5_amenity_name($amenity);
+
+		if ($floor_code !== '' && $name !== '') {
+			$slug = sanitize_title($name);
+			if ($slug !== '') {
+				return sanitize_title($floor_code) . '-' . $slug;
+			}
+		}
+
+		if ($name !== '') {
+			return sanitize_title($name);
+		}
+
+		return '';
+	}
+}
+
+if (!function_exists('cc_home5_amenity_description')) {
+	function cc_home5_amenity_description(array $amenity) {
+		foreach (array('amenity_description', 'description', 'amenity_tooltip', 'tooltip') as $key) {
+			if (!empty($amenity[$key])) {
+				return $amenity[$key];
+			}
+		}
+		return '';
+	}
+}
+
+$cc_sections   = get_query_var('cc_sections', array());
+$data          = $cc_sections['utilities_all_in_one'][0] ?? null;
+
+if (!$data && !empty($GLOBALS['RE_UTILITIES']) && is_array($GLOBALS['RE_UTILITIES'])) {
+	$data = $GLOBALS['RE_UTILITIES'];
+}
+
 $section_title = $data['section_title'] ?? '';
-$description  = $data['section_description'] ?? '';
-$masterplan   = $data['masterplan_image'] ?? '';
-$floor_groups = $data['floor_groups'] ?? [];
+$description   = $data['section_description'] ?? '';
+$masterplan    = $data['masterplan_image'] ?? '';
+$floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups'] : array();
 ?>
 <section class="home-5 section-swiper relative overflow-hidden">
-	<div class="vector-1"><img src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-h-5-1.svg'); ?>" alt=""></div>
-	<div class="vector-2"><img src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-h-5-2.svg'); ?>" alt=""></div>
+	<div class="vector-1"><img src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-h-5-1.svg'); ?>"
+			alt=""></div>
+	<div class="vector-2"><img src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-h-5-2.svg'); ?>"
+			alt=""></div>
 	<div class="image-map-wrapper">
-		<?php if ($masterplan) : ?>
-		<div class="img"><img src="<?php echo esc_url($masterplan); ?>" alt=""></div>
-		<?php endif; ?>
+		<?php echo do_shortcode('[tienich]'); ?>
 		<div class="bg-overlay"></div>
 	</div>
 	<div class="section-amenity-wrapper">
 		<div class="wrap-inner xl:mb-16 mb-base text-white">
-			<div class="sub heading-4 font-fontHeading font-bold text-Primary-3" data-aos="fade-right" data-aos-delay="200" data-aos-duration="700">Hệ tiện ích</div>
+			<div class="sub heading-4 font-fontHeading font-bold text-Primary-3" data-aos="fade-right"
+				data-aos-delay="200" data-aos-duration="700">Hệ tiện ích</div>
 			<?php if ($section_title) : ?>
-			<div class="title heading-2 font-fontHeading font-bold uppercase mb-1" data-aos="fade-right" data-aos-delay="400" data-aos-duration="700">
+			<div class="title heading-2 font-fontHeading font-bold uppercase mb-1" data-aos="fade-right"
+				data-aos-delay="400" data-aos-duration="700">
 				<?php echo esc_html($section_title); ?>
 			</div>
 			<?php endif; ?>
@@ -39,23 +115,30 @@ $floor_groups = $data['floor_groups'] ?? [];
 		<?php if ($floor_groups) : ?>
 		<div class="amenity-legend-wrap mt-7" data-aos="fade-right" data-aos-delay="800" data-aos-duration="700">
 			<div class="wrap-item-toggle flex flex-col gap-3">
-				<?php foreach ($floor_groups as $group) : ?>
-				<div class="item-toggle group transition-300">
+				<?php foreach ($floor_groups as $group) :
+					$floor_code = cc_home5_floor_code($group);
+					$amenities  = cc_home5_group_amenities($group);
+					?>
+				<div class="item-toggle group transition-300"<?php echo $floor_code ? ' data-floor-code="' . esc_attr($floor_code) . '"' : ''; ?>>
 					<div class="title flex items-center justify-between cursor-pointer transition-300">
 						<div class="toggle-wrapper flex items-center gap-5">
 							<div class="floor body-3 font-semibold text-Primary-3 font-fontHeading">
-								<?php echo esc_html($group['floor_name']); ?>
+								<?php echo esc_html(cc_home5_floor_name($group)); ?>
 							</div>
 						</div>
 						<i class="fa-light fa-plus text-xl ml-auto transition-300 text-white"></i>
 					</div>
-					<?php if (!empty($group['amenities'])) : ?>
+					<?php if ($amenities) : ?>
 					<div class="content" style="display: none;">
 						<div class="amenity-legend-list">
-							<?php foreach ($group['amenities'] as $i => $amenity) : ?>
-							<a class="amenity-legend-item" href="#">
-								<div class="amenity-legend-item-number"><span><?php echo ($i + 1); ?></span></div>
-								<div class="amenity-legend-item-text"><?php echo esc_html($amenity['amenity_name']); ?></div>
+							<?php foreach ($amenities as $i => $amenity) :
+								$map_id = cc_home5_amenity_map_id($amenity, $floor_code);
+								?>
+							<a class="amenity-legend-item" href="#"
+								<?php echo $map_id ? ' data-map-id="' . esc_attr($map_id) . '"' : ''; ?>>
+								<div class="amenity-legend-item-number"><span><?php echo (int) $i + 1; ?></span></div>
+								<div class="amenity-legend-item-text"><?php echo esc_html(cc_home5_amenity_name($amenity)); ?>
+								</div>
 							</a>
 							<?php endforeach; ?>
 						</div>
@@ -66,5 +149,55 @@ $floor_groups = $data['floor_groups'] ?? [];
 			</div>
 		</div>
 		<?php endif; ?>
+	</div>
+
+	<div class="wrap-amenity-tooltip hidden">
+		<?php
+		if (!$data) {
+			echo '<!-- home-5 tooltip: $data null — thiếu utilities_all_in_one hoặc RE_UTILITIES -->';
+		} elseif (!$floor_groups) {
+			echo '<!-- home-5 tooltip: floor_groups rỗng -->';
+		}
+
+		foreach ($floor_groups as $group) {
+			$floor_code = cc_home5_floor_code($group);
+			$floor_name = cc_home5_floor_name($group);
+			$amenities  = cc_home5_group_amenities($group);
+
+			foreach ($amenities as $amenity) {
+				$name = cc_home5_amenity_name($amenity);
+				$desc = cc_home5_amenity_description($amenity);
+				$map_id = cc_home5_amenity_map_id($amenity, $floor_code);
+
+				if ($map_id === '' && $name === '' && $desc === '') {
+					continue;
+				}
+				if ($map_id === '' && $name !== '') {
+					$map_id = sanitize_title($name);
+				}
+				?>
+		<div class="amenity-tooltip-wrapper" data-title="<?php echo esc_attr($map_id); ?>"
+			data-map-id="<?php echo esc_attr($map_id); ?>"
+			<?php echo $floor_code ? ' data-floor-code="' . esc_attr($floor_code) . '"' : ''; ?>>
+			<div class="amenity-tooltip-item">
+				<div class="plan-tooltip-icon">
+					<i class="fa-regular fa-plus"></i>
+				</div>
+				<?php if ($name !== '') : ?>
+				<div class="amenity-tooltip-item-title">
+					<h3><?php echo esc_html($name); ?></h3>
+				</div>
+				<?php endif; ?>
+				<?php if ($desc !== '') : ?>
+				<div class="amenity-tooltip-item-content">
+					<?php echo wp_kses_post($desc); ?>
+				</div>
+				<?php endif; ?>
+			</div>
+		</div>
+				<?php
+			}
+		}
+		?>
 	</div>
 </section>

@@ -55,6 +55,23 @@ function re_register_post_types()
     ));
 
     // ─────────────────────────────────────────────
+    // CPT: re_apt_template — Mẫu căn hộ (Template)
+    // Tái sử dụng cho nhiều căn hộ cùng loại.
+    // Nếu căn hộ chọn template → ưu tiên gallery/layout của template.
+    // ─────────────────────────────────────────────
+    create_post_type('re_apt_template', array(
+        'name'          => 'Mẫu căn hộ',
+        'singular_name' => 'Mẫu căn hộ',
+        'slug'          => 're-apt-template',
+        'icon'          => 'dashicons-welcome-widgets-menus',
+        'menu_position' => 28,
+        'supports'      => array('title', 'thumbnail'),
+        'has_archive'   => false,
+        'show_in_rest'  => true,
+        'exclude_from_search' => true,
+    ));
+
+    // ─────────────────────────────────────────────
     // CPT: re_utility — Danh mục tiện ích chung
     // Dùng làm catalog: editor tạo sẵn các tiện ích
     // (icon + tên), apartment chỉ cần chọn + nhập value

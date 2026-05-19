@@ -28,11 +28,12 @@ function canhcam_style()
 	 * Styles
 	 */
 
-	wp_enqueue_style('frontend-style-global', THEME_URI . '/styles/core.min.css', array(), GENERATE_VERSION);
-	wp_enqueue_style('frontend-style-tailwind', THEME_URI . '/styles/tailwind.min.css', array(), GENERATE_VERSION);
-	wp_enqueue_style('frontend-style-main', THEME_URI . '/styles/main.min.css', array(), GENERATE_VERSION);
+	// wp_enqueue_style('frontend-style-global', THEME_URI . '/styles/core.min.css', array(), GENERATE_VERSION);
+	// wp_enqueue_style('frontend-style-tailwind', THEME_URI . '/styles/tailwind.min.css', array(), GENERATE_VERSION);
+	// wp_enqueue_style('frontend-style-main', THEME_URI . '/styles/main.min.css', array(), GENERATE_VERSION);
 	wp_enqueue_style('dist-css-core', THEME_URI . '/dist/css/core.min.css', array(), GENERATE_VERSION);
 	wp_enqueue_style('dist-css-main', THEME_URI . '/dist/css/main.min.css', array(), GENERATE_VERSION);
+	// include main.js
 
 	/**
 	 * Script
@@ -41,17 +42,19 @@ function canhcam_style()
 		$my_license = CanhCam_Licsence_Class::init();
 		if (!$my_license->isDateExpiration()) {
 			if (stripos($_SERVER['HTTP_USER_AGENT'], 'Chrome-Lighthouse') === false) {
-				wp_enqueue_script('front-end-global', THEME_URI . '/scripts/core.min.js', '', '', true);
-				wp_enqueue_script('front-end-main', THEME_URI . '/scripts/main.min.js', '', '', true);
+				// wp_enqueue_script('front-end-global', THEME_URI . '/scripts/core.min.js', '', '', true);
+				// wp_enqueue_script('front-end-main', THEME_URI . '/scripts/main.min.js', '', '', true);
 				wp_enqueue_script('dist-js-core', THEME_URI . '/dist/js/core.min.js', '', GENERATE_VERSION, true);
 				wp_enqueue_script('dist-js-main', THEME_URI . '/dist/js/main.min.js', '', GENERATE_VERSION, true);
 			}
 		}
 	}
-	wp_enqueue_script('front-end-global', THEME_URI . '/scripts/core.min.js', '', '', true);
-				wp_enqueue_script('front-end-main', THEME_URI . '/scripts/main.min.js', '', '', true);
+	// wp_enqueue_script('front-end-global', THEME_URI . '/scripts/core.min.js', '', '', true);
+	// 			wp_enqueue_script('front-end-main', THEME_URI . '/scripts/main.min.js', '', '', true);
 				wp_enqueue_script('dist-js-core', THEME_URI . '/dist/js/core.min.js', '', GENERATE_VERSION, true);
 				wp_enqueue_script('dist-js-main', THEME_URI . '/dist/js/main.min.js', '', GENERATE_VERSION, true);
+				wp_enqueue_script('src-main', THEME_URI . '/src/js/main.js', array(), GENERATE_VERSION, true);
+
 }
 
 if (!function_exists('canhcam_setup')) :

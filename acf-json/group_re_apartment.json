@@ -37,21 +37,12 @@
       "wrapper": { "width": "50", "class": "", "id": "" }
     },
     {
-      "key": "field_apartment_name",
-      "label": "Tên căn hộ",
-      "name": "apartment_name",
-      "type": "text",
-      "instructions": "VD: Căn 12B, A-1204",
-      "required": 1,
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
       "key": "field_apartment_code",
       "label": "Mã căn hộ",
       "name": "apartment_code",
       "type": "text",
       "instructions": "VD: A1204, S1-12B",
-      "required": 1,
+      "required": 0,
       "wrapper": { "width": "33", "class": "", "id": "" }
     },
     {
@@ -146,6 +137,20 @@
       "type": "tab",
       "placement": "top",
       "endpoint": 0
+    },
+    {
+      "key": "field_apt_template_ref",
+      "label": "Mẫu căn hộ (Template)",
+      "name": "apt_template_ref",
+      "type": "post_object",
+      "instructions": "Chọn mẫu căn hộ. Nếu có, thư viện ảnh và sơ đồ thiết kế từ mẫu sẽ được ưu tiên hiển thị hơn ảnh riêng của căn này.",
+      "required": 0,
+      "post_type": ["re_apt_template"],
+      "filters": ["search"],
+      "return_format": "id",
+      "ui": 1,
+      "allow_null": 1,
+      "wrapper": { "width": "100", "class": "", "id": "" }
     },
     {
       "key": "field_apartment_layout",

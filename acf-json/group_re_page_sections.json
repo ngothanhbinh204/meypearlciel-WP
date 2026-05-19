@@ -170,8 +170,8 @@
                   "key": "field_stat_icon",
                   "label": "Icon (URL hoặc class FA)",
                   "name": "icon",
-                  "type": "text",
-                  "instructions": "VD: /img/icon/Users.svg hoặc fa-light fa-building",
+                  "type": "image",
+				  "return_format": "url",
                   "wrapper": { "width": "30", "class": "", "id": "" }
                 },
                 {
@@ -299,72 +299,74 @@
             },
             {
               "key": "field_uaio_floor_groups",
-              "label": "Nhóm tầng / khu vực",
+              "label": "Danh sách tầng",
               "name": "floor_groups",
               "type": "repeater",
-              "instructions": "Mỗi item là một tầng / khu vực có danh sách tiện ích riêng",
+              "instructions": "Mỗi item = 1 tầng. Số tầng phải khớp với prefix polygon trong Image Map Pro (floor-{number}-zoom, floor-{number}-*).",
               "layout": "block",
               "button_label": "Thêm tầng",
               "sub_fields": [
                 {
+                  "key": "field_uaio_floor_number",
+                  "label": "Số tầng (prefix IMP)",
+                  "name": "floor_number",
+                  "type": "text",
+                  "required": 1,
+                  "instructions": "Số nguyên hoặc code ngắn — dùng làm prefix polygon IMP. VD: nhập '1' → JS sẽ tìm polygon 'floor-1-zoom' và 'floor-1-*'",
+                  "wrapper": { "width": "25", "class": "", "id": "" }
+                },
+                {
                   "key": "field_uaio_floor_name",
-                  "label": "Tên tầng / khu vực",
+                  "label": "Tên hiển thị (Tab label)",
                   "name": "floor_name",
                   "type": "text",
                   "required": 1,
-                  "wrapper": { "width": "50", "class": "", "id": "" }
+                  "instructions": "Tên hiển thị trên tab sidebar. VD: Tầng 1, Tầng 2, Mái Outdoor",
+                  "wrapper": { "width": "75", "class": "", "id": "" }
                 },
-                {
-                  "key": "field_uaio_floor_code",
-                  "label": "Mã tầng",
-                  "name": "floor_code",
-                  "type": "text",
-                  "instructions": "VD: F1, OUTDOOR, ROOFTOP",
-                  "wrapper": { "width": "50", "class": "", "id": "" }
-                },
-                {
-                  "key": "field_uaio_camera_state",
-                  "label": "Camera state (JSON)",
-                  "name": "camera_state",
-                  "type": "textarea",
-                  "rows": 2,
-                  "instructions": "JSON viewport state — do not edit manually",
-                  "wrapper": { "width": "100", "class": "", "id": "" }
-                },
+               
                 {
                   "key": "field_uaio_amenities",
                   "label": "Danh sách tiện ích",
                   "name": "amenities",
                   "type": "repeater",
-                  "layout": "row",
+                  "layout": "table",
                   "button_label": "Thêm tiện ích",
                   "sub_fields": [
+                    {
+                      "key": "field_uaio_amenity_number",
+                      "label": "STT",
+                      "name": "amenity_number",
+                      "type": "number",
+                      "instructions": "Số thứ tự hiển thị trong sidebar",
+                      "min": 1,
+                      "wrapper": { "width": "10", "class": "", "id": "" }
+                    },
                     {
                       "key": "field_uaio_amenity_name",
                       "label": "Tên tiện ích",
                       "name": "amenity_name",
                       "type": "text",
                       "required": 1,
-                      "wrapper": { "width": "50", "class": "", "id": "" }
+                      "wrapper": { "width": "10", "class": "", "id": "" }
+                    },
+                    {
+                      "key": "field_uaio_amenity_mapping_id",
+                      "label": "Mapping ID (data-title IMP)",
+                      "name": "amenity_mapping_id",
+                      "type": "text",
+                      "required": 1,
+                      "instructions": "Bắt buộc khớp chính xác với data-title của polygon trong Image Map Pro. VD: floor-1-ballroom, floor-2-kidclub",
+                      "wrapper": { "width": "30", "class": "", "id": "" }
                     },
                     {
                       "key": "field_uaio_amenity_description",
-                      "label": "Mô tả",
+                      "label": "Mô tả (tooltip)",
                       "name": "amenity_description",
-                      "type": "wysiwyg",
-                      "tabs": "all",
-                      "toolbar": "basic",
-                      "media_upload": 0,
-                      "wrapper": { "width": "50", "class": "", "id": "" }
-                    },
-                    {
-                      "key": "field_uaio_amenity_polygon",
-                      "label": "Dữ liệu polygon",
-                      "name": "amenity_polygon",
                       "type": "textarea",
                       "rows": 2,
-                      "instructions": "JSON polygon — do not edit manually. Use the Polygon Editor.",
-                      "wrapper": { "width": "100", "class": "", "id": "" }
+                      "instructions": "Nội dung hiển thị trong tooltip khi hover tiện ích",
+                      "wrapper": { "width": "50", "class": "", "id": "" }
                     }
                   ]
                 }

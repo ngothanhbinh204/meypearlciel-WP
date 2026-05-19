@@ -11,15 +11,6 @@
       "endpoint": 0
     },
     {
-      "key": "field_building_name",
-      "label": "Tên tòa",
-      "name": "building_name",
-      "type": "text",
-      "instructions": "VD: Tòa A, Block S1",
-      "required": 1,
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
       "key": "field_building_code",
       "label": "Mã tòa",
       "name": "building_code",

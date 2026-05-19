@@ -22,7 +22,7 @@ $news_query = new WP_Query([
 $posts = $news_query->posts;
 $popup_post = $posts[0] ?? null;
 ?>
-<section class="home-9 relative overflow-hidden section-py bg-Primary-2">
+<section class="home-9 relative overflow-hidden bg-Primary-2">
 	<div class="vector">
 		<img class="img-svg" src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home9-embed.svg'); ?>" alt="">
 	</div>
@@ -32,7 +32,7 @@ $popup_post = $posts[0] ?? null;
 				Tin tức
 			</h2>
 			<?php if ($posts) : ?>
-			<div class="wrapper-list grid md:grid-cols-3 grid-cols-1 gap-base">
+			<div class="wrapper-list grid grid-cols-1 gap-base">
 				<?php foreach ($posts as $i => $post) :
 					$thumbnail_url = get_the_post_thumbnail_url($post->ID, 'large');
 					$permalink     = get_permalink($post->ID);

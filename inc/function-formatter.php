@@ -119,7 +119,7 @@ function format_building( $post_id, $include_floors = false ) {
 
     $building = array(
         'id'            => (int) $post_id,
-        'name'          => get_field( 'building_name', $post_id ) ?: get_the_title( $post_id ),
+        'name'          => get_the_title( $post_id ),
         'code'          => get_field( 'building_code', $post_id ) ?: '',
         'status'        => get_field( 'building_status', $post_id ) ?: 'available',
         'total_floor'   => (int) get_field( 'building_total_floor', $post_id ),
@@ -182,7 +182,7 @@ function format_floor( $post_id, $include_apartments = true ) {
 
     $floor = array(
         'id'          => (int) $post_id,
-        'name'        => get_field( 'floor_name', $post_id ) ?: get_the_title( $post_id ),
+        'name'        => get_the_title( $post_id ),
         'number'      => (int) get_field( 'floor_number', $post_id ),
         'number_end'  => (int) get_field( 'floor_number_end', $post_id ) ?: null,
         'status'      => get_field( 'floor_status', $post_id ) ?: 'available',
@@ -242,8 +242,28 @@ function format_apartment( $post_id ) {
         return $order_a <=> $order_b;
     } );
 
-    // Gallery
-    $gallery = re_format_gallery( get_field( 'apartment_gallery', $post_id ) ?: array() );
+    // Template — nếu căn hộ chọn mẫu, ưu tiên gallery/layout từ mẫu đó
+    $tpl_id      = (int) get_field( 'apt_template_ref', $post_id );
+    $tpl_gallery = array();
+    $tpl_layout  = null;
+    if ( $tpl_id ) {
+        $tpl_raw_gallery = get_field( 'template_gallery', $tpl_id );
+        if ( ! empty( $tpl_raw_gallery ) ) {
+            $tpl_gallery = re_format_gallery( $tpl_raw_gallery );
+        }
+        $tpl_raw_layout = get_field( 'template_layout', $tpl_id );
+        if ( ! empty( $tpl_raw_layout ) ) {
+            $tpl_layout = re_format_image( $tpl_raw_layout );
+        }
+    }
+
+    // Gallery: ưu tiên template gallery nếu có, fallback căn hộ riêng
+    $gallery = ! empty( $tpl_gallery )
+        ? $tpl_gallery
+        : re_format_gallery( get_field( 'apartment_gallery', $post_id ) ?: array() );
+
+    // Layout image: ưu tiên template layout nếu có, fallback căn hộ riêng
+    $layout = $tpl_layout ?: re_format_image( get_field( 'apartment_layout', $post_id ) );
 
     // Interaction: polygon drawn via Polygon Editor + display options
     $interaction = array(
@@ -254,7 +274,7 @@ function format_apartment( $post_id ) {
 
     return array(
         'id'          => (int) $post_id,
-        'name'        => get_field( 'apartment_name', $post_id ) ?: get_the_title( $post_id ),
+        'name'        => get_the_title( $post_id ),
         'code'        => get_field( 'apartment_code', $post_id )        ?: '',
         'type'        => get_field( 'apartment_type', $post_id )        ?: '',
         'status'      => get_field( 'apartment_status', $post_id )      ?: 'available',
@@ -262,8 +282,9 @@ function format_apartment( $post_id ) {
         'area_gross'  => (float) get_field( 'apartment_area_gross', $post_id ),
         'direction'   => get_field( 'apartment_direction', $post_id )   ?: '',
         'description' => get_field( 'apartment_description', $post_id ) ?: '',
-        'layout'      => re_format_image( get_field( 'apartment_layout', $post_id ) ),
+        'layout'      => $layout,
         'gallery'     => $gallery,
+        'template_id' => $tpl_id ?: null,
         'facilities'  => $facilities,
         'interaction' => $interaction,
         'floor_id'    => (int) get_field( 'parent_floor', $post_id ),
@@ -510,6 +531,8 @@ function re_rest_get_buildings( WP_REST_Request $request ) {
 
 /**
  * Callback: GET /re/v1/building/{id}/floors
+ * Trả về full building data (name, description, master_plan, floors, apartments).
+ * Frontend dùng để render popup tòa nhà sau khi click từ Image Map Pro.
  */
 function re_rest_get_building_floors( WP_REST_Request $request ) {
     $building_id = (int) $request->get_param( 'id' );
@@ -518,12 +541,10 @@ function re_rest_get_building_floors( WP_REST_Request $request ) {
         return new WP_Error( 'not_found', 'Không tìm thấy tòa nhà', array( 'status' => 404 ) );
     }
 
-    $floors = re_get_floors_by_building( $building_id );
+    // include_floors = true: kèm toàn bộ floors + apartments
+    $building = format_building( $building_id, true );
 
-    return rest_ensure_response( array(
-        'building_id' => $building_id,
-        'floors'      => $floors,
-    ) );
+    return rest_ensure_response( $building );
 }
 
 /**
@@ -730,14 +751,14 @@ function re_format_utilities_section( $layout ) {
 
         foreach ( $floor['amenities'] ?? array() as $a ) {
             $amenities[] = array(
-                'name'        => $a['amenity_name']        ?? '',
+                'name'        => get_the_title( $a['amenity_ref'] ?? 0 ),
                 'description' => $a['amenity_description'] ?? '',
                 'polygon'     => re_format_polygon( $a['amenity_polygon'] ?? '' ),
             );
         }
 
         $floor_groups[] = array(
-            'name'         => $floor['floor_name'] ?? '',
+            'name'         => get_the_title( $floor['floor_ref'] ?? 0 ),
             'code'         => $floor['floor_code'] ?? '',
             'camera_state' => re_format_camera_state( $floor['camera_state'] ?? '' ),
             'amenities'    => $amenities,

@@ -16,20 +16,11 @@
       "name": "parent_building",
       "type": "post_object",
       "instructions": "Chọn tòa nhà mà tầng này thuộc về",
-      "required": 1,
+      "required": 0,
       "post_type": ["re_building"],
       "filters": ["search"],
       "return_format": "id",
       "ui": 1,
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_floor_name",
-      "label": "Tên tầng",
-      "name": "floor_name",
-      "type": "text",
-      "instructions": "VD: Tầng 1, Tầng 4-35, Tầng kỹ thuật",
-      "required": 1,
       "wrapper": { "width": "50", "class": "", "id": "" }
     },
     {
@@ -38,7 +29,7 @@
       "name": "floor_number",
       "type": "number",
       "instructions": "Số thứ tự tầng dùng để sắp xếp. Tầng nhóm (4-35) nhập số đầu tiên",
-      "required": 1,
+      "required": 0,
       "min": 0,
       "step": 1,
       "wrapper": { "width": "33", "class": "", "id": "" }
