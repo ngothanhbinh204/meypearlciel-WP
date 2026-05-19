@@ -2,8 +2,8 @@
 /**
  * Home Section 10 — Liên hệ / CTA
  * ACF layout: cta (index 0)
- * Fields: title, subtitle, background_image, phone, button_text,
- *         contact_form (CF7 ID), popup_contact_form (CF7 ID)
+ * Fields: title, subtitle, background_image, phone, logo_section,
+ *         contact_form (CF7 ID), popup_image_left, logo_popup, popup_contact_form (CF7 ID)
  *
  * Popup: #intro-popup — Fancybox registration form modal
  */
@@ -17,14 +17,11 @@ $bg_image          = $data['background_image'] ?? null;
 $bg_url            = is_array($bg_image) ? ($bg_image['url'] ?? '') : $bg_image;
 $bg_style          = $bg_url ? ' style="background-image: url(' . esc_url($bg_url) . ')"' : '';
 $cf7_form_id       = (int) ($data['contact_form'] ?? 0);
+$logo_section      = $data['logo_section'] ?? '';
+$img_left_popup    = $data['popup_image_left'] ?? '';
+$logo_popup        = $data['logo_popup'] ?? '';
 $cf7_popup_form_id = (int) ($data['popup_contact_form'] ?? 0);
 
-// Developer logo — from options or static fallback
-$dev_logo_url = get_template_directory_uri() . '/img/logo-MeyGroup.png';
-$options_logo = get_field('footer_logo', 'options');
-if (is_array($options_logo) && !empty($options_logo['url'])) {
-	$dev_logo_url = $options_logo['url'];
-}
 ?>
 <section class="home-10 relative overflow-hidden section-py" <?php echo $bg_style; ?>>
 	<div class="container-fluid">
@@ -39,7 +36,7 @@ if (is_array($options_logo) && !empty($options_logo['url'])) {
 				<?php endif; ?>
 				<div class="logo rem:max-w-[324px]" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">
 					<a class="img-ratio ratio:pt-[124_324]" href="#">
-						<img class="lozad" data-src="<?php echo esc_url($dev_logo_url); ?>" alt="">
+						<img class="lozad" data-src="<?php echo esc_url($logo_section); ?>" alt="">
 					</a>
 				</div>
 			</div>
@@ -53,7 +50,7 @@ if (is_array($options_logo) && !empty($options_logo['url'])) {
 				<?php endif; ?>
 				<div class="my-8">
 					<?php if ($cf7_form_id) : ?>
-						<?php echo do_shortcode('[contact-form-7 id="' . esc_attr($cf7_form_id) . '"]'); ?>
+					<?php echo do_shortcode('[contact-form-7 id="' . esc_attr($cf7_form_id) . '"]'); ?>
 					<?php endif; ?>
 				</div>
 				<?php if ($phone) : ?>
@@ -73,21 +70,25 @@ if (is_array($options_logo) && !empty($options_logo['url'])) {
 		<div class="col-left">
 			<div class="img">
 				<a class="img-ratio ratio:pt-[696_600]" href="#">
-					<img class="lozad" data-src="<?php echo esc_url($dev_logo_url); ?>" alt="">
+					<?php if ($img_left_popup) : ?>
+					<img class="lozad" data-src="<?php echo esc_url($img_left_popup); ?>" alt="">
+					<?php endif; ?>
 				</a>
 			</div>
 		</div>
 		<div class="col-right flex flex-col justify-center xl:p-10 p-6">
+			<?php if ($logo_popup) : ?>
 			<div class="logo rem:max-w-[248px] mb-5">
 				<a class="img-ratio ratio:pt-[60_248]" href="#">
-					<img class="lozad" data-src="<?php echo esc_url($dev_logo_url); ?>" alt="">
+					<img class="lozad" data-src="<?php echo esc_url($logo_popup); ?>" alt="">
 				</a>
 			</div>
+			<?php endif; ?>
 			<div class="title heading-4 font-bold font-fontHeading text-Primary-1 mb-5">
 				Liên hệ nhận thông tin tư vấn dự án
 			</div>
 			<?php if ($cf7_popup_form_id) : ?>
-				<?php echo do_shortcode('[contact-form-7 id="' . esc_attr($cf7_popup_form_id) . '"]'); ?>
+			<?php echo do_shortcode('[contact-form-7 id="' . esc_attr($cf7_popup_form_id) . '"]'); ?>
 			<?php endif; ?>
 		</div>
 	</div>

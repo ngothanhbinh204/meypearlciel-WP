@@ -12,9 +12,10 @@ $bg_image    = $data['background_image']['url'] ?? '';
 $stats       = $data['stats'] ?? [];
 $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image) . ')"' : '';
 ?>
-<section class="home-3 relative overflow-hidden section-py"<?php echo $bg_style; ?>>
+<section class="home-3 relative overflow-hidden section-py" <?php echo $bg_style; ?>>
 	<div class="vector">
-		<img class="img-svg" src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home3-embed.svg'); ?>" alt="">
+		<img class="img-svg" src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home3-embed.svg'); ?>"
+			alt="">
 	</div>
 	<div class="container-fluid">
 		<div class="wrap-content home-item-animation rem:max-w-[540px] w-full ml-auto bg-Secondary-1 xl:p-8 p-4">
@@ -29,12 +30,14 @@ $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image)
 				<div class="item flex gap-2 pb-3 border-b border-b-Primary-2/20">
 					<?php if (!empty($stat['icon'])) : ?>
 					<div class="icon">
-						<img class="img-svg" src="<?php echo esc_url($stat['icon']); ?>" alt="">
+						<!-- <img class="img-svg" src="<?php echo esc_url($stat['icon']); ?>" alt=""> -->
+						<i class="<?php echo esc_url($stat['icon']); ?>"></i>
 					</div>
 					<?php endif; ?>
 					<div class="content">
 						<?php if (!empty($stat['label'])) : ?>
-						<div class="label body-3 font-semibold text-Primary-2 mb-1"><?php echo esc_html($stat['label']); ?></div>
+						<div class="label body-3 font-semibold text-Primary-2 mb-1">
+							<?php echo esc_html($stat['label']); ?></div>
 						<?php endif; ?>
 						<?php if (!empty($stat['description'])) : ?>
 						<div class="format-content body-3 font-normal text-Primary-4">

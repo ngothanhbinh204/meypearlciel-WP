@@ -48,6 +48,10 @@ function canhcam_style()
 			}
 		}
 	}
+	wp_enqueue_script('front-end-global', THEME_URI . '/scripts/core.min.js', '', '', true);
+				wp_enqueue_script('front-end-main', THEME_URI . '/scripts/main.min.js', '', '', true);
+				wp_enqueue_script('dist-js-core', THEME_URI . '/dist/js/core.min.js', '', GENERATE_VERSION, true);
+				wp_enqueue_script('dist-js-main', THEME_URI . '/dist/js/main.min.js', '', GENERATE_VERSION, true);
 }
 
 if (!function_exists('canhcam_setup')) :

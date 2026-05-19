@@ -433,6 +433,38 @@ function re_register_rest_routes() {
             ),
         ),
     ) );
+
+    // GET /wp-json/re/v1/page/{page_id}/utilities
+    // Trả về floor_groups + amenities + polygons cho section home-5
+    register_rest_route( 're/v1', '/page/(?P<page_id>\d+)/utilities', array(
+        'methods'             => WP_REST_Server::READABLE,
+        'callback'            => 're_rest_get_page_utilities',
+        'permission_callback' => '__return_true',
+        'args'                => array(
+            'page_id' => array(
+                'required'          => true,
+                'validate_callback' => function ( $param ) {
+                    return is_numeric( $param ) && intval( $param ) > 0;
+                },
+            ),
+        ),
+    ) );
+
+    // GET /wp-json/re/v1/page/{page_id}/apartment-layout
+    // Trả về buildings + polygons + floors + apartments cho section home-7
+    register_rest_route( 're/v1', '/page/(?P<page_id>\d+)/apartment-layout', array(
+        'methods'             => WP_REST_Server::READABLE,
+        'callback'            => 're_rest_get_page_apartment_layout',
+        'permission_callback' => '__return_true',
+        'args'                => array(
+            'page_id' => array(
+                'required'          => true,
+                'validate_callback' => function ( $param ) {
+                    return is_numeric( $param ) && intval( $param ) > 0;
+                },
+            ),
+        ),
+    ) );
 }
 
 /**
@@ -509,6 +541,79 @@ function re_rest_get_apartment( WP_REST_Request $request ) {
     return rest_ensure_response( $apartment );
 }
 
+/**
+ * Callback: GET /re/v1/page/{page_id}/utilities
+ * Trả về dữ liệu section utilities_all_in_one (home-5) theo page cụ thể.
+ * Frontend dùng để render bản đồ tiện ích + toggle floor groups.
+ */
+function re_rest_get_page_utilities( WP_REST_Request $request ) {
+    $page_id = (int) $request->get_param( 'page_id' );
+
+    if ( ! get_post( $page_id ) ) {
+        return new WP_Error( 'not_found', 'Không tìm thấy trang', array( 'status' => 404 ) );
+    }
+
+    $sections = get_field( 'page_sections', $page_id );
+    if ( empty( $sections ) ) {
+        return new WP_Error( 'no_sections', 'Trang không có sections', array( 'status' => 404 ) );
+    }
+
+    foreach ( $sections as $section ) {
+        if ( ( $section['acf_fc_layout'] ?? '' ) === 'utilities_all_in_one' ) {
+            return rest_ensure_response( re_format_utilities_section( $section ) );
+        }
+    }
+
+    return new WP_Error( 'not_found', 'Không tìm thấy utilities section trong trang này', array( 'status' => 404 ) );
+}
+
+/**
+ * Callback: GET /re/v1/page/{page_id}/apartment-layout
+ * Trả về buildings + polygon từ ACF section + floors + apartments từ CPT (home-7).
+ * Kết hợp polygon/color từ section với nested data từ CPT.
+ */
+function re_rest_get_page_apartment_layout( WP_REST_Request $request ) {
+    $page_id = (int) $request->get_param( 'page_id' );
+
+    if ( ! get_post( $page_id ) ) {
+        return new WP_Error( 'not_found', 'Không tìm thấy trang', array( 'status' => 404 ) );
+    }
+
+    $sections = get_field( 'page_sections', $page_id );
+    if ( empty( $sections ) ) {
+        return new WP_Error( 'no_sections', 'Trang không có sections', array( 'status' => 404 ) );
+    }
+
+    foreach ( $sections as $section ) {
+        if ( ( $section['acf_fc_layout'] ?? '' ) !== 'apartment_layout' ) continue;
+
+        $buildings_data   = array();
+        $masterplan_image = re_format_image( $section['masterplan_image'] ?? null );
+
+        foreach ( $section['buildings'] ?? array() as $row ) {
+            $building_id = (int) ( $row['building_ref'] ?? 0 );
+            if ( ! $building_id ) continue;
+
+            $building = format_building( $building_id, true );
+            if ( ! $building ) continue;
+
+            // Gắn thêm polygon + màu từ section ACF (không lưu trong CPT)
+            $building['polygon'] = re_format_polygon( $row['building_polygon'] ?? '' );
+            $building['color']   = sanitize_hex_color( $row['building_color'] ?? '' ) ?: '#f97316';
+            $buildings_data[]    = $building;
+        }
+
+        return rest_ensure_response( array(
+            'section_title'    => $section['section_title']    ?? '',
+            'masterplan_image' => $masterplan_image,
+            'buildings'        => $buildings_data,
+            'legend'           => re_get_global_legend(),
+        ) );
+    }
+
+    return new WP_Error( 'not_found', 'Không tìm thấy apartment layout section trong trang này', array( 'status' => 404 ) );
+}
+
 
 // ═══════════════════════════════════════════════════════════
 // WP LOCALIZE — Inline JSON cho trang có apartment_layout
@@ -566,6 +671,21 @@ function re_localize_masterplan_data() {
     );
 
     wp_localize_script( 'front-end-main', 'RE_DATA', $data );
+
+    // ─── Inject utilities section data (home-5) as RE_UTILITIES ────────────
+    // Tránh frontend phải gọi thêm AJAX cho section tiện ích.
+    foreach ( $sections as $section ) {
+        if ( ( $section['acf_fc_layout'] ?? '' ) === 'utilities_all_in_one' ) {
+            $utilities = re_format_utilities_section( $section );
+            $utilities['meta'] = array(
+                'api_base' => esc_url( rest_url( 're/v1' ) ),
+                'page_id'  => get_queried_object_id(),
+                'nonce'    => wp_create_nonce( 'wp_rest' ),
+            );
+            wp_localize_script( 'front-end-main', 'RE_UTILITIES', $utilities );
+            break;
+        }
+    }
 }
 
 

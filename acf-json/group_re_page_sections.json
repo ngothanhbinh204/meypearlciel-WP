@@ -60,15 +60,35 @@
               "min": 1,
               "sub_fields": [
                 {
+                  "key": "field_welcome_slide_type",
+                  "label": "Loại slide",
+                  "name": "slide_type",
+                  "type": "select",
+                  "choices": {
+                    "welcome": "Welcome (section-welcome)",
+                    "about": "About (section-about)"
+                  },
+                  "default_value": "welcome",
+                  "return_format": "value",
+                  "wrapper": { "width": "20", "class": "", "id": "" }
+                },
+                {
                   "key": "field_welcome_slide_title",
-                  "label": "Tiêu đề slide",
+                  "label": "Tiêu đề (h2)",
                   "name": "title",
+                  "type": "text",
+                  "wrapper": { "width": "80", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_welcome_slide_sub_title",
+                  "label": "Sub-title trang trí (slide welcome)",
+                  "name": "sub_title",
                   "type": "text",
                   "wrapper": { "width": "100", "class": "", "id": "" }
                 },
                 {
                   "key": "field_welcome_slide_image",
-                  "label": "Hình ảnh slide",
+                  "label": "Hình ảnh chính",
                   "name": "image",
                   "type": "image",
                   "return_format": "array",
@@ -76,13 +96,38 @@
                   "wrapper": { "width": "40", "class": "", "id": "" }
                 },
                 {
+                  "key": "field_welcome_slide_inner_title",
+                  "label": "Inner title lớn (slide welcome)",
+                  "name": "inner_title",
+                  "type": "text",
+                  "instructions": "VD: \"Sông\"",
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                },
+                {
                   "key": "field_welcome_slide_description",
-                  "label": "Mô tả slide",
+                  "label": "Mô tả / nội dung",
                   "name": "description",
                   "type": "wysiwyg",
                   "tabs": "all",
                   "toolbar": "basic",
                   "media_upload": 0,
+                  "wrapper": { "width": "60", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_welcome_slide_title_right",
+                  "label": "Title right trang trí (slide welcome)",
+                  "name": "title_right",
+                  "type": "text",
+                  "instructions": "VD: sắc sống",
+                  "wrapper": { "width": "50", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_welcome_slide_image_right",
+                  "label": "Hình ảnh phải (slide about)",
+                  "name": "image_right",
+                  "type": "image",
+                  "return_format": "array",
+                  "preview_size": "medium",
                   "wrapper": { "width": "60", "class": "", "id": "" }
                 }
               ]
@@ -135,7 +180,7 @@
                   "name": "label",
                   "type": "text",
                   "instructions": "VD: Đơn vị phát triển",
-                  "wrapper": { "width": "70", "class": "", "id": "" }
+                  "wrapper": { "width": "30", "class": "", "id": "" }
                 },
                 {
                   "key": "field_stat_description",
@@ -145,7 +190,7 @@
                   "tabs": "all",
                   "toolbar": "basic",
                   "media_upload": 0,
-                  "wrapper": { "width": "100", "class": "", "id": "" }
+                  "wrapper": { "width": "40", "class": "", "id": "" }
                 }
               ]
             }
@@ -161,6 +206,13 @@
               "key": "field_location_title",
               "label": "Tiêu đề section",
               "name": "title",
+              "type": "text",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+			 {
+              "key": "field_location_subtitle",
+              "label": "Tiêu đề phụ",
+              "name": "subtitle",
               "type": "text",
               "wrapper": { "width": "100", "class": "", "id": "" }
             },
@@ -343,9 +395,9 @@
               "min": 1,
               "sub_fields": [
                 {
-                  "key": "field_lifestyle_icon",
-                  "label": "Hình ảnh slide",
-                  "name": "icon",
+                  "key": "field_lifestyle_image_left",
+                  "label": "Hình ảnh trái (col-left, tỷ lệ 580:450)",
+                  "name": "image_left",
                   "type": "image",
                   "return_format": "url",
                   "preview_size": "medium",
@@ -360,11 +412,30 @@
                   "wrapper": { "width": "35", "class": "", "id": "" }
                 },
                 {
+                  "key": "field_lifestyle_sub_title",
+                  "label": "Sub-title trang trí",
+                  "name": "sub_title",
+                  "type": "text",
+                  "wrapper": { "width": "35", "class": "", "id": "" }
+                },
+                {
                   "key": "field_lifestyle_description",
                   "label": "Mô tả ngắn",
                   "name": "description",
-                  "type": "text",
-                  "wrapper": { "width": "35", "class": "", "id": "" }
+                  "type": "wysiwyg",
+                  "tabs": "all",
+                  "toolbar": "basic",
+                  "media_upload": 0,
+                  "wrapper": { "width": "100", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_lifestyle_image_right",
+                  "label": "Hình ảnh phải (col-right, tỷ lệ tự do)",
+                  "name": "image_right",
+                  "type": "image",
+                  "return_format": "url",
+                  "preview_size": "medium",
+                  "wrapper": { "width": "30", "class": "", "id": "" }
                 }
               ]
             }
@@ -448,7 +519,10 @@
               "key": "field_gallery_title",
               "label": "Tiêu đề section",
               "name": "title",
-              "type": "text",
+              "type": "wysiwyg",
+              "tabs": "all",
+              "toolbar": "basic",
+              "media_upload": 0,
               "instructions": "Hỗ trợ HTML đơn giản: <span>từ khoá</span> để highlight",
               "wrapper": { "width": "100", "class": "", "id": "" }
             },
@@ -464,15 +538,38 @@
               "wrapper": { "width": "100", "class": "", "id": "" }
             },
             {
-              "key": "field_gallery_images",
-              "label": "Gallery hình ảnh",
-              "name": "gallery_images",
+              "key": "field_gallery_featured",
+              "label": "Cột 1 — Ảnh nổi bật (featured + play icon)",
+              "name": "gallery_featured",
+              "type": "image",
+              "return_format": "array",
+              "preview_size": "medium",
+              "instructions": "1 ảnh hiển thị ở cột trái kèm biểu tượng play (tỷ lệ 427:320)",
+              "wrapper": { "width": "100", "class": "", "id": "" }
+            },
+            {
+              "key": "field_gallery_col2",
+              "label": "Cột 2 — Thư viện ảnh cuộn",
+              "name": "gallery_col2",
               "type": "gallery",
               "return_format": "array",
               "preview_size": "medium",
               "insert": "append",
-              "min": 3,
-              "instructions": "Tối thiểu 3 ảnh — chia đều vào 3 cột cuộn"
+              "min": 1,
+              "instructions": "Ảnh cuộn cột giữa",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_gallery_col3",
+              "label": "Cột 3 — Thư viện ảnh cuộn",
+              "name": "gallery_col3",
+              "type": "gallery",
+              "return_format": "array",
+              "preview_size": "medium",
+              "insert": "append",
+              "min": 1,
+              "instructions": "Ảnh cuộn cột phải",
+              "wrapper": { "width": "50", "class": "", "id": "" }
             }
           ]
         },
@@ -525,34 +622,22 @@
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
-              "key": "field_cta_button_text",
-              "label": "Text nút submit",
-              "name": "button_text",
-              "type": "text",
-              "default_value": "ĐĂNG KÝ",
-              "wrapper": { "width": "33", "class": "", "id": "" }
-            },
-            {
-              "key": "field_cta_button_url",
-              "label": "URL nút (tuỳ chọn)",
-              "name": "button_url",
-              "type": "url",
-              "wrapper": { "width": "34", "class": "", "id": "" }
-            },
-            {
-              "key": "field_cta_phone",
-              "label": "Hotline",
-              "name": "phone",
-              "type": "text",
-              "wrapper": { "width": "33", "class": "", "id": "" }
-            },
-            {
               "key": "field_cta_bg_image",
               "label": "Ảnh nền section",
               "name": "background_image",
               "type": "image",
               "return_format": "url",
               "preview_size": "medium",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_cta_logo_section",
+              "label": "Logo — col-left section",
+              "name": "logo_section",
+              "type": "image",
+              "return_format": "url",
+              "preview_size": "medium",
+              "instructions": "Logo hiển thị ở col-left của section chính (tỷ lệ 124:324)",
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
@@ -565,6 +650,25 @@
               "return_format": "id",
               "ui": 1,
               "instructions": "Chọn form CF7 hiển thị trong section chính",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+			{
+				"key": "field_image_left_popup",
+				"label": "Ảnh trái popup (tỷ lệ 580:450)",
+				"name": "popup_image_left",
+				"type": "image",
+				"return_format": "url",
+				"instructions": "Ảnh trang trí bên trái popup đăng ký",
+				"wrapper": { "width": "50", "class": "", "id": "" }
+			},
+            {
+              "key": "field_cta_logo_popup",
+              "label": "Logo — trong popup",
+              "name": "logo_popup",
+              "type": "image",
+              "return_format": "url",
+              "preview_size": "medium",
+              "instructions": "Logo hiển thị bên trong popup đăng ký (tỷ lệ 60:248)",
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
