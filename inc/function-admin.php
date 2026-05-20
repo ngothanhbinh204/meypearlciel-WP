@@ -26,7 +26,7 @@ function re_admin_enqueue_polygon_editor( $hook ) {
         ? get_post_type( $post_id )
         : ( isset( $_GET['post_type'] ) ? sanitize_key( $_GET['post_type'] ) : '' );
 
-    if ( ! in_array( $post_type, array( 're_building', 'page', 're_apartment' ), true ) ) return;
+    if ( ! in_array( $post_type, array( 're_apartment' ), true ) ) return;
 
     $theme_uri = get_template_directory_uri();
     $theme_dir = get_template_directory();

@@ -27,7 +27,6 @@ function re_apartment_admin_columns($columns)
 
         if ($key === 'title') {
 
-            $new_columns['apartment_code']      = 'Mã căn';
             $new_columns['apartment_floor']     = 'Tầng';
             $new_columns['apartment_building']  = 'Tòa nhà';
             $new_columns['apartment_area']      = 'Diện tích';
@@ -51,15 +50,6 @@ add_action(
 function re_apartment_admin_columns_content($column, $post_id)
 {
     switch ($column) {
-
-        /**
-         * Apartment Code
-         */
-        case 'apartment_code':
-
-            echo esc_html(get_field('apartment_code', $post_id) ?: '—');
-
-            break;
 
         /**
          * Floor
@@ -131,7 +121,6 @@ add_filter(
 
 function re_apartment_sortable_columns($columns)
 {
-    $columns['apartment_code']  = 'apartment_code';
     $columns['apartment_area']  = 'apartment_area';
 
     return $columns;
@@ -157,13 +146,6 @@ function re_apartment_admin_orderby($query)
     $orderby = $query->get('orderby');
 
     switch ($orderby) {
-
-        case 'apartment_code':
-
-            $query->set('meta_key', 'apartment_code');
-            $query->set('orderby', 'meta_value');
-
-            break;
 
         case 'apartment_area':
 
@@ -275,10 +257,6 @@ function re_admin_columns_style()
 {
 ?>
 <style>
-.column-apartment_code {
-	width: 100px;
-}
-
 .column-apartment_floor {
 	width: 120px;
 }

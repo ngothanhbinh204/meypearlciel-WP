@@ -159,7 +159,11 @@ Fancybox.bind("[data-fancybox]", {
  * Dien noi dung vao #popup-plan shell.
  * @param {Object} building  Response tu GET /re/v1/building/{id}/floors
  */
-function renderBuildingPopup(building) {
+/**
+ * @param {Object}      building        Response tu GET /re/v1/building/{id}/floors
+ * @param {number|null} selectedFloorId  Floor ID can pre-select (tu openFloorPopup)
+ */
+function renderBuildingPopup(building, selectedFloorId = null) {
 	// Lay mau toa tu RE_DATA (duoc inject san qua wp_localize_script)
 	const meta  = (window.RE_DATA?.buildings || []).find(b => b.id === building.id);
 	const color = meta?.color || '#f97316';
@@ -172,13 +176,16 @@ function renderBuildingPopup(building) {
 	floorsEl.innerHTML = '';
 	const floors = building.floors || [];
 
-	floors.forEach((floor, index) => {
+	// Xac dinh floor can pre-select: dung selectedFloorId neu co, fallback floor[0]
+	const activeId = selectedFloorId || (floors[0]?.id ?? null);
+
+	floors.forEach((floor) => {
 		const key = floor.number_end
 			? `${floor.number}-${floor.number_end}`
 			: floor.number;
 
 		const btn       = document.createElement('div');
-		btn.className   = 'floor-item' + (index === 0 ? ' active' : '');
+		btn.className   = 'floor-item' + (floor.id === activeId ? ' active' : '');
 		btn.dataset.floor   = key;
 		btn.dataset.floorId = floor.id;
 		btn.textContent = floor.name;
@@ -192,8 +199,9 @@ function renderBuildingPopup(building) {
 		floorsEl.appendChild(btn);
 	});
 
-	// Hien thi anh tang dau tien
-	renderFloorPlan(floors[0] || null, building);
+	// Hien thi floor duoc chon (hoac floor dau tien)
+	const initialFloor = floors.find(f => f.id === activeId) || floors[0] || null;
+	renderFloorPlan(initialFloor, building);
 
 	// Legend mau toa
 	document.getElementById('popup-building-legend').innerHTML = `
@@ -367,11 +375,39 @@ function hexToRgba(hex, alpha) {
 }
 
 /**
- * Mo popup toa nha — expose ra window de Image Map Pro goi duoc.
+ * Mo popup tang — expose ra window de Image Map Pro goi duoc.
  *
  * Cau hinh trong Image Map Pro:
  *   Action → "Run Script"
- *   Script → openBuildingPopup(42)   // 42 = post ID cua re_building
+ *   Script → openFloorPopup(55)   // 55 = post ID cua re_floor
+ *
+ * Flow:
+ *   1. Fetch GET /re/v1/floor/{floorId}
+ *   2. Response: { floor, building (kem tat ca sibling floors) }
+ *   3. renderBuildingPopup(building, floor.id) — sidebar day du, floor duoc click pre-select
+ *   4. Fancybox.show('#popup-plan')
+ *
+ * @param {number} floorId  Post ID cua tang (re_floor CPT)
+ */
+window.openFloorPopup = async function(floorId) {
+	try {
+		const apiBase = window.RE_DATA?.meta?.api_base || '/wp-json/re/v1';
+		const res     = await fetch(`${apiBase}/floor/${floorId}`);
+
+		if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+		const { floor, building } = await res.json();
+		renderBuildingPopup(building, floor.id);
+
+		Fancybox.show([{ src: '#popup-plan', type: 'inline' }]);
+	} catch (err) {
+		console.error('[openFloorPopup]', err);
+	}
+};
+
+/**
+ * (Legacy) Mo popup toa nha theo building ID — giu lai de backward-compatible.
+ * Khuyen nghi: dung openFloorPopup() thay the.
  *
  * @param {number} buildingId  Post ID cua toa nha (re_building CPT)
  */

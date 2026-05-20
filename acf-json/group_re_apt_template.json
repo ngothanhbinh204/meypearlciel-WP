@@ -3,49 +3,12 @@
   "title": "Thông tin mẫu căn hộ",
   "fields": [
     {
-      "key": "field_tpl_info_tab",
-      "label": "Thông tin mẫu",
-      "name": "",
-      "type": "tab",
-      "placement": "top",
-      "endpoint": 0
-    },
-
-    {
-      "key": "field_tpl_area",
-      "label": "Diện tích điển hình (m²)",
-      "name": "template_area",
-      "type": "number",
-      "instructions": "Diện tích thông thủy đặc trưng của mẫu này (dùng để hiển thị)",
-      "min": 0,
-      "step": 0.01,
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_tpl_description",
-      "label": "Mô tả mẫu",
-      "name": "template_description",
-      "type": "textarea",
-      "rows": 3,
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
       "key": "field_tpl_media_tab",
       "label": "Hình ảnh",
       "name": "",
       "type": "tab",
       "placement": "top",
       "endpoint": 0
-    },
-    {
-      "key": "field_tpl_layout",
-      "label": "Sơ đồ thiết kế (Layout)",
-      "name": "template_layout",
-      "type": "image",
-      "return_format": "array",
-      "preview_size": "medium",
-      "instructions": "Ảnh sơ đồ/layout của mẫu căn hộ. Nếu căn hộ dùng mẫu này sẽ ưu tiên hiển thị ảnh layout từ đây.",
-      "wrapper": { "width": "50", "class": "", "id": "" }
     },
     {
       "key": "field_tpl_gallery",
@@ -57,6 +20,34 @@
       "insert": "append",
       "min": 0,
       "instructions": "Bộ ảnh dùng chung cho tất cả căn hộ áp dụng mẫu này. Ưu tiên hơn gallery riêng của từng căn hộ.",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_tpl_area_tab",
+      "label": "Diện tích",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_tpl_area_net",
+      "label": "Diện tích thông thủy (m²)",
+      "name": "template_area_net",
+      "type": "number",
+      "min": 0,
+      "step": 0.01,
+      "instructions": "Nếu có, sẽ ưu tiên hiển thị thay cho diện tích thông thủy của từng căn hộ.",
+      "wrapper": { "width": "50", "class": "", "id": "" }
+    },
+    {
+      "key": "field_tpl_area_gross",
+      "label": "Diện tích tim tường (m²)",
+      "name": "template_area_gross",
+      "type": "number",
+      "min": 0,
+      "step": 0.01,
+      "instructions": "Nếu có, sẽ ưu tiên hiển thị thay cho diện tích tim tường của từng căn hộ.",
       "wrapper": { "width": "50", "class": "", "id": "" }
     }
   ],

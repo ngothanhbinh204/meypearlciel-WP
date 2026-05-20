@@ -43,47 +43,62 @@ $masterplan_url = is_array($masterplan) ? ($masterplan['url'] ?? '') : $masterpl
 
 	<?php
 $buildings     = $data['buildings'] ?? [];
-$status_labels = [
-	'available'   => 'Đang mở bán',
-	'coming_soon' => 'Đang cập nhật',
-	'sold_out'    => 'Đã bán hết',
-];
+
 ?>
-	<div class="wrap-building-tooltip hidden">
-		<?php $seen_bids = []; foreach ( $buildings as $i => $row ) :
-		$bid   = $row['building_ref'] ?? 0;
-		if ( ! $bid ) continue;
-		if ( in_array( $bid, $seen_bids ) ) continue; // bo qua duplicate
-		$seen_bids[] = $bid;
-		$bpost = get_post( $bid );
-		if ( ! $bpost ) continue;
-		$btitle  = $bpost->post_title;
-		$floors  = get_field( 'building_total_floor',    $bid );
-		$apts    = get_field( 'building_total_apartment', $bid );
-		$area    = get_field( 'building_area',            $bid );
-		$status  = get_field( 'building_status',          $bid );
-		$summary = get_field( 'building_popup_summary',   $bid );
-		$slabel  = $status_labels[ $status ] ?? '';
+	<?php
+	// Lấy tất cả building IDs từ repeater (không trùng)
+	$bid_list = [];
+	foreach ( $buildings as $row ) {
+		$bid = (int) ( $row['building_ref'] ?? 0 );
+		if ( $bid && ! in_array( $bid, $bid_list ) ) $bid_list[] = $bid;
+	}
+
+	// Query tất cả tầng thuộc các tòa trong section, sắp xếp theo floor_number
+	$floor_ids = $bid_list ? get_posts( [
+		'post_type'      => 're_floor',
+		'posts_per_page' => -1,
+		'post_status'    => 'publish',
+		'fields'         => 'ids',
+		'no_found_rows'  => true,
+		'meta_key'       => 'floor_number',
+		'orderby'        => 'meta_value_num',
+		'order'          => 'ASC',
+		'meta_query'     => [ [
+			'key'     => 'parent_building',
+			'value'   => $bid_list,
+			'compare' => 'IN',
+			'type'    => 'NUMERIC',
+		] ],
+	] ) : [];
 	?>
-		<div class="plan-tooltip-wrapper" data-index="<?php echo $i + 1; ?>"
-			data-title="<?php echo esc_attr( $btitle ); ?>" data-building-id="<?php echo esc_attr( $bid ); ?>">
+	<div class="wrap-floor-tooltip hidden">
+		<?php foreach ( $floor_ids as $fid ) :
+			$ftitle     = html_entity_decode( get_the_title( $fid ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+			$imp_slug  = re_get_imp_title( $fid );
+			$imp_title  = preg_replace( '/\s*[\x{2013}\x{2014}-]\s*/u', '-', $ftitle );			$floor_count = get_field( 'floor_total_count',     $fid );
+			$apts_total  = get_field( 'floor_total_apartment', $fid );
+			$area        = get_field( 'floor_area',            $fid );
+			$status      = get_field( 'floor_status',          $fid );
+			$parent_bid  = get_field( 'parent_building',       $fid );
+		?>
+		<div class="plan-tooltip-wrapper" data-floor-id="<?php echo esc_attr( $fid ); ?>"
+			data-building-id="<?php echo esc_attr( is_array( $parent_bid ) ? ( $parent_bid['ID'] ?? 0 ) : $parent_bid ); ?>"
+			data-slug="<?php echo esc_attr( $imp_slug ); ?>" data-title="<?php echo esc_attr( $imp_title ); ?>">
 			<div class="plan-tooltip-item">
-				<img src="<?php echo get_template_directory_uri() ?>/img/tooltip-arrow.svg" alt="" class="tooltip-arrow">
-				<div class="tooltip-name heading-5 font-bold"><?php echo esc_html( $btitle ); ?></div>
-				<!-- <?php if ( $summary ) : ?>
-				<div class="tooltip-summary body-4"><?php echo esc_html( $summary ); ?></div>
-				<?php endif; ?> -->
+				<img src="<?php echo get_template_directory_uri(); ?>/img/tooltip-arrow.svg" alt=""
+					class="tooltip-arrow">
+				<div class="tooltip-name heading-5 font-bold"><?php echo esc_html( $ftitle ); ?></div>
 				<div class="plan-popup-content">
-					<?php if ( $floors ) : ?>
+					<?php if ( $floor_count ) : ?>
 					<div class="plan-popup-content-item">
 						<div class="plan-popup-content-item-title">Số tầng</div>
-						<div class="plan-popup-content-item-value"><?php echo esc_html( $floors ); ?></div>
+						<div class="plan-popup-content-item-value"><?php echo esc_html( $floor_count ); ?></div>
 					</div>
 					<?php endif; ?>
-					<?php if ( $apts ) : ?>
+					<?php if ( $apts_total ) : ?>
 					<div class="plan-popup-content-item">
 						<div class="plan-popup-content-item-title">Số căn hộ</div>
-						<div class="plan-popup-content-item-value"><?php echo esc_html( $apts ); ?></div>
+						<div class="plan-popup-content-item-value"><?php echo esc_html( $apts_total ); ?></div>
 					</div>
 					<?php endif; ?>
 					<?php if ( $area ) : ?>
@@ -93,11 +108,7 @@ $status_labels = [
 					</div>
 					<?php endif; ?>
 				</div>
-				<?php if ( $slabel ) : ?>
-				<div class="tooltip-status status-<?php echo esc_attr( $status ); ?>">
-					<?php echo esc_html( $slabel ); ?>
-				</div>
-				<?php endif; ?>
+
 			</div>
 		</div>
 		<?php endforeach; ?>

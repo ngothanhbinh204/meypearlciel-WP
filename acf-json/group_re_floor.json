@@ -24,51 +24,36 @@
       "wrapper": { "width": "50", "class": "", "id": "" }
     },
     {
-      "key": "field_floor_number",
-      "label": "Số tầng (để sort)",
-      "name": "floor_number",
+      "key": "field_floor_total_count",
+      "label": "Số tầng (hiển thị)",
+      "name": "floor_total_count",
       "type": "number",
-      "instructions": "Số thứ tự tầng dùng để sắp xếp. Tầng nhóm (4-35) nhập số đầu tiên",
-      "required": 0,
+      "instructions": "Số tầng trong nhóm dùng để hiển thị popup. VD: nhóm Tầng 4-35 → nhập 32",
       "min": 0,
       "step": 1,
       "wrapper": { "width": "33", "class": "", "id": "" }
     },
     {
-      "key": "field_floor_number_end",
-      "label": "Số tầng cuối (nếu nhóm)",
-      "name": "floor_number_end",
+      "key": "field_floor_total_apartment",
+      "label": "Số căn hộ",
+      "name": "floor_total_apartment",
       "type": "number",
-      "instructions": "Để trống nếu là tầng đơn. Nhập số cuối nếu là nhóm tầng VD: 35",
+      "instructions": "Tổng số căn hộ trên tầng / nhóm tầng này",
       "min": 0,
       "step": 1,
       "wrapper": { "width": "33", "class": "", "id": "" }
     },
     {
-      "key": "field_floor_status",
-      "label": "Trạng thái",
-      "name": "floor_status",
-      "type": "select",
-      "choices": {
-        "available": "Đang mở bán",
-        "coming_soon": "Sắp mở bán",
-        "sold_out": "Đã bán hết"
-      },
-      "default_value": "available",
-      "return_format": "value",
+      "key": "field_floor_area",
+      "label": "Diện tích điển hình",
+      "name": "floor_area",
+      "type": "text",
+      "instructions": "Diện tích đặc trưng của tầng để hiển thị. VD: 45 - 68, 72",
       "wrapper": { "width": "34", "class": "", "id": "" }
     },
     {
-      "key": "field_floor_description",
-      "label": "Mô tả tầng",
-      "name": "floor_description",
-      "type": "textarea",
-      "rows": 3,
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
-    {
       "key": "field_floor_media_tab",
-      "label": "Hình ảnh",
+      "label": "Hình ảnh Floor Plan",
       "name": "",
       "type": "tab",
       "placement": "top",
@@ -84,16 +69,6 @@
       "instructions": "Ảnh sơ đồ mặt bằng tầng hiển thị trong popup building — dùng làm nền để đặt hotspot căn hộ",
       "required": 1,
       "wrapper": { "width": "66", "class": "", "id": "" }
-    },
-    {
-      "key": "field_floor_thumbnail",
-      "label": "Ảnh thumbnail tầng",
-      "name": "floor_thumbnail",
-      "type": "image",
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "instructions": "Ảnh nhỏ hiển thị trong sidebar danh sách tầng",
-      "wrapper": { "width": "34", "class": "", "id": "" }
     }
   ],
   "location": [

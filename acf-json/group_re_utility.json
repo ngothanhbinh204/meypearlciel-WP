@@ -6,10 +6,9 @@
       "key": "field_utility_icon",
       "label": "Icon",
       "name": "utility_icon",
-      "type": "text",
-      "instructions": "Emoji hoặc tên class icon. VD: 🛏  hoặc  icon-bed  hoặc  fas fa-bed",
-      "required": 1,
-      "wrapper": { "width": "30", "class": "", "id": "" }
+      "type": "image",
+      "instructions": "Hình ảnh SVG",
+	  "return_format": "array"
     },
     {
       "key": "field_utility_label",

@@ -7,5 +7,5 @@ require get_template_directory() . '/inc/function-pagination.php';
 require get_template_directory() . '/inc/function-setup.php';
 require get_template_directory() . '/inc/function-post-types.php';
 require get_template_directory() . '/inc/function-formatter.php';
-// require get_template_directory() . '/inc/function-admin.php';
+require get_template_directory() . '/inc/function-admin.php';
 require get_template_directory() . '/inc/function-column.php';

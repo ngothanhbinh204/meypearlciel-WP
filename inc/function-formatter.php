@@ -21,6 +21,25 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // ═══════════════════════════════════════════════════════════
 
 /**
+ * Trả về tiêu đề post đã decode HTML entities (ví dụ &#8211; → –).
+ * get_the_title() chạy qua wptexturize/wpautop nên trả về HTML entities;
+ * dùng hàm này thay thế để đảm bảo data-title / API response là plain text.
+ */
+function re_get_clean_title( $post_id ) {
+    return html_entity_decode( get_the_title( $post_id ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+}
+
+/**
+ * Trả về tiêu đề đã chuẩn hóa dấu gạch để khớp với data-title của IMP area.
+ * "Tầng 1 – 2" → "Tầng 1-2"  (bỏ space quanh en-dash/em-dash, dùng hyphen thường).
+ * Dùng cho attribute data-title trong tooltip masterplan.
+ */
+function re_get_imp_title( $post_id ) {
+    $title = re_get_clean_title( $post_id );
+    return preg_replace( '/\s*[\x{2013}\x{2014}-]\s*/u', '-', $title );
+}
+
+/**
  * Normalize ACF image field → { id, url, width, height, alt }
  * Trả về null nếu không có ảnh.
  */
@@ -119,7 +138,7 @@ function format_building( $post_id, $include_floors = false ) {
 
     $building = array(
         'id'            => (int) $post_id,
-        'name'          => get_the_title( $post_id ),
+        'name'          => re_get_clean_title( $post_id ),
         'code'          => get_field( 'building_code', $post_id ) ?: '',
         'status'        => get_field( 'building_status', $post_id ) ?: 'available',
         'total_floor'   => (int) get_field( 'building_total_floor', $post_id ),
@@ -181,15 +200,14 @@ function format_floor( $post_id, $include_apartments = true ) {
     if ( get_post_type( $post_id ) !== 're_floor' ) return null;
 
     $floor = array(
-        'id'          => (int) $post_id,
-        'name'        => get_the_title( $post_id ),
-        'number'      => (int) get_field( 'floor_number', $post_id ),
-        'number_end'  => (int) get_field( 'floor_number_end', $post_id ) ?: null,
-        'status'      => get_field( 'floor_status', $post_id ) ?: 'available',
-        'description' => get_field( 'floor_description', $post_id ) ?: '',
-        'image'       => re_format_image( get_field( 'floor_image', $post_id ) ),
-        'thumbnail'   => re_format_image( get_field( 'floor_thumbnail', $post_id ) ),
-        'building_id' => (int) get_field( 'parent_building', $post_id ),
+        'id'              => (int) $post_id,
+        'name'            => re_get_clean_title( $post_id ),
+        'total_count'     => (int) get_field( 'floor_total_count', $post_id ) ?: null,
+        'total_apartment' => (int) get_field( 'floor_total_apartment', $post_id ) ?: null,
+        'area'            => get_field( 'floor_area', $post_id ) ?: '',
+        'description'     => get_field( 'floor_description', $post_id ) ?: '',
+        'image'           => re_format_image( get_field( 'floor_image', $post_id ) ),
+        'building_id'     => (int) get_field( 'parent_building', $post_id ),
     );
 
     if ( $include_apartments ) {
@@ -220,6 +238,8 @@ function format_apartment( $post_id ) {
         if ( $utility_id && get_post_type( $utility_id ) === 're_utility' ) {
             // Lấy icon & label từ catalog, đảm bảo đồng nhất toàn site
             $icon  = get_field( 'utility_icon', $utility_id )  ?: '';
+			// $icon là dạng hình ảnh (ACF image field), trả về array {id, url, width, height, alt}
+			$icon = re_format_image( $icon );
             $label = get_field( 'utility_label', $utility_id ) ?: get_the_title( $utility_id );
         } else {
             // Fallback nếu utility bị xóa
@@ -242,10 +262,12 @@ function format_apartment( $post_id ) {
         return $order_a <=> $order_b;
     } );
 
-    // Template — nếu căn hộ chọn mẫu, ưu tiên gallery/layout từ mẫu đó
-    $tpl_id      = (int) get_field( 'apt_template_ref', $post_id );
-    $tpl_gallery = array();
-    $tpl_layout  = null;
+    // Template — nếu căn hộ chọn mẫu, ưu tiên gallery/layout/area từ mẫu đó
+    $tpl_id         = (int) get_field( 'apt_template_ref', $post_id );
+    $tpl_gallery    = array();
+    $tpl_layout     = null;
+    $tpl_area_net   = null;
+    $tpl_area_gross = null;
     if ( $tpl_id ) {
         $tpl_raw_gallery = get_field( 'template_gallery', $tpl_id );
         if ( ! empty( $tpl_raw_gallery ) ) {
@@ -255,6 +277,10 @@ function format_apartment( $post_id ) {
         if ( ! empty( $tpl_raw_layout ) ) {
             $tpl_layout = re_format_image( $tpl_raw_layout );
         }
+        $raw_net   = get_field( 'template_area_net',   $tpl_id );
+        $raw_gross = get_field( 'template_area_gross', $tpl_id );
+        if ( $raw_net   !== null && $raw_net   !== '' ) $tpl_area_net   = (float) $raw_net;
+        if ( $raw_gross !== null && $raw_gross !== '' ) $tpl_area_gross = (float) $raw_gross;
     }
 
     // Gallery: ưu tiên template gallery nếu có, fallback căn hộ riêng
@@ -274,12 +300,11 @@ function format_apartment( $post_id ) {
 
     return array(
         'id'          => (int) $post_id,
-        'name'        => get_the_title( $post_id ),
-        'code'        => get_field( 'apartment_code', $post_id )        ?: '',
+        'name'        => re_get_clean_title( $post_id ),
         'type'        => get_field( 'apartment_type', $post_id )        ?: '',
         'status'      => get_field( 'apartment_status', $post_id )      ?: 'available',
-        'area_net'    => (float) get_field( 'apartment_area_net', $post_id ),
-        'area_gross'  => (float) get_field( 'apartment_area_gross', $post_id ),
+        'area_net'    => $tpl_area_net   !== null ? $tpl_area_net   : (float) get_field( 'apartment_area_net',   $post_id ),
+        'area_gross'  => $tpl_area_gross !== null ? $tpl_area_gross : (float) get_field( 'apartment_area_gross', $post_id ),
         'direction'   => get_field( 'apartment_direction', $post_id )   ?: '',
         'description' => get_field( 'apartment_description', $post_id ) ?: '',
         'layout'      => $layout,
@@ -439,6 +464,23 @@ function re_register_rest_routes() {
         ),
     ) );
 
+    // GET /wp-json/re/v1/floor/{id}
+    // Trả về floor data + parent building (với toàn bộ sibling floors).
+    // Frontend dùng khi IMP polygon đại diện cho floor, click → openFloorPopup(floorId).
+    register_rest_route( 're/v1', '/floor/(?P<id>\d+)', array(
+        'methods'             => WP_REST_Server::READABLE,
+        'callback'            => 're_rest_get_floor',
+        'permission_callback' => '__return_true',
+        'args'                => array(
+            'id' => array(
+                'required'          => true,
+                'validate_callback' => function ( $param ) {
+                    return is_numeric( $param ) && intval( $param ) > 0;
+                },
+            ),
+        ),
+    ) );
+
     // GET /wp-json/re/v1/apartment/{id}
     // Trả về chi tiết một căn hộ (dùng cho level 4 popup)
     register_rest_route( 're/v1', '/apartment/(?P<id>\d+)', array(
@@ -545,6 +587,40 @@ function re_rest_get_building_floors( WP_REST_Request $request ) {
     $building = format_building( $building_id, true );
 
     return rest_ensure_response( $building );
+}
+
+/**
+ * Callback: GET /re/v1/floor/{id}
+ * Trả về floor cụ thể + parent building (kèm toàn bộ sibling floors).
+ * Frontend dùng cho openFloorPopup(floorId): khi IMP polygon map tới re_floor.
+ *
+ * Response shape:
+ *   {
+ *     floor:    { id, name, number, image, apartments, ... },
+ *     building: { id, name, master_plan, floors: [...] }
+ *   }
+ */
+function re_rest_get_floor( WP_REST_Request $request ) {
+    $floor_id = (int) $request->get_param( 'id' );
+
+    if ( get_post_type( $floor_id ) !== 're_floor' ) {
+        return new WP_Error( 'not_found', 'Không tìm thấy tầng', array( 'status' => 404 ) );
+    }
+
+    $floor       = format_floor( $floor_id, true );
+    $building_id = $floor['building_id'] ?? 0;
+
+    if ( ! $building_id || get_post_type( $building_id ) !== 're_building' ) {
+        return new WP_Error( 'no_building', 'Tầng chưa được gắn với tòa nhà', array( 'status' => 422 ) );
+    }
+
+    // Lấy building + toàn bộ floors (để render sidebar)
+    $building = format_building( $building_id, true );
+
+    return rest_ensure_response( array(
+        'floor'    => $floor,
+        'building' => $building,
+    ) );
 }
 
 /**
@@ -691,7 +767,8 @@ function re_localize_masterplan_data() {
         'nonce'            => wp_create_nonce( 'wp_rest' ),
     );
 
-    wp_localize_script( 'front-end-main', 'RE_DATA', $data );
+    // Inject vào dist-js-main (handle thực sự được enqueue)
+    wp_localize_script( 'dist-js-main', 'RE_DATA', $data );
 
     // ─── Inject utilities section data (home-5) as RE_UTILITIES ────────────
     // Tránh frontend phải gọi thêm AJAX cho section tiện ích.
@@ -703,7 +780,7 @@ function re_localize_masterplan_data() {
                 'page_id'  => get_queried_object_id(),
                 'nonce'    => wp_create_nonce( 'wp_rest' ),
             );
-            wp_localize_script( 'front-end-main', 'RE_UTILITIES', $utilities );
+            wp_localize_script( 'dist-js-main', 'RE_UTILITIES', $utilities );
             break;
         }
     }
@@ -751,14 +828,14 @@ function re_format_utilities_section( $layout ) {
 
         foreach ( $floor['amenities'] ?? array() as $a ) {
             $amenities[] = array(
-                'name'        => get_the_title( $a['amenity_ref'] ?? 0 ),
+                'name'        => re_get_clean_title( $a['amenity_ref'] ?? 0 ),
                 'description' => $a['amenity_description'] ?? '',
                 'polygon'     => re_format_polygon( $a['amenity_polygon'] ?? '' ),
             );
         }
 
         $floor_groups[] = array(
-            'name'         => get_the_title( $floor['floor_ref'] ?? 0 ),
+            'name'         => re_get_clean_title( $floor['floor_ref'] ?? 0 ),
             'code'         => $floor['floor_code'] ?? '',
             'camera_state' => re_format_camera_state( $floor['camera_state'] ?? '' ),
             'amenities'    => $amenities,

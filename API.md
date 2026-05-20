@@ -7,6 +7,17 @@ ví dụ: `https://example.com/wp-json/re/v1/masterplan`,
 `https://example.com/wp-json/re/v1/apartment/{id}`
 `https://example.com/wp-json/re/v1/page/{page_id}/apartment-layout`
 `https://example.com/wp-json/re/v1/page/{page_id}/utilities`
+`/re/v1/floor/{id}`
+https://meypearl.webcanhcam.vn/wp-json//re/v1/floor/7
+trả về:
+{
+  "id": 55,
+  "name": "Tầng 4-35 điển hình",
+  "total_count": 32,
+  "total_apartment": 128,
+  "area": "45 - 68",
+  ...
+}
 ---
 
 ## Masterplan (Home-7 — Mặt bằng dự án)
@@ -16,6 +27,7 @@ ví dụ: `https://example.com/wp-json/re/v1/masterplan`,
 | GET | `/masterplan` | Full JSON: tất cả tòa nhà + Tầng + căn hộ (Level 1-4) |
 | GET | `/buildings` | Danh sách tòa nhà + polygon hotspot (Level 1) |
 | GET | `/building/{id}/floors` | Tầng + căn hộ của một tòa (Level 2-3) |
+| GET | `/floor/{id}` | Chi tiết tầng: thông tin cơ bản + căn hộ (Level 3-4) |
 | GET | `/apartment/{id}` | Chi tiết căn hộ: gallery, tiện ích, polygon (Level 4) |
 | GET | `/page/{page_id}/apartment-layout` | Tòa nhà + polygon/màu từ section ACF + tầng + căn hộ |
 

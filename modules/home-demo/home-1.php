@@ -4,11 +4,12 @@
  * ACF layout: hero_banner (index 0)
  */
 
-$cc_sections = get_query_var('cc_sections', []);
-$data        = $cc_sections['hero_banner'][0] ?? null;
-$image       = $data['image'] ?? null;
-$cta_url     = $data['cta_url'] ?? '#';
-$socials     = get_field('header_social_links', 'options') ?: [];
+$cc_sections  = get_query_var('cc_sections', []);
+$data         = $cc_sections['hero_banner'][0] ?? null;
+$image        = $data['image'] ?? null;
+$mobile_image = $data['mobile_image'] ?? null;
+$cta_url      = $data['cta_url'] ?? '#';
+$socials      = get_field('header_social_links', 'options') ?: [];
 ?>
 <section class="home-1">
 	<div class="slide relative">
@@ -17,10 +18,17 @@ $socials     = get_field('header_social_links', 'options') ?: [];
 				<?php if ($image) : ?>
 				<div class="swiper-slide">
 					<div class="home-1-banner relative">
-						<a class="img-ratio ratio:pt-[960_1920]" href="<?php echo esc_url($cta_url); ?>">
+						<a class="img-ratio ratio:pt-[960_1920] <?php echo $mobile_image ? 'hidden md:block' : ''; ?>"
+							href="<?php echo esc_url($cta_url); ?>">
 							<img class="lozad" data-src="<?php echo esc_url($image['url']); ?>"
 								alt="<?php echo esc_attr($image['alt']); ?>">
 						</a>
+						<?php if ($mobile_image) : ?>
+						<a class="img-ratio ratio:pt-[960_540] md:hidden" href="<?php echo esc_url($cta_url); ?>">
+							<img class="lozad" data-src="<?php echo esc_url($mobile_image['url']); ?>"
+								alt="<?php echo esc_attr($mobile_image['alt']); ?>">
+						</a>
+						<?php endif; ?>
 					</div>
 				</div>
 				<?php endif; ?>

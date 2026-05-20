@@ -60,7 +60,7 @@ $highlights  = $data['highlights'] ?? [];
 						<?php echo esc_html($item['icon']); ?>
 					</div>
 					<div class="infos border-l-2 border-l-Primary-1 pl-3 text-Primary-4 font-normal flex-1 pb-10">
-						<div class="title"><?php echo esc_html($item['label']); ?></div>
+						<div class="title"><?php echo wp_kses_post($item['label']); ?></div>
 					</div>
 				</div>
 				<?php endforeach; ?>

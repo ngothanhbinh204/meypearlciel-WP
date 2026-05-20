@@ -17,6 +17,9 @@ $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image)
 		<img class="img-svg" src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home3-embed.svg'); ?>"
 			alt="">
 	</div>
+	<div class="vector-mobile mobile-show" aria-hidden="true"><img class="img-svg"
+			src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home3-embed-mobile.svg'); ?>" alt="">
+	</div>
 	<div class="container-fluid">
 		<div class="wrap-content home-item-animation rem:max-w-[540px] w-full ml-auto bg-Secondary-1 xl:p-8 p-4">
 			<?php if ($title) : ?>

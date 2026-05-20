@@ -18,9 +18,11 @@ if (!function_exists('cc_home5_floor_name')) {
 
 if (!function_exists('cc_home5_floor_code')) {
 	function cc_home5_floor_code(array $group) {
-		$code = trim((string) ($group['floor_code'] ?? $group['code'] ?? ''));
-		if ($code !== '') {
-			return $code;
+		foreach (array('floor_number', 'floor_code', 'code') as $key) {
+			$val = trim((string) ($group[$key] ?? ''));
+			if ($val !== '') {
+				return $val;
+			}
 		}
 		$name = cc_home5_floor_name($group);
 		return $name !== '' ? sanitize_title($name) : '';
@@ -119,7 +121,8 @@ $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups']
 					$floor_code = cc_home5_floor_code($group);
 					$amenities  = cc_home5_group_amenities($group);
 					?>
-				<div class="item-toggle group transition-300"<?php echo $floor_code ? ' data-floor-code="' . esc_attr($floor_code) . '"' : ''; ?>>
+				<div class="item-toggle group transition-300"
+					<?php echo $floor_code ? ' data-floor-code="' . esc_attr($floor_code) . '"' : ''; ?>>
 					<div class="title flex items-center justify-between cursor-pointer transition-300">
 						<div class="toggle-wrapper flex items-center gap-5">
 							<div class="floor body-3 font-semibold text-Primary-3 font-fontHeading">
@@ -137,7 +140,8 @@ $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups']
 							<a class="amenity-legend-item" href="#"
 								<?php echo $map_id ? ' data-map-id="' . esc_attr($map_id) . '"' : ''; ?>>
 								<div class="amenity-legend-item-number"><span><?php echo (int) $i + 1; ?></span></div>
-								<div class="amenity-legend-item-text"><?php echo esc_html(cc_home5_amenity_name($amenity)); ?>
+								<div class="amenity-legend-item-text">
+									<?php echo esc_html(cc_home5_amenity_name($amenity)); ?>
 								</div>
 							</a>
 							<?php endforeach; ?>
@@ -195,7 +199,7 @@ $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups']
 				<?php endif; ?>
 			</div>
 		</div>
-				<?php
+		<?php
 			}
 		}
 		?>

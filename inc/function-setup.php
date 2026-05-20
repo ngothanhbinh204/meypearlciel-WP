@@ -51,8 +51,10 @@ function canhcam_style()
 	}
 	// wp_enqueue_script('front-end-global', THEME_URI . '/scripts/core.min.js', '', '', true);
 	// 			wp_enqueue_script('front-end-main', THEME_URI . '/scripts/main.min.js', '', '', true);
-				wp_enqueue_script('dist-js-core', THEME_URI . '/dist/js/core.min.js', '', GENERATE_VERSION, true);
-				wp_enqueue_script('dist-js-main', THEME_URI . '/dist/js/main.min.js', '', GENERATE_VERSION, true);
+				wp_enqueue_script('dist-js-core',   THEME_URI . '/dist/js/core.min.js',         '', GENERATE_VERSION, true);
+				wp_enqueue_script('dist-js-swiper', THEME_URI . '/src/plugins/swiper.min.js', '', GENERATE_VERSION, true);
+				wp_enqueue_script('dist-js-main',   THEME_URI . '/dist/js/main.min.js',       '', GENERATE_VERSION, true);
+				wp_enqueue_script('dist-js-api',    THEME_URI . '/dist/js/API.js',             array('dist-js-core', 'dist-js-swiper'), GENERATE_VERSION, true);
 				wp_enqueue_script('src-main', THEME_URI . '/src/js/main.js', array(), GENERATE_VERSION, true);
 
 }

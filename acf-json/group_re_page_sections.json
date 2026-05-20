@@ -18,12 +18,23 @@
           "sub_fields": [
             {
               "key": "field_hero_image",
-              "label": "Ảnh nền hero",
+              "label": "Ảnh nền hero (Desktop)",
               "name": "image",
               "type": "image",
               "return_format": "array",
               "preview_size": "medium",
               "required": 1,
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_hero_mobile_image",
+              "label": "Ảnh nền hero (Mobile)",
+              "name": "mobile_image",
+              "type": "image",
+              "return_format": "array",
+              "preview_size": "medium",
+              "instructions": "Tỳ chọn — ảnh hiển thị trên màn hình nhỏ (< 768px). Đề trống nếu dùng chung ảnh desktop. Tỷ lệ gợi ý: 9:16 (dọc).",
+              "required": 0,
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
@@ -94,6 +105,14 @@
                   "return_format": "array",
                   "preview_size": "medium",
                   "wrapper": { "width": "40", "class": "", "id": "" }
+                },
+                {
+                  "key": "field_welcome_slide_video",
+                  "label": "Video (YouTube / URL file)",
+                  "name": "slide_video",
+                  "type": "url",
+                  "instructions": "Tuỳ chọn — URL YouTube, Vimeo hoặc link file MP4/WebM. Nếu có video sẽ hiển thị thay cho Hình ảnh chính.",
+                  "wrapper": { "width": "60", "class": "", "id": "" }
                 },
                 {
                   "key": "field_welcome_slide_inner_title",
@@ -255,7 +274,8 @@
                   "key": "field_loc_highlight_label",
                   "label": "Tên địa điểm",
                   "name": "label",
-                  "type": "text",
+                  "type": "wysiwyg",
+				  
                   "instructions": "VD: Trung tâm TP.HCM, Sân bay Tân Sơn Nhất",
                   "wrapper": { "width": "75", "class": "", "id": "" }
                 }
@@ -541,13 +561,21 @@
             },
             {
               "key": "field_gallery_featured",
-              "label": "Cột 1 — Ảnh nổi bật (featured + play icon)",
+              "label": "Cột 1 — Ảnh poster / nổi bật (featured + play icon)",
               "name": "gallery_featured",
               "type": "image",
               "return_format": "array",
               "preview_size": "medium",
-              "instructions": "1 ảnh hiển thị ở cột trái kèm biểu tượng play (tỷ lệ 427:320)",
-              "wrapper": { "width": "100", "class": "", "id": "" }
+              "instructions": "Ảnh poster hiển thị trước khi play video (tỷ lệ 427:320). Nếu không có video, ảnh hiển thị tĩnh.",
+              "wrapper": { "width": "50", "class": "", "id": "" }
+            },
+            {
+              "key": "field_gallery_featured_video",
+              "label": "Cột 1 — Video (MP4 / YouTube / Vimeo)",
+              "name": "gallery_featured_video",
+              "type": "url",
+              "instructions": "Tuỳ chọn — URL video MP4, YouTube hoặc Vimeo. Nếu có video, click nút play sẽ phát inline trong khung ảnh (không popup).",
+              "wrapper": { "width": "50", "class": "", "id": "" }
             },
             {
               "key": "field_gallery_col2",

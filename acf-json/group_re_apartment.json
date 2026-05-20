@@ -36,48 +36,7 @@
       "ui": 1,
       "wrapper": { "width": "50", "class": "", "id": "" }
     },
-    {
-      "key": "field_apartment_code",
-      "label": "Mã căn hộ",
-      "name": "apartment_code",
-      "type": "text",
-      "instructions": "VD: A1204, S1-12B",
-      "required": 0,
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_apartment_type",
-      "label": "Loại căn hộ",
-      "name": "apartment_type",
-      "type": "select",
-      "choices": {
-        "studio": "Studio",
-        "1br": "1 Phòng ngủ",
-        "2br": "2 Phòng ngủ",
-        "3br": "3 Phòng ngủ",
-        "4br": "4 Phòng ngủ",
-        "penthouse": "Penthouse",
-        "duplex": "Duplex",
-        "shophouse": "Shophouse"
-      },
-      "default_value": "2br",
-      "return_format": "value",
-      "wrapper": { "width": "33", "class": "", "id": "" }
-    },
-    {
-      "key": "field_apartment_status",
-      "label": "Trạng thái",
-      "name": "apartment_status",
-      "type": "select",
-      "choices": {
-        "available": "Còn hàng",
-        "reserved": "Đã đặt cọc",
-        "sold": "Đã bán"
-      },
-      "default_value": "available",
-      "return_format": "value",
-      "wrapper": { "width": "34", "class": "", "id": "" }
-    },
+
     {
       "key": "field_apartment_area_tab",
       "label": "Diện tích",
@@ -104,32 +63,7 @@
       "step": 0.01,
       "wrapper": { "width": "33", "class": "", "id": "" }
     },
-    {
-      "key": "field_apartment_direction",
-      "label": "Hướng căn hộ",
-      "name": "apartment_direction",
-      "type": "select",
-      "choices": {
-        "dong": "Đông",
-        "tay": "Tây",
-        "nam": "Nam",
-        "bac": "Bắc",
-        "dong_nam": "Đông Nam",
-        "dong_bac": "Đông Bắc",
-        "tay_nam": "Tây Nam",
-        "tay_bac": "Tây Bắc"
-      },
-      "return_format": "value",
-      "wrapper": { "width": "34", "class": "", "id": "" }
-    },
-    {
-      "key": "field_apartment_description",
-      "label": "Mô tả căn hộ",
-      "name": "apartment_description",
-      "type": "textarea",
-      "rows": 4,
-      "wrapper": { "width": "", "class": "", "id": "" }
-    },
+
     {
       "key": "field_apartment_media_tab",
       "label": "Hình ảnh",
@@ -152,16 +86,7 @@
       "allow_null": 1,
       "wrapper": { "width": "100", "class": "", "id": "" }
     },
-    {
-      "key": "field_apartment_layout",
-      "label": "Sơ đồ thiết kế căn hộ",
-      "name": "apartment_layout",
-      "type": "image",
-      "return_format": "array",
-      "preview_size": "medium",
-      "instructions": "Ảnh layout/thiết kế nội thất của căn hộ",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
+
     {
       "key": "field_apartment_gallery",
       "label": "Gallery hình ảnh",
@@ -240,21 +165,6 @@
       "default_value": "#f97316",
       "enable_opacity": 0,
       "return_format": "string",
-      "wrapper": { "width": "50", "class": "", "id": "" }
-    },
-    {
-      "key": "field_apt_popup_position",
-      "label": "Vị trí popup",
-      "name": "apartment_popup_position",
-      "type": "select",
-      "choices": {
-        "top": "Trên",
-        "bottom": "Dưới",
-        "left": "Trái",
-        "right": "Phải"
-      },
-      "default_value": "top",
-      "return_format": "value",
       "wrapper": { "width": "50", "class": "", "id": "" }
     }
   ],

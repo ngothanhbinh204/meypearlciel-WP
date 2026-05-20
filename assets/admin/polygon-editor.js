@@ -23,22 +23,13 @@
 
   // ── CONFIGS ───────────────────────────────────────────────────
 
-  var POLY_CONFIGS = [
-    {
-      id             : 'apartment_layout_buildings_poly',
-      title          : 'Masterplan Polygon Editor — Tòa nhà',
-      description    : 'Click để thêm đỉnh → click đỉnh đầu (xanh) để đóng polygon',
-      context        : 'page-section',
-      layoutName     : 'apartment_layout',
-      imageSource    : 'field',
-      imageFieldName : 'masterplan_image',
-      repeaterName   : 'buildings',
-      polygonField   : 'building_polygon',
-      colorField     : 'building_color',
-      labelField     : 'building_ref',
-      defaultColor   : '#f97316',
-    },
-  ];
+  // POLY_CONFIGS trông — polygon editor cho home sections (home-5, home-7) đã tắt.
+  // Chỉ giữ polygon editor cho re_apartment (SPE_CONFIGS).
+  // POLY_CONFIGS trống — polygon editor cho home sections (home-5, home-7) đã tắt.
+  // Chỉ giữ polygon editor cho re_apartment (SPE_CONFIGS).
+  // POLY_CONFIGS trống — polygon editor cho home sections (home-5, home-7) đã tắt.
+  // Chỉ giữ polygon editor cho re_apartment (SPE_CONFIGS).
+  var POLY_CONFIGS = [];
 
   // Instances registry (allows append/remove sync)
   var instances = {};
@@ -1508,17 +1499,12 @@
   }
 
   function initAll() {
-    initPolygonEditors();
-
-    // Single-polygon editors (re_apartment)
+    // Single-polygon editors (re_apartment) — only kept context
     SPE_CONFIGS.forEach(function (cfg) {
       var editor = new SinglePolygonEditor(cfg);
       editor.mount();
       if (editor.wrapper) instances[cfg.id] = editor;
     });
-
-    // Utilities spatial polygon + camera editors (page post type)
-    initUtilities();
   }
 
   function syncAll() {
@@ -1526,10 +1512,6 @@
       Object.keys(instances).forEach(function (id) {
         if (instances[id].syncAll) instances[id].syncAll();
       });
-      // Init any newly appended floor_group rows
-      initUtilities();
-      // Init any newly added apartment_layout sections
-      initPolygonEditors();
     }, 400);
   }
 
