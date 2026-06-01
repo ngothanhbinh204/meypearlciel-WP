@@ -9,6 +9,28 @@ if (!function_exists('cc_home5_amenity_name')) {
 		return trim((string) ($amenity['amenity_name'] ?? $amenity['name'] ?? ''));
 	}
 }
+if(!function_exists('cc_home5_amenity_number')) {
+	function cc_home5_amenity_number(array $amenity) {
+		foreach (array('number', 'amenity_number', 'data_number') as $key) {
+			$val = trim((string) ($amenity[$key] ?? ''));
+			if ($val !== '') {
+				return $val;
+			}
+		}
+		return '#000000';
+	}
+}
+if(!function_exists('cc_home5_amenity_color')) {
+	function cc_home5_amenity_color(array $amenity) {
+		foreach (array('color', 'amenity_color', 'color_code') as $key) {
+			$val = trim((string) ($amenity[$key] ?? ''));
+			if ($val !== '') {
+				return $val;
+			}
+		}
+		return '#000000';
+	}
+}
 
 if (!function_exists('cc_home5_floor_name')) {
 	function cc_home5_floor_name(array $group) {
@@ -89,7 +111,8 @@ $description   = $data['section_description'] ?? '';
 $masterplan    = $data['masterplan_image'] ?? '';
 $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups'] : array();
 ?>
-<section class="home-5 section-swiper relative overflow-hidden">
+<section id="home-5" class="home-5 section-amenity section-swiper relative overflow-hidden"
+	data-image-map-name="Tiện Ích">
 	<div class="vector-1"><img src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-h-5-1.svg'); ?>"
 			alt=""></div>
 	<div class="vector-2"><img src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-h-5-2.svg'); ?>"
@@ -100,16 +123,16 @@ $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups']
 	</div>
 	<div class="section-amenity-wrapper">
 		<div class="wrap-inner xl:mb-16 mb-base text-white">
-			<div class="sub heading-4 font-fontHeading font-bold text-Primary-3" data-aos="fade-right"
-				data-aos-delay="200" data-aos-duration="700">Hệ tiện ích</div>
+			<div class="sub heading-4 font-fontHeading font-bold text-Primary-3" data-aos="fade-up" data-aos-delay="200"
+				data-aos-duration="1000">Hệ tiện ích</div>
 			<?php if ($section_title) : ?>
-			<div class="title heading-2 font-fontHeading font-bold uppercase mb-1" data-aos="fade-right"
-				data-aos-delay="400" data-aos-duration="700">
+			<div class="title heading-2 font-fontHeading font-bold uppercase mb-1" data-aos="fade-up"
+				data-aos-delay="400" data-aos-duration="1000">
 				<?php echo esc_html($section_title); ?>
 			</div>
 			<?php endif; ?>
 			<?php if ($description) : ?>
-			<div class="ctn body-3 font-normal" data-aos="fade-right" data-aos-delay="600" data-aos-duration="700">
+			<div class="ctn body-3 font-normal" data-aos="fade-up" data-aos-delay="600" data-aos-duration="1000">
 				<?php echo wp_kses_post($description); ?>
 			</div>
 			<?php endif; ?>
@@ -121,8 +144,10 @@ $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups']
 					$floor_code = cc_home5_floor_code($group);
 					$amenities  = cc_home5_group_amenities($group);
 					?>
-				<div class="item-toggle group transition-300"
-					<?php echo $floor_code ? ' data-floor-code="' . esc_attr($floor_code) . '"' : ''; ?>>
+				<div class="item-toggle group transition-300" <?php
+					echo $floor_code ? ' data-floor-code="' . esc_attr($floor_code) . '"' : '';
+					echo $floor_code ? ' data-floor-focus="' . esc_attr($floor_code . '-zoom') . '"' : '';
+					?>>
 					<div class="title flex items-center justify-between cursor-pointer transition-300">
 						<div class="toggle-wrapper flex items-center gap-5">
 							<div class="floor body-3 font-semibold text-Primary-3 font-fontHeading">
@@ -136,10 +161,19 @@ $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups']
 						<div class="amenity-legend-list">
 							<?php foreach ($amenities as $i => $amenity) :
 								$map_id = cc_home5_amenity_map_id($amenity, $floor_code);
+								$amenity_color = cc_home5_amenity_color($amenity);
 								?>
-							<a class="amenity-legend-item" href="#"
-								<?php echo $map_id ? ' data-map-id="' . esc_attr($map_id) . '"' : ''; ?>>
-								<div class="amenity-legend-item-number"><span><?php echo (int) $i + 1; ?></span></div>
+							<a class="amenity-legend-item" data-imp-trigger-object-on-click="floor-1-zoom"
+								data-imp-trigger-object-on-mouseover="<?php echo esc_attr($map_id); ?>"
+								href="javascript:void(0)"
+								<?php echo $map_id ? ' data-map-id="' . esc_attr($map_id) . '"' : ''; ?>
+								data-amenity-color="<?php echo esc_attr($amenity_color); ?>">
+								<div style="background-color: <?php echo esc_attr($amenity_color); ?>;"
+									class="amenity-legend-item-number">
+									<span>
+										<?php echo esc_html(cc_home5_amenity_number($amenity)); ?>
+									</span>
+								</div>
 								<div class="amenity-legend-item-text">
 									<?php echo esc_html(cc_home5_amenity_name($amenity)); ?>
 								</div>
@@ -180,23 +214,23 @@ $floor_groups  = is_array($data['floor_groups'] ?? null) ? $data['floor_groups']
 					$map_id = sanitize_title($name);
 				}
 				?>
-		<div class="amenity-tooltip-wrapper" data-title="<?php echo esc_attr($map_id); ?>"
-			data-map-id="<?php echo esc_attr($map_id); ?>"
+		<div class="amenity-tooltip-wrapper" data-index="<?php echo esc_attr($map_id); ?>"
+			data-title="<?php echo esc_attr($map_id); ?>" data-map-id="<?php echo esc_attr($map_id); ?>"
 			<?php echo $floor_code ? ' data-floor-code="' . esc_attr($floor_code) . '"' : ''; ?>>
 			<div class="amenity-tooltip-item">
-				<div class="plan-tooltip-icon">
+				<!-- <div class="plan-tooltip-icon">
 					<i class="fa-regular fa-plus"></i>
-				</div>
+				</div> -->
 				<?php if ($name !== '') : ?>
 				<div class="amenity-tooltip-item-title">
 					<h3><?php echo esc_html($name); ?></h3>
 				</div>
 				<?php endif; ?>
-				<?php if ($desc !== '') : ?>
+				<!-- <?php if ($desc !== '') : ?>
 				<div class="amenity-tooltip-item-content">
 					<?php echo wp_kses_post($desc); ?>
 				</div>
-				<?php endif; ?>
+				<?php endif; ?> -->
 			</div>
 		</div>
 		<?php

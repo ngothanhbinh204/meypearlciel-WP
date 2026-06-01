@@ -12,24 +12,52 @@ $subtitle	= $data['subtitle'] ?? '';
 $description = $data['description'] ?? '';
 $map_image   = $data['image'] ?? null;
 $highlights  = $data['highlights'] ?? [];
+
+function get_svg_with_class($attachment_id, $class = 'img-svg') {
+    $path = get_attached_file($attachment_id);
+    if (!file_exists($path)) {
+        return '';
+    }
+    
+    $svg_content = file_get_contents($path);
+    if (!$svg_content) {
+        return '';
+    }
+    
+    // Dùng DOMDocument để thêm class an toàn
+    $dom = new DOMDocument();
+    $old_libxml_errors = libxml_use_internal_errors(true);
+    $dom->loadXML($svg_content);
+    libxml_use_internal_errors($old_libxml_errors);
+    
+    $svg = $dom->getElementsByTagName('svg')->item(0);
+    if ($svg) {
+        $old_class = $svg->getAttribute('class');
+        $new_class = trim($old_class . ' ' . $class);
+        $svg->setAttribute('class', $new_class);
+    }
+    
+    return $dom->saveXML($svg);
+}
 ?>
-<section class="home-4 relative overflow-hidden bg-Secondary-1">
-	<div class="container-fluid default-container-js">
-		<div class="wrapper grid xl:grid-cols-[calc(486/1760*100%)_1fr] grid-cols-1 xl:gap-0 gap-base">
+<section id="home-4" class="home-4 relative overflow-hidden bg-Secondary-1">
+	<div class="container-fluid default-container-js flex flex-col">
+		<div class="wrapper grid xl:grid-cols-[calc(486/1760*100%)_1fr] grid-cols-1 xl:gap-0 gap-base h-full">
 			<div class="col-left xl:pt-20">
 				<?php if ($title) : ?>
-				<div class="title heading-2 font-bold text-Primary-1 font-fontHeading mb-5" data-aos="fade-right"
+				<div class="title heading-2 font-bold text-Primary-1 font-fontHeading mb-5" data-aos="fade-up"
 					data-aos-delay="200" data-aos-duration="1000">
 					<?php echo esc_html($title); ?>
 				</div>
 				<?php endif; ?>
 				<?php if ($subtitle) : ?>
-				<div class="sub-title heading-hightlight font-normal font-secondary text-Primary-1 mb-5 leading-none">
-					<?php echo esc_html($subtitle); ?>
+				<div class="sub-title heading-hightlight font-normal font-secondary text-Primary-1 mb-5 leading-none"
+					data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+					<?php echo wp_kses_post($subtitle); ?>
 				</div>
 				<?php endif; ?>
 				<?php if ($description) : ?>
-				<div class="format-content space-y-5 font-normal text-Primary-4 xl:rem:pr-[98px]" data-aos="fade-right"
+				<div class="format-content space-y-5 font-normal text-Primary-4 xl:rem:pr-[98px]" data-aos="fade-up"
 					data-aos-delay="600" data-aos-duration="1000">
 					<?php echo wp_kses_post($description); ?>
 				</div>
@@ -38,9 +66,8 @@ $highlights  = $data['highlights'] ?? [];
 			<?php if ($map_image) : ?>
 			<div class="col-right" stick-to-edge="right" unstick-min="1024">
 				<div class="img">
-					<a class="img-ratio ratio:pt-[703_1411]" href="#">
-						<img src="<?php echo esc_url($map_image['url']); ?>"
-							alt="<?php echo esc_attr($map_image['alt']); ?>">
+					<a class="img-ratio ratio:pt-[60%]" href="javascript:void(0)">
+						<?php echo get_svg_with_class($map_image['ID'], 'img-svg'); ?>
 					</a>
 				</div>
 			</div>
@@ -66,7 +93,7 @@ $highlights  = $data['highlights'] ?? [];
 				<?php endforeach; ?>
 			</div>
 			<div class="car xl:rem:w-[798px] max-w-full absolute bottom-0">
-				<a class="img-ratio ratio:pt-[30_798]" href="#">
+				<a class="img-ratio ratio:pt-[30_798]" href="javascript:void(0)">
 					<img src="<?php echo esc_url(get_template_directory_uri() . '/img/car.png'); ?>" alt="">
 				</a>
 			</div>

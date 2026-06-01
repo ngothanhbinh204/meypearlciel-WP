@@ -67,9 +67,14 @@
                     .find(function (b) { return b.id === building.id; });
         var color = (meta && meta.color) ? meta.color : '#f97316';
 
-        // Tên tòa nhà
+        // Header popup: hiển thị tên tầng đang active
         var headerEl = document.getElementById('popup-building-header');
-        if (headerEl) headerEl.textContent = building.name || '';
+        function setPopupHeader(floor) {
+            if (!headerEl) return;
+            headerEl.textContent = (floor && floor.name)
+                ? floor.name
+                : (building.name || '');
+        }
 
         // Sidebar — floor tabs
         var floorsEl = document.getElementById('popup-floor-tabs');
@@ -95,6 +100,7 @@
                         .forEach(function (el) { el.classList.remove('active'); });
                 btn.classList.add('active');
                 renderFloorPlan(floor, building);
+                setPopupHeader(floor);
             });
 
             floorsEl.appendChild(btn);
@@ -103,6 +109,7 @@
         // Hiển thị floor được chọn ngay lập tức
         var initial = floors.find(function (f) { return f.id === activeId; }) || floors[0] || null;
         renderFloorPlan(initial, building);
+        setPopupHeader(initial);
 
         // Legend màu căn hộ — lấy từ global_legend (ACF Theme Options → RE_DATA.legend)
         var legendEl = document.getElementById('popup-building-legend');
@@ -139,8 +146,13 @@
             ? (image.height / image.width * 100).toFixed(4)
             : (550 / 960 * 100).toFixed(4);
 
+        var zoomViewport = document.createElement('div');
+        zoomViewport.className = 'plan-zoom-viewport';
+        zoomViewport.style.cssText = 'position:relative;width:100%;overflow:hidden;touch-action:none;';
+
         var ratioDiv       = document.createElement('div');
-        ratioDiv.style.cssText = 'position:relative;width:100%;padding-top:' + aspectPct + '%;';
+        ratioDiv.className = 'plan-zoom-content';
+        ratioDiv.style.cssText = 'position:relative;width:100%;padding-top:' + aspectPct + '%;transform-origin:center center;will-change:transform;';
 
         var img           = document.createElement('img');
         img.src           = imageUrl;
@@ -164,8 +176,200 @@
             ratioDiv.appendChild(svg);
         }
 
+        zoomViewport.appendChild(ratioDiv);
+
         planEl.innerHTML = '';
-        planEl.appendChild(ratioDiv);
+        planEl.appendChild(zoomViewport);
+
+        initPlanZoom(zoomViewport, ratioDiv);
+    }
+
+    /**
+     * Camera zoom cho popup mặt bằng.
+     * Reset mỗi lần renderFloorPlan chạy để khi đổi tầng sẽ về scale mặc định.
+     */
+    function initPlanZoom(viewportEl, contentEl) {
+        if (!viewportEl || !contentEl) return;
+
+        var zoomInBtn  = document.querySelector('.js-plan-zoom-in');
+        var zoomOutBtn = document.querySelector('.js-plan-zoom-out');
+       
+
+        var controlsEl = document.querySelector('.plan-zoom-controls');
+        if (controlsEl) {
+            if (controlsEl.parentElement) {
+                controlsEl.parentElement.style.position = 'relative';
+            }
+            controlsEl.style.cssText = 'position:absolute;right:12px;bottom:12px;z-index:5;display:flex;flex-direction:column;gap:8px;';
+        }
+
+        var minScale = 1;
+        var maxScale = 4;
+        var step = 0.25;
+        var scale = 1;
+        var tx = 0;
+        var ty = 0;
+        var isDragging = false;
+        var isPanning = false;
+        var dragStartX = 0;
+        var dragStartY = 0;
+        var dragStartTx = 0;
+        var dragStartTy = 0;
+        var dragThreshold = 4;
+
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function clampTranslate() {
+            var vw = viewportEl.clientWidth;
+            var vh = viewportEl.clientHeight;
+            var maxX = (vw * (scale - 1)) / 2;
+            var maxY = (vh * (scale - 1)) / 2;
+            tx = clamp(tx, -maxX, maxX);
+            ty = clamp(ty, -maxY, maxY);
+        }
+
+        function applyTransform(withTransition) {
+            if (withTransition) {
+                contentEl.style.transition = 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)';
+            } else {
+                contentEl.style.transition = 'none';
+            }
+            contentEl.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) scale(' + scale + ')';
+            viewportEl.style.cursor = (scale > 1) ? (isDragging ? 'grabbing' : 'grab') : 'default';
+            if (zoomOutBtn) zoomOutBtn.disabled = scale <= minScale + 0.001;
+            if (zoomInBtn)  zoomInBtn.disabled  = scale >= maxScale - 0.001;
+        }
+
+        function setZoom(nextScale, focusX, focusY, withTransition) {
+            var vw = viewportEl.clientWidth;
+            var vh = viewportEl.clientHeight;
+            var oldScale = scale;
+            var target = clamp(nextScale, minScale, maxScale);
+            if (target === oldScale) return;
+
+            var fx = (typeof focusX === 'number') ? focusX : (vw / 2);
+            var fy = (typeof focusY === 'number') ? focusY : (vh / 2);
+
+            // Giữ điểm focus đứng yên trong viewport khi thay đổi scale.
+            var localX = (fx - (vw / 2) - tx) / oldScale;
+            var localY = (fy - (vh / 2) - ty) / oldScale;
+
+            scale = target;
+            tx = fx - (vw / 2) - (localX * scale);
+            ty = fy - (vh / 2) - (localY * scale);
+
+            clampTranslate();
+            applyTransform(withTransition);
+        }
+
+        function onZoomIn() {
+            setZoom(scale + step, null, null, true);
+        }
+
+        function onZoomOut() {
+            setZoom(scale - step, null, null, true);
+        }
+
+        if (zoomInBtn) {
+            zoomInBtn.onclick = onZoomIn;
+        }
+
+        if (zoomOutBtn) {
+            zoomOutBtn.onclick = onZoomOut;
+        }
+
+        viewportEl.onwheel = function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            var rect = viewportEl.getBoundingClientRect();
+            var fx = evt.clientX - rect.left;
+            var fy = evt.clientY - rect.top;
+            var delta = evt.deltaY < 0 ? step : -step;
+            setZoom(scale + delta, fx, fy, true);
+        };
+
+        function onPointerDown(evt) {
+            if (scale <= 1) return;
+            if (evt.button !== 0) return;
+
+            // Cho phép click polygon khi đã zoom (không biến click thành pan).
+            if (evt.target && evt.target.tagName && evt.target.tagName.toLowerCase() === 'polygon') {
+                return;
+            }
+
+            isDragging = true;
+            isPanning = false;
+            dragStartX = evt.clientX;
+            dragStartY = evt.clientY;
+            dragStartTx = tx;
+            dragStartTy = ty;
+
+            if (viewportEl.setPointerCapture && typeof evt.pointerId !== 'undefined') {
+                viewportEl.setPointerCapture(evt.pointerId);
+            }
+
+            applyTransform(false);
+        }
+
+        function onPointerMove(evt) {
+            if (!isDragging) return;
+
+            var dx = evt.clientX - dragStartX;
+            var dy = evt.clientY - dragStartY;
+
+            if (!isPanning) {
+                if (Math.abs(dx) < dragThreshold && Math.abs(dy) < dragThreshold) {
+                    return;
+                }
+                isPanning = true;
+            }
+
+            evt.preventDefault();
+            evt.stopPropagation();
+
+            tx = dragStartTx + dx;
+            ty = dragStartTy + dy;
+            clampTranslate();
+            applyTransform(false);
+        }
+
+        function onPointerUp(evt) {
+            if (!isDragging) return;
+
+            if (isPanning) {
+                evt.preventDefault();
+                evt.stopPropagation();
+            }
+
+            isDragging = false;
+            isPanning = false;
+            if (viewportEl.releasePointerCapture && typeof evt.pointerId !== 'undefined') {
+                try { viewportEl.releasePointerCapture(evt.pointerId); } catch (e) {}
+            }
+            applyTransform(false);
+        }
+
+        viewportEl.addEventListener('pointerdown', onPointerDown);
+        viewportEl.addEventListener('pointermove', onPointerMove);
+        viewportEl.addEventListener('pointerup', onPointerUp);
+        viewportEl.addEventListener('pointercancel', onPointerUp);
+
+        // Chặn touch gesture nổi bọt lên Fancybox.
+        viewportEl.addEventListener('touchstart', function (evt) {
+            evt.stopPropagation();
+        }, { passive: true });
+        viewportEl.addEventListener('touchmove', function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+        }, { passive: false });
+
+        // Reset camera mặc định cho mỗi lần render tầng.
+        scale = 1;
+        tx = 0;
+        ty = 0;
+        applyTransform(false);
     }
 
     /**
@@ -308,6 +512,13 @@
         return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
+    function openPlanPopup() {
+        if (!window.Fancybox) return;
+        window.Fancybox.show([{ src: '#popup-plan', type: 'inline' }], {
+            dragToClose: false,
+        });
+    }
+
     // ════════════════════════════════════════════════════════════════════
     // PUBLIC API — window.open* (gọi từ IMP "Run Script")
     // ════════════════════════════════════════════════════════════════════
@@ -326,7 +537,7 @@
         var cached = _floorMap[floorId];
         if (cached) {
             renderBuildingPopup(cached.building, cached.floor.id);
-            window.Fancybox && Fancybox.show([{ src: '#popup-plan', type: 'inline' }]);
+            openPlanPopup();
             return;
         }
 
@@ -343,7 +554,7 @@
                     _floorMap[f.id] = { floor: f, building: data.building };
                 });
                 renderBuildingPopup(data.building, data.floor.id);
-                window.Fancybox && Fancybox.show([{ src: '#popup-plan', type: 'inline' }]);
+                openPlanPopup();
             })
             .catch(function (err) { console.error('[openFloorPopup]', err); });
     };
@@ -362,7 +573,7 @@
         var building = _buildingMap[buildingId];
         if (building) {
             renderBuildingPopup(building, null);
-            window.Fancybox && Fancybox.show([{ src: '#popup-plan', type: 'inline' }]);
+            openPlanPopup();
             return;
         }
 
@@ -377,7 +588,7 @@
                     _floorMap[f.id] = { floor: f, building: building };
                 });
                 renderBuildingPopup(building, null);
-                window.Fancybox && Fancybox.show([{ src: '#popup-plan', type: 'inline' }]);
+                openPlanPopup();
             })
             .catch(function (err) { console.error('[openBuildingPopup]', err); });
     };

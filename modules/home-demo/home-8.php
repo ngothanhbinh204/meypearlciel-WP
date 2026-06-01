@@ -45,13 +45,14 @@ if ( $featured_video ) {
 	}
 }
 ?>
-<section class="home-8 relative overflow-hidden bg-Secondary-1">
+<section id="home-8" class="home-8 relative overflow-hidden bg-Secondary-1">
 	<div class="vector" aria-hidden="true">
 		<img class="img-svg" src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home8-embed.svg'); ?>"
 			alt="">
 	</div>
 	<div class="vector-mobile mobile-show" aria-hidden="true"><img class="img-svg"
-			src="./img/vector-home8-embed-mobile.svg" alt=""></div>
+			src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home-group-embed-mobile.svg'); ?>" alt="">
+	</div>
 	<div class="wrap-container xl:rem:pl-[260px] xl:rem:pr-[87px] px-4">
 		<div class="wrapper-main grid lg:grid-cols-[calc(480/1573*100%)_1fr] grid-cols-1 xl:rem:gap-[113px] gap-base">
 			<!-- Left: heading + colour list -->
@@ -77,27 +78,33 @@ if ( $featured_video ) {
 					class="wrap-slide-desktop home-item-animation absolute top-0 left-0 w-full h-full hidden lg:grid grid-cols-3 rem:gap-[10px] overflow-hidden min-h-[36rem]">
 					<!-- Col 1: featured image/video with play icon -->
 					<div class="wrap-scroll-container flex flex-col justify-center">
-						<?php if ($featured_image) : ?>
-						<div class="img relative home8-featured-wrap" <?php if ( $featured_video ) : ?>
-							data-video-type="<?php echo esc_attr( $video_type ); ?>"
-							data-video-src="<?php echo esc_attr( $video_embed_url ); ?>" <?php endif; ?>>
+						<?php if ($featured_image || $featured_video) : ?>
+						<div class="img relative home8-featured-wrap" <?php if ($featured_video) : ?>
+							data-video-type="<?php echo esc_attr($video_type); ?>"
+							data-video-src="<?php echo esc_attr($video_embed_url); ?>" <?php endif; ?>>
+
+							<?php if ($featured_video) : ?>
+
+							<div class="img-ratio ratio:pt-[427_320] home8-featured-video">
+								<video src="<?php echo esc_url($featured_video); ?>" autoplay muted loop playsinline>
+								</video>
+							</div>
+
+							<div class="wrap-play-icon absolute-center home8-play-btn">
+								<div class="play-icon">
+									<button type="button" aria-label="Phát video">
+										<span class="material-symbols-outlined">play_arrow</span>
+									</button>
+								</div>
+							</div>
+
+							<?php elseif ($featured_image) : ?>
+
 							<div class="img-ratio ratio:pt-[427_320] home8-featured-poster">
 								<img class="lozad" data-src="<?php echo esc_url($featured_image['url']); ?>"
 									alt="<?php echo esc_attr($featured_image['alt']); ?>">
 							</div>
-							<?php if ( $featured_video ) : ?>
-							<div class="img-ratio ratio:pt-[427_320] home8-featured-video">
-								<video src="<?php echo esc_url($featured_video); ?>" autoplay muted loop
-									playsinline></video>
-							</div>
-							<?php endif; ?>
-							<?php if ( $featured_video ) : ?>
-							<div class="wrap-play-icon absolute-center home8-play-btn">
-								<div class="play-icon">
-									<button type="button" aria-label="Phát video"><span
-											class="material-symbols-outlined">play_arrow</span></button>
-								</div>
-							</div>
+
 							<?php endif; ?>
 
 						</div>

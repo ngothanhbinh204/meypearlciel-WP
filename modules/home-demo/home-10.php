@@ -23,13 +23,14 @@ $logo_popup        = $data['logo_popup'] ?? '';
 $cf7_popup_form_id = (int) ($data['popup_contact_form'] ?? 0);
 
 ?>
-<section class="home-10 relative overflow-hidden section-py" <?php echo $bg_style; ?>>
+<section id="home-10" class="home-10 relative overflow-hidden section-py"
+	setBackground="<?php echo esc_url($bg_url); ?>">
 	<div class="container-fluid">
 		<div class="wrapper-main grid lg:grid-cols-[calc(840/1600*100%)_1fr] grid-cols-1 gap-base">
 			<!-- Left: project title + developer logo -->
 			<div class="col-left xl:rem:pl-[180px]">
 				<?php if ($title) : ?>
-				<h2 class="title heading-2 font-bold font-fontHeading uppercase text-Secondary-1 mb-base"
+				<h2 class="title heading-2 font-bold text-Primary-3 font-fontHeading uppercase mb-5"
 					data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
 					<?php echo wp_kses_post($title); ?>
 				</h2>
@@ -43,8 +44,8 @@ $cf7_popup_form_id = (int) ($data['popup_contact_form'] ?? 0);
 			<!-- Right: registration form -->
 			<div class="col-right">
 				<?php if ($subtitle) : ?>
-				<h2 class="title heading-2 font-bold font-fontHeading uppercase text-Secondary-1 mb-5"
-					data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+				<h2 class="title text-center text-Primary-3 heading-1 font-fontHeading mb-6" data-aos="fade-up"
+					data-aos-delay="200" data-aos-duration="1000">
 					<?php echo esc_html($subtitle); ?>
 				</h2>
 				<?php endif; ?>
@@ -78,7 +79,7 @@ $cf7_popup_form_id = (int) ($data['popup_contact_form'] ?? 0);
 		</div>
 		<div class="col-right flex flex-col justify-center xl:p-10 p-6">
 			<?php if ($logo_popup) : ?>
-			<div class="rem:max-w-[248px] w-full mx-auto xl:mb-15 mb-base">
+			<div class="logo rem:max-w-[248px] w-full mx-auto xl:mb-15 mb-3">
 				<a class="img-ratio ratio:pt-[80_248]" href="#">
 					<img class="lozad" data-src="<?php echo esc_url($logo_popup); ?>" alt="">
 				</a>

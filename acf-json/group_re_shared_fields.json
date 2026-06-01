@@ -104,7 +104,25 @@
           "wrapper": { "width": "50", "class": "", "id": "" }
         }
       ]
-    }
+    },
+    {
+      "key": "field_global_compass_icon",
+      "label": "Icon la bàn",
+      "name": "global_compass_icon",
+      "type": "image",
+      "instructions": "Icon la bàn hiển thị trong popup mặt bằng",
+      "return_format": "array",
+      "preview_size": "thumbnail",
+      "wrapper": { "width": "33", "class": "", "id": "" }
+    },
+	{
+		"key": "field_note",
+		"label": "Ghi chú",
+		"name": "notes",
+		"type": "wysiwyg",
+		"instructions": "Ghi chú chung cho toàn dự án, hiển thị trong Theme Options.",
+		"wrapper": { "width": "100", "class": "", "id": "" }
+	}
   ],
   "location": [
     [

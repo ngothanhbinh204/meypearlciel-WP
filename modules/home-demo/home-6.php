@@ -9,10 +9,10 @@ $cc_sections   = get_query_var('cc_sections', []);
 $data          = $cc_sections['lifestyle'][0] ?? null;
 $utility_items = $data['utility_items'] ?? [];
 ?>
-<section class="home-6 relative overflow-hidden">
+<section id="home-6" class="home-6 relative overflow-hidden">
 	<div class="vector-mobile mobile-show" aria-hidden="true"><img class="img-svg"
-			src="./img/vector-home6-embed-mobile.svg" alt=""></div>
-	<div class="swiper-column-auto relative" data-speed="700">
+			src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home6-embed-mobile.svg'); ?>" alt=""></div>
+	<div class="swiper-column-auto autoplay swiper-loop relative" data-speed="700" data-time="5000">
 		<div class="swiper">
 			<div class="swiper-wrapper">
 				<?php foreach ($utility_items as $item) :

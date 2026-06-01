@@ -12,7 +12,7 @@ $bg_image    = $data['background_image']['url'] ?? '';
 $stats       = $data['stats'] ?? [];
 $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image) . ')"' : '';
 ?>
-<section class="home-3 relative overflow-hidden section-py" <?php echo $bg_style; ?>>
+<section id="home-3" class="home-3 relative overflow-hidden" >
 	<div class="vector">
 		<img class="img-svg" src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home3-embed.svg'); ?>"
 			alt="">
@@ -20,7 +20,10 @@ $bg_style    = $bg_image ? ' style="background-image: url(' . esc_url($bg_image)
 	<div class="vector-mobile mobile-show" aria-hidden="true"><img class="img-svg"
 			src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home3-embed-mobile.svg'); ?>" alt="">
 	</div>
-	<div class="container-fluid">
+	<div class="bg-overview">
+		<a href="#" class="img-ratio ratio:pt-[960_1920]">
+			<img src="<?php echo esc_url($bg_image); ?>" alt="">
+		</a>
 		<div class="wrap-content home-item-animation rem:max-w-[540px] w-full ml-auto bg-Secondary-1 xl:p-8 p-4">
 			<?php if ($title) : ?>
 			<h2 class="title-box heading-2 uppercase font-fontHeading text-Primary-2 font-bold mb-8 block-title">

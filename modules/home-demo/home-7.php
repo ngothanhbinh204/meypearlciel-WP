@@ -16,12 +16,25 @@ $data          = $cc_sections['apartment_layout'][0] ?? null;
 $section_title = $data['section_title'] ?? '';
 $masterplan    = $data['masterplan_image'] ?? null;
 $masterplan_url = is_array($masterplan) ? ($masterplan['url'] ?? '') : $masterplan;
+$compass_icon  = get_field('global_compass_icon', 'option');
+$compass_url   = is_array($compass_icon) ? ($compass_icon['url'] ?? '') : '';
+$compass_alt   = is_array($compass_icon) ? ($compass_icon['alt'] ?? 'compass') : 'compass';
+$notes         = get_field('notes', 'option');
 ?>
 <section class="home-7 relative overflow-hidden">
 	<div class="vector">
 		<img src="<?php echo esc_url(get_template_directory_uri() . '/img/line-home-7.svg'); ?>" alt="">
 	</div>
 	<div class="image-map-wrapper">
+		<?php if ($section_title) : ?>
+		<div class="wrap-content title-fade-left">
+			<div class="sub-title heading-4 font-bold font-fontHeading" data-aos="fade-right" data-aos-delay="200"
+				data-aos-duration="1000">Tổng thể</div>
+			<div class="title heading-2 font-fontHeading font-bold uppercase bottom-title">
+				<?php echo esc_html($section_title); ?>
+			</div>
+		</div>
+		<?php endif; ?>
 		<?php if ($masterplan_url) : ?>
 		<div class="img">
 			<!-- Image Map Pro sẽ overlay lên ảnh này — KHÔNG dùng <a> wrapper -->
@@ -29,20 +42,12 @@ $masterplan_url = is_array($masterplan) ? ($masterplan['url'] ?? '') : $masterpl
 
 		</div>
 		<?php endif; ?>
-		<?php if ($section_title) : ?>
-		<div class="wrap-content">
-			<div class="sub-title heading-4 font-bold font-fontHeading" data-aos="fade-right" data-aos-delay="200"
-				data-aos-duration="1000">Tổng thể</div>
-			<div class="title heading-2 font-fontHeading font-bold uppercase" data-aos="fade-right" data-aos-delay="400"
-				data-aos-duration="1000">
-				<?php echo esc_html($section_title); ?>
-			</div>
-		</div>
-		<?php endif; ?>
+
 	</div>
 
 	<?php
 $buildings     = $data['buildings'] ?? [];
+// var_dump($buildings);
 
 ?>
 	<?php
@@ -70,6 +75,7 @@ $buildings     = $data['buildings'] ?? [];
 			'type'    => 'NUMERIC',
 		] ],
 	] ) : [];
+
 	?>
 	<div class="wrap-floor-tooltip hidden">
 		<?php foreach ( $floor_ids as $fid ) :
@@ -108,7 +114,12 @@ $buildings     = $data['buildings'] ?? [];
 					</div>
 					<?php endif; ?>
 				</div>
-
+				<div class="btn-more mt-3">
+					<a href="#" class="btn btn-primary style-default js-open-floor-detail"
+						data-floor-id="<?php echo esc_attr( $fid ); ?>"
+						data-building-id="<?php echo esc_attr( is_array( $parent_bid ) ? ( $parent_bid['ID'] ?? 0 ) : $parent_bid ); ?>">Xem
+						chi tiết</a>
+				</div>
 			</div>
 		</div>
 		<?php endforeach; ?>
@@ -128,19 +139,39 @@ $buildings     = $data['buildings'] ?? [];
 			<div id="popup-floor-tabs" class="wrap-floor"></div>
 			<div class="wrap-image-map">
 				<div class="img" id="popup-building-plan"></div>
+				<div class="plan-zoom-controls" aria-label="Zoom controls">
+					<button type="button" class="plan-zoom-btn js-plan-zoom-in" aria-label="Phóng to">
+						<i class="fa-light fa-plus"></i>
+					</button>
+					<button type="button" class="plan-zoom-btn js-plan-zoom-out" aria-label="Thu nhỏ">
+						<i class="fa-light fa-minus"></i>
+					</button>
+				</div>
 			</div>
-			<div id="popup-building-legend" class="plan-legend-list"></div>
+			<div class="wrapper-legend">
+				<div id="popup-building-legend" class="plan-legend-list"></div>
+				<div class="icon-compasss">
+					<?php if ( $compass_url ) : ?>
+					<img src="<?php echo esc_url( $compass_url ); ?>" alt="<?php echo esc_attr( $compass_alt ); ?>">
+					<?php endif; ?>
+				</div>
+			</div>
 		</div>
+		<?php if ( $notes ) : ?>
+		<div class="note">
+			<?php echo wp_kses_post( $notes ); ?>
+		</div>
+		<?php endif; ?>
 	</div>
 </div>
 
 <!-- Apartment detail popup — JS-populated shells (openApartmentDetail) -->
 <div class="plan-popup-detail" id="popup-detail-plan" style="display: none;" data-fancybox-modal>
 	<div class="popup-content">
-		<div class="wrapper-main flex flex-col lg:flex-row gap-base">
+		<div class="wrapper-main flex justify-center">
 			<!-- Col left: gallery swiper -->
 			<div class="col-left xl:rem:max-w-[757px] w-full">
-				<div class="wrapper grid md:grid-cols-[calc(627/757*100%)_1fr] gap-[calc(10/805*100%)]">
+				<div class="wrapper grid grid-cols-[calc(627/757*100%)_1fr] gap-[calc(10/805*100%)]">
 					<div class="main">
 						<div class="swiper js-apt-swiper-main">
 							<div class="swiper-wrapper"></div>

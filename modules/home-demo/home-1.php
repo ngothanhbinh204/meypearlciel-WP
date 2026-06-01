@@ -7,31 +7,52 @@
 $cc_sections  = get_query_var('cc_sections', []);
 $data         = $cc_sections['hero_banner'][0] ?? null;
 $image        = $data['image'] ?? null;
+$video_file	= $data['video_file'] ?? null;
 $mobile_image = $data['mobile_image'] ?? null;
-$cta_url      = $data['cta_url'] ?? '#';
 $socials      = get_field('header_social_links', 'options') ?: [];
 ?>
-<section class="home-1">
+<section class="home-1" id="home-1">
 	<div class="slide relative">
 		<div class="swiper">
 			<div class="swiper-wrapper">
+
+				<?php if ($video_file) : ?>
+				<div class="swiper-slide">
+					<div class="home-1-banner relative">
+						<a class="img-ratio ratio:pt-[960_1920]" href="#" >
+							<video class="hero-video w-full h-full object-cover" autoplay playsinline muted
+								preload="metadata">
+								<source src="<?php echo esc_url($video_file); ?>" type="video/mp4">
+							</video>
+						</a>
+					</div>
+				</div>
+				<?php endif; ?>
 				<?php if ($image) : ?>
 				<div class="swiper-slide">
 					<div class="home-1-banner relative">
-						<a class="img-ratio ratio:pt-[960_1920] <?php echo $mobile_image ? 'hidden md:block' : ''; ?>"
-							href="<?php echo esc_url($cta_url); ?>">
-							<img class="lozad" data-src="<?php echo esc_url($image['url']); ?>"
-								alt="<?php echo esc_attr($image['alt']); ?>">
-						</a>
+						<div class="banner-desktop desktop-show">
+							<a class="img-ratio ratio:pt-[960_1920] <?php echo $mobile_image ? : ''; ?>">
+								<img class="lozad" data-src="<?php echo esc_url($image['url']); ?>"
+									alt="<?php echo esc_attr($image['alt']); ?>">
+							</a>
+						</div>
+
 						<?php if ($mobile_image) : ?>
-						<a class="img-ratio ratio:pt-[960_540] md:hidden" href="<?php echo esc_url($cta_url); ?>">
-							<img class="lozad" data-src="<?php echo esc_url($mobile_image['url']); ?>"
-								alt="<?php echo esc_attr($mobile_image['alt']); ?>">
-						</a>
+						<div class="banner-mobile mobile-show">
+							<a>
+								<img class="lozad" data-src="<?php echo esc_url($mobile_image['url']); ?>"
+									alt="<?php echo esc_attr($mobile_image['alt']); ?>">
+							</a>
+						</div>
 						<?php endif; ?>
 					</div>
 				</div>
 				<?php endif; ?>
+
+
+
+
 			</div>
 		</div>
 		<div class="scroll-down absolute left-2/4 -translate-x-2/4 bottom-0 z-2 flex flex-col">

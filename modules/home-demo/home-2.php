@@ -10,8 +10,8 @@ $cc_sections = get_query_var('cc_sections', []);
 $data        = $cc_sections['welcome'][0] ?? null;
 $slides      = $data['slides'] ?? [];
 ?>
-<section class="home-2 relative overflow-hidden">
-	<div class="swiper-column-auto relative swiper-loop autoplay auto-height" data-speed="700" data-time="5000">
+<section id="home-2" class="home-2 relative overflow-hidden">
+	<div class="swiper-column-auto relative allow-mouseWheel slides-per-view-1" data-speed="700" data-time="5000">
 		<div class="swiper">
 			<div class="swiper-wrapper">
 				<?php foreach ($slides as $slide) :
@@ -28,7 +28,7 @@ $slides      = $data['slides'] ?? [];
 					<div class="section-about xl:rem:pt-[180px] relative overflow-hidden">
 						<div class="vector">
 							<img class="img-svg"
-								src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home-2-welcome.svg'); ?>"
+								src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-here-for-life.svg'); ?>"
 								alt="">
 						</div>
 						<div class="vector-mobile mobile-show">
@@ -36,9 +36,9 @@ $slides      = $data['slides'] ?? [];
 								src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home-2-welcome-mobile.svg'); ?>"
 								alt="">
 						</div>
-						<div class="wrap-container xl:pl-25 xl:rem:px-[160px] px-4 h-full">
+						<div class="wrap-container xl:pl-25 xl:rem:px-[160px] px-4">
 							<div
-								class="wrapper-main grid lg:grid-cols-[calc(627/1600*100%)_1fr] grid-cols-1 xl:rem:gap-[273px] gap-4 h-full">
+								class="wrapper-main grid lg:grid-cols-[calc(627/1600*100%)_1fr] grid-cols-1 xl:rem:gap-[273px] gap-4">
 								<div class="col-left">
 									<?php if ($slide_video || $slide_image) : ?>
 									<div class="item">
@@ -91,6 +91,7 @@ $slides      = $data['slides'] ?? [];
 
 										</div>
 									</div>
+									
 									<?php endif; ?>
 								</div>
 								<div class="col-right">
@@ -112,20 +113,28 @@ $slides      = $data['slides'] ?? [];
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 					<?php else : // welcome (default) ?>
-					<div class="section-welcome xl:pt-25 pb-10 py-10 relative overflow-hidden">
 						<div class="vector" aria-hidden="true">
 							<img class="img-svg"
 								src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home-2-welcome.svg'); ?>"
 								alt="">
 						</div>
+					<div class="section-welcome xl:pt-25 pb-10 py-10 relative overflow-hidden">
+						
+						<div class="vector-mobile mobile-show">
+							<img class="img-svg"
+								src="<?php echo esc_url(get_template_directory_uri() . '/img/vector-home-2-welcome-mobile.svg'); ?>"
+								alt="">
+						</div>
 						<div class="wrap-content rem:max-w-[1010px] px-4 w-full mx-auto text-Secondary-1">
 							<?php if ($slide_title || $slide_sub_title) : ?>
-							<div class="wrap-heading text-center mb-base title-fade-left">
+							<div class="wrap-heading text-center mb-base">
 								<?php if ($slide_title) : ?>
-								<h2 class="title font-fontHeading font-bold heading-2 uppercase bottom-title">
+								<h2 class="title font-fontHeading font-bold heading-2 uppercase" data-aos="fade-up"
+									data-aos-delay="200" data-aos-duration="1000">
 									<?php echo esc_html($slide_title); ?>
 								</h2>
 								<?php endif; ?>

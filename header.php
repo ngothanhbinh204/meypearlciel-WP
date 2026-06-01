@@ -16,6 +16,7 @@
 <body <?php body_class(get_field('add_class_body', get_the_ID())) ?>>
 
 	<?php
+$searchUrl = home_url() . "/?s=";
 $header_logo    = get_field('header_logo', 'options');
 $header_socials = get_field('header_social_links', 'options');
 $wpml_languages = apply_filters('wpml_active_languages', null, 'skip_missing=0');
@@ -36,40 +37,43 @@ $wpml_languages = apply_filters('wpml_active_languages', null, 'skip_missing=0')
 				</div>
 				<div class="header-right">
 					<div class="header-right-inner">
-						<?php if (!empty($wpml_languages)) : ?>
+						<?php if (!empty($wpml_languages)) : 
+    // Mảng map mã ngôn ngữ => hiển thị
+    $language_code_map = array(
+        'vi' => 'VN',  // Chuyển vi -> VN
+        'en' => 'EN',  // en -> EN
+        // Thêm các map khác nếu cần
+    );
+?>
 						<div class="header-language">
 							<div class="header-language-active">
 								<ul>
-									<?php foreach ($wpml_languages as $lang) : if ($lang['active']) : ?>
-									<li class="wpml-ls-current-language"><a
-											href="<?php echo esc_url($lang['url']); ?>"><span
-												class="wpml-ls-native"><?php echo esc_html(strtoupper($lang['language_code'])); ?></span></a>
+									<?php foreach ($wpml_languages as $lang) : if ($lang['active']) : 
+                $display_code = isset($language_code_map[$lang['language_code']]) 
+                    ? $language_code_map[$lang['language_code']] 
+                    : strtoupper($lang['language_code']);
+            ?>
+									<li class="wpml-ls-current-language">
+										<a href="<?php echo esc_url($lang['url']); ?>">
+											<span class="wpml-ls-native"><?php echo esc_html($display_code); ?></span>
+										</a>
 									</li>
 									<?php endif; endforeach; ?>
-									<ul>
-										<?php foreach ($wpml_languages as $lang) : if (!$lang['active']) : ?>
-										<li><a
-												href="<?php echo esc_url($lang['url']); ?>"><span><?php echo esc_html(strtoupper($lang['language_code'])); ?></span></a>
-										</li>
-										<?php endif; endforeach; ?>
-									</ul>
 								</ul>
 							</div>
 							<div class="header-language-list">
 								<ul>
-									<?php foreach ($wpml_languages as $lang) : if ($lang['active']) : ?>
-									<li class="wpml-ls-current-language"><a
-											href="<?php echo esc_url($lang['url']); ?>"><span
-												class="wpml-ls-native"><?php echo esc_html(strtoupper($lang['language_code'])); ?></span></a>
+									<?php foreach ($wpml_languages as $lang) : if (!$lang['active']) : 
+                $display_code = isset($language_code_map[$lang['language_code']]) 
+                    ? $language_code_map[$lang['language_code']] 
+                    : strtoupper($lang['language_code']);
+            ?>
+									<li>
+										<a href="<?php echo esc_url($lang['url']); ?>">
+											<span><?php echo esc_html($display_code); ?></span>
+										</a>
 									</li>
 									<?php endif; endforeach; ?>
-									<ul>
-										<?php foreach ($wpml_languages as $lang) : if (!$lang['active']) : ?>
-										<li><a
-												href="<?php echo esc_url($lang['url']); ?>"><span><?php echo esc_html(strtoupper($lang['language_code'])); ?></span></a>
-										</li>
-										<?php endif; endforeach; ?>
-									</ul>
 								</ul>
 							</div>
 						</div>
@@ -117,9 +121,14 @@ $wpml_languages = apply_filters('wpml_active_languages', null, 'skip_missing=0')
 					</nav>
 					<div class="nav-search xl:mt-12 mt-6">
 						<div class="wrap-form-search relative">
-							<input type="text" placeholder="<?php esc_attr_e('Tìm kiếm', 'canhcamtheme'); ?>">
-							<button aria-label="<?php esc_attr_e('Tìm kiếm', 'canhcamtheme'); ?>"><i
-									class="fa-light fa-magnifying-glass"></i></button>
+							<form class="header-search-box" action="<?= esc_url(home_url('/')) ?>" method="get">
+								<input type="text" name="s"
+									placeholder="<?php esc_attr_e('Tìm kiếm', 'canhcamtheme'); ?>"
+									value="<?php echo esc_attr(get_search_query()); ?>">
+								<button type="submit" aria-label="<?php esc_attr_e('Tìm kiếm', 'canhcamtheme'); ?>">
+									<i class="fa-light fa-magnifying-glass"></i>
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>

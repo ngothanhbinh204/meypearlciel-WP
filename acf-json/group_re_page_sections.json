@@ -37,22 +37,22 @@
               "required": 0,
               "wrapper": { "width": "50", "class": "", "id": "" }
             },
+           
             {
-              "key": "field_hero_cta_url",
-              "label": "Nút CTA — URL",
-              "name": "cta_url",
-              "type": "url",
-              "instructions": "Link khi click vào banner",
-              "wrapper": { "width": "50", "class": "", "id": "" }
-            },
-            {
-              "key": "field_hero_video_url",
-              "label": "Video URL (YouTube / MP4)",
-              "name": "video_url",
-              "type": "url",
-              "instructions": "Tuỳ chọn — để trống nếu không dùng video",
-              "wrapper": { "width": "100", "class": "", "id": "" }
-            }
+			"key": "field_hero_video_file",
+			"label": "Video MP4",
+			"name": "video_file",
+			"type": "file",
+			"instructions": "Chọn file MP4 — để trống nếu không dùng video",
+			"wrapper": {
+				"width": "100",
+				"class": "",
+				"id": ""
+			},
+			"return_format": "url",
+			"mime_types": "mp4",
+			"library": "all"
+		}
           ]
         },
         "layout_welcome": {
@@ -371,13 +371,21 @@
                       "wrapper": { "width": "10", "class": "", "id": "" }
                     },
                     {
+                      "key": "field_uaio_amenity_color",
+                      "label": "Màu tiện ích",
+                      "name": "amenity_color",
+                      "type": "color_picker",
+                      "default_value": "#ffffff",
+                      "wrapper": { "width": "10", "class": "", "id": "" }
+                    },
+                    {
                       "key": "field_uaio_amenity_mapping_id",
                       "label": "Mapping ID (data-title IMP)",
                       "name": "amenity_mapping_id",
                       "type": "text",
                       "required": 1,
                       "instructions": "Bắt buộc khớp chính xác với data-title của polygon trong Image Map Pro. VD: floor-1-ballroom, floor-2-kidclub",
-                      "wrapper": { "width": "30", "class": "", "id": "" }
+                      "wrapper": { "width": "25", "class": "", "id": "" }
                     },
                     {
                       "key": "field_uaio_amenity_description",
@@ -386,7 +394,7 @@
                       "type": "textarea",
                       "rows": 2,
                       "instructions": "Nội dung hiển thị trong tooltip khi hover tiện ích",
-                      "wrapper": { "width": "50", "class": "", "id": "" }
+                      "wrapper": { "width": "45", "class": "", "id": "" }
                     }
                   ]
                 }
